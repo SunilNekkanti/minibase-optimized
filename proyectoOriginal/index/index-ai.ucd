@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="index-ai" size="562,546" id="index" metadata="uml2-1.0" initialized="true" tag="1000" key="3230303630393033206D696E69626173652D6F7074696D697A65642F4665726E616E646F">
+  <children xsi:type="editmodel:ClassEditModel" name="UnknownIndexTypeException" location="50,50" size="231,103" id="index/UnknownIndexTypeException" runTimeClassModel="UnknownIndexTypeException(),UnknownIndexTypeException(Ljava.lang.Exception;Ljava.lang.String;),UnknownIndexTypeException(Ljava.lang.String;)">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="173,54">
+      <children xsi:type="editmodel:MethodEditModel" name="UnknownIndexTypeException" id="index/UnknownIndexTypeException#UnknownIndexTypeException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="UnknownIndexTypeException" id="index/UnknownIndexTypeException#UnknownIndexTypeException()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="UnknownIndexTypeException" id="index/UnknownIndexTypeException#UnknownIndexTypeException(Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="IndexUtils" location="401,203" size="112,67" id="index/IndexUtils" runTimeClassModel="BTree_scan([Literator.CondExpr;Lbtree.IndexFile;)">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="89,18">
+      <children xsi:type="editmodel:MethodEditModel" name="BTree_scan" id="index/IndexUtils#BTree_scan([Literator.CondExpr;Lbtree.IndexFile;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="IndexScan" location="241,203" size="110,103" id="index/IndexScan" runTimeClassModel="get_next(),close(),IndexScan(Lglobal.IndexType;Ljava.lang.String;Ljava.lang.String;[Lglobal.AttrType;[SII[Literator.FldSpec;[Literator.CondExpr;IZ)">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="81,54">
+      <children xsi:type="editmodel:MethodEditModel" name="IndexScan" id="index/IndexScan#IndexScan(Lglobal.IndexType;Ljava.lang.String;Ljava.lang.String;[Lglobal.AttrType;[SII[Literator.FldSpec;[Literator.CondExpr;IZ)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="close" id="index/IndexScan#close()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="get_next" id="index/IndexScan#get_next()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="InvalidSelectionException" location="331,50" size="208,103" id="index/InvalidSelectionException" runTimeClassModel="InvalidSelectionException(Ljava.lang.Exception;Ljava.lang.String;),InvalidSelectionException(Ljava.lang.String;),InvalidSelectionException()">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="151,54">
+      <children xsi:type="editmodel:MethodEditModel" name="InvalidSelectionException" id="index/InvalidSelectionException#InvalidSelectionException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="InvalidSelectionException" id="index/InvalidSelectionException#InvalidSelectionException(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="InvalidSelectionException" id="index/InvalidSelectionException#InvalidSelectionException()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="IndexException" location="50,203" size="141,103" id="index/IndexException" runTimeClassModel="IndexException(Ljava.lang.String;),IndexException(),IndexException(Ljava.lang.Exception;Ljava.lang.String;)">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="103,54">
+      <children xsi:type="editmodel:MethodEditModel" name="IndexException" id="index/IndexException#IndexException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="IndexException" id="index/IndexException#IndexException(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="IndexException" id="index/IndexException#IndexException()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <diagramOptions xsi:type="options:ClassDiagramOptions" level="-1" showScope="InPackage" properties="wireOptions=3"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="15,15" gridOrigin="0,0" rulerUnit="pixel">
+    <leftRuler/>
+    <topRuler/>
+  </boardSetting>
+  <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" attributeSorter="Natural" methodSorter="Natural" showClassStereotype="true" showPackageStereotype="true" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showInterfaceStereotype="true" showAttributeProperty="true"/>
+</editmodel:ClassDiagramEditModel>

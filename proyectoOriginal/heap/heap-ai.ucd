@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="heap-ai" size="573,2080" id="heap" metadata="uml2-1.0" initialized="true" tag="1000" key="3230303630393033206D696E69626173652D6F7074696D697A65642F4665726E616E646F">
+  <children xsi:type="editmodel:ClassEditModel" name="HFBufMgrException" location="272,1804" size="167,85" id="heap/HFBufMgrException" runTimeClassModel="HFBufMgrException(),HFBufMgrException(Ljava.lang.Exception;Ljava.lang.String;)">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="125,36">
+      <children xsi:type="editmodel:MethodEditModel" name="HFBufMgrException" id="heap/HFBufMgrException#HFBufMgrException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="HFBufMgrException" id="heap/HFBufMgrException#HFBufMgrException()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="InvalidSlotNumberException" location="50,1534" size="223,85" id="heap/InvalidSlotNumberException" runTimeClassModel="InvalidSlotNumberException(),InvalidSlotNumberException(Ljava.lang.Exception;Ljava.lang.String;)">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="162,36">
+      <children xsi:type="editmodel:MethodEditModel" name="InvalidSlotNumberException" id="heap/InvalidSlotNumberException#InvalidSlotNumberException()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="InvalidSlotNumberException" id="heap/InvalidSlotNumberException#InvalidSlotNumberException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="HFDiskMgrException" location="50,1804" size="172,85" id="heap/HFDiskMgrException" runTimeClassModel="HFDiskMgrException(Ljava.lang.Exception;Ljava.lang.String;),HFDiskMgrException()">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="128,36">
+      <children xsi:type="editmodel:MethodEditModel" name="HFDiskMgrException" id="heap/HFDiskMgrException#HFDiskMgrException()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="HFDiskMgrException" id="heap/HFDiskMgrException#HFDiskMgrException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="InvalidUpdateException" location="50,1669" size="193,85" id="heap/InvalidUpdateException" runTimeClassModel="InvalidUpdateException(Ljava.lang.Exception;Ljava.lang.String;),InvalidUpdateException()">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="141,36">
+      <children xsi:type="editmodel:MethodEditModel" name="InvalidUpdateException" id="heap/InvalidUpdateException#InvalidUpdateException()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="InvalidUpdateException" id="heap/InvalidUpdateException#InvalidUpdateException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="FieldNumberOutOfBoundException" location="50,1264" size="264,85" id="heap/FieldNumberOutOfBoundException" runTimeClassModel="FieldNumberOutOfBoundException(Ljava.lang.Exception;Ljava.lang.String;),FieldNumberOutOfBoundException()">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="196,36">
+      <children xsi:type="editmodel:MethodEditModel" name="FieldNumberOutOfBoundException" id="heap/FieldNumberOutOfBoundException#FieldNumberOutOfBoundException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="FieldNumberOutOfBoundException" id="heap/FieldNumberOutOfBoundException#FieldNumberOutOfBoundException()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="HFException" location="203,1939" size="122,85" id="heap/HFException" runTimeClassModel="HFException(),HFException(Ljava.lang.Exception;Ljava.lang.String;)">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="90,36">
+      <children xsi:type="editmodel:MethodEditModel" name="HFException" id="heap/HFException#HFException()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="HFException" id="heap/HFException#HFException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="FileAlreadyDeletedException" location="50,1399" size="227,85" id="heap/FileAlreadyDeletedException" runTimeClassModel="FileAlreadyDeletedException(Ljava.lang.Exception;Ljava.lang.String;),FileAlreadyDeletedException()">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="167,36">
+      <children xsi:type="editmodel:MethodEditModel" name="FileAlreadyDeletedException" id="heap/FileAlreadyDeletedException#FileAlreadyDeletedException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="FileAlreadyDeletedException" id="heap/FileAlreadyDeletedException#FileAlreadyDeletedException()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Scan" location="50,1939" size="103,121" id="heap/Scan" runTimeClassModel="position(Lglobal.RID;),getNext(Lglobal.RID;),closescan(),Scan(Lheap.Heapfile;)">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="80,72">
+      <children xsi:type="editmodel:MethodEditModel" name="Scan" id="heap/Scan#Scan(Lheap.Heapfile;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="closescan" id="heap/Scan#closescan()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getNext" id="heap/Scan#getNext(Lglobal.RID;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="position" id="heap/Scan#position(Lglobal.RID;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="InvalidTupleSizeException" location="323,1534" size="212,85" id="heap/InvalidTupleSizeException" runTimeClassModel="InvalidTupleSizeException(Ljava.lang.Exception;Ljava.lang.String;),InvalidTupleSizeException()">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="154,36">
+      <children xsi:type="editmodel:MethodEditModel" name="InvalidTupleSizeException" id="heap/InvalidTupleSizeException#InvalidTupleSizeException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="InvalidTupleSizeException" id="heap/InvalidTupleSizeException#InvalidTupleSizeException()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="InvalidTypeException" location="293,1669" size="179,85" id="heap/InvalidTypeException" runTimeClassModel="InvalidTypeException(),InvalidTypeException(Ljava.lang.Exception;Ljava.lang.String;)">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="131,36">
+      <children xsi:type="editmodel:MethodEditModel" name="InvalidTypeException" id="heap/InvalidTypeException#InvalidTypeException()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="InvalidTypeException" id="heap/InvalidTypeException#InvalidTypeException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="SpaceNotAvailableException" location="327,1399" size="226,85" id="heap/SpaceNotAvailableException" runTimeClassModel="SpaceNotAvailableException(),SpaceNotAvailableException(Ljava.lang.Exception;Ljava.lang.String;)">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="168,36">
+      <children xsi:type="editmodel:MethodEditModel" name="SpaceNotAvailableException" id="heap/SpaceNotAvailableException#SpaceNotAvailableException()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="SpaceNotAvailableException" id="heap/SpaceNotAvailableException#SpaceNotAvailableException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="DataPageInfo" location="250,846" size="132,229" id="heap/DataPageInfo" runTimeClassModel="availspace,recct,DataPageInfo(Lheap.Tuple;),flushToTuple(),convertToTuple(),returnByteArray(),DataPageInfo(),DataPageInfo([B),size,pageId">
+    <children xsi:type="editmodel:CompartmentEditModel" size="89,72">
+      <children xsi:type="editmodel:AttributeEditModel" name="availspace" id="heap/DataPageInfo#availspace"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="pageId" id="heap/DataPageInfo#pageId"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="recct" id="heap/DataPageInfo#recct"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="size" id="heap/DataPageInfo#size"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="109,108">
+      <children xsi:type="editmodel:MethodEditModel" name="DataPageInfo" id="heap/DataPageInfo#DataPageInfo()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="DataPageInfo" id="heap/DataPageInfo#DataPageInfo([B)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="DataPageInfo" id="heap/DataPageInfo#DataPageInfo(Lheap.Tuple;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="convertToTuple" id="heap/DataPageInfo#convertToTuple()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="flushToTuple" id="heap/DataPageInfo#flushToTuple()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="returnByteArray" id="heap/DataPageInfo#returnByteArray()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Tuple" location="234,50" size="158,481" id="heap/Tuple" runTimeClassModel="tupleCopy(Lheap.Tuple;),getStrFld(I),size(),copyFldOffset(),getFloFld(I),Tuple([BII),tupleInit([BII),noOfFlds(),getLength(),Tuple(),setHdr(S[Lglobal.AttrType;[S),max_size,returnTupleByteArray(),getIntFld(I),getOffset(),setFloFld(IF),print([Lglobal.AttrType;),setIntFld(II),getCharFld(I),getTupleByteArray(),Tuple(I),Tuple(Lheap.Tuple;),setStrFld(ILjava.lang.String;),tupleSet([BII)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="82,18">
+      <children xsi:type="editmodel:AttributeEditModel" name="max_size" id="heap/Tuple#max_size"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="135,414">
+      <children xsi:type="editmodel:MethodEditModel" name="Tuple" id="heap/Tuple#Tuple([BII)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="Tuple" id="heap/Tuple#Tuple(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="Tuple" id="heap/Tuple#Tuple()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="Tuple" id="heap/Tuple#Tuple(Lheap.Tuple;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="copyFldOffset" id="heap/Tuple#copyFldOffset()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getCharFld" id="heap/Tuple#getCharFld(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getFloFld" id="heap/Tuple#getFloFld(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getIntFld" id="heap/Tuple#getIntFld(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getLength" id="heap/Tuple#getLength()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getOffset" id="heap/Tuple#getOffset()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getStrFld" id="heap/Tuple#getStrFld(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getTupleByteArray" id="heap/Tuple#getTupleByteArray()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="noOfFlds" id="heap/Tuple#noOfFlds()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="print" id="heap/Tuple#print([Lglobal.AttrType;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="returnTupleByteArray" id="heap/Tuple#returnTupleByteArray()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setFloFld" id="heap/Tuple#setFloFld(IF)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setHdr" id="heap/Tuple#setHdr(S[Lglobal.AttrType;[S)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setIntFld" id="heap/Tuple#setIntFld(II)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setStrFld" id="heap/Tuple#setStrFld(ILjava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="size" id="heap/Tuple#size()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="tupleCopy" id="heap/Tuple#tupleCopy(Lheap.Tuple;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="tupleInit" id="heap/Tuple#tupleInit([BII)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="tupleSet" id="heap/Tuple#tupleSet([BII)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="HFPage" location="50,189" size="134,607" id="heap/HFPage" runTimeClassModel="fREE_SPACE,empty(),prevPage,HFPage(Ldiskmgr.Page;),getRecord(Lglobal.RID;),nextRecord(Lglobal.RID;),slotCnt,dumpPage(),insertRecord([B),curPage,nextPage,HFPage(),tYPE,deleteRecord(Lglobal.RID;),setSlot(III),getSlotLength(I),openHFpage(Ldiskmgr.Page;),type,sIZE_OF_SLOT,sLOT_CNT,getHFpageArray(),firstRecord(),nEXT_PAGE,dPFIXED,cUR_PAGE,pREV_PAGE,returnRecord(Lglobal.RID;),getSlotOffset(I),available_space(),init(Lglobal.PageId;Ldiskmgr.Page;),uSED_PTR">
+    <children xsi:type="editmodel:CompartmentEditModel" size="111,252">
+      <children xsi:type="editmodel:AttributeEditModel" name="cUR_PAGE" id="heap/HFPage#cUR_PAGE"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="curPage" id="heap/HFPage#curPage"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="dPFIXED" id="heap/HFPage#dPFIXED"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="fREE_SPACE" id="heap/HFPage#fREE_SPACE"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="nEXT_PAGE" id="heap/HFPage#nEXT_PAGE"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="nextPage" id="heap/HFPage#nextPage"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="pREV_PAGE" id="heap/HFPage#pREV_PAGE"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="prevPage" id="heap/HFPage#prevPage"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="sIZE_OF_SLOT" id="heap/HFPage#sIZE_OF_SLOT"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="sLOT_CNT" id="heap/HFPage#sLOT_CNT"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="slotCnt" id="heap/HFPage#slotCnt"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="tYPE" id="heap/HFPage#tYPE"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="type" id="heap/HFPage#type"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="uSED_PTR" id="heap/HFPage#uSED_PTR"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="110,306">
+      <children xsi:type="editmodel:MethodEditModel" name="HFPage" id="heap/HFPage#HFPage()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="HFPage" id="heap/HFPage#HFPage(Ldiskmgr.Page;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="available_space" id="heap/HFPage#available_space()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="deleteRecord" id="heap/HFPage#deleteRecord(Lglobal.RID;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="dumpPage" id="heap/HFPage#dumpPage()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="empty" id="heap/HFPage#empty()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="firstRecord" id="heap/HFPage#firstRecord()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getHFpageArray" id="heap/HFPage#getHFpageArray()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getRecord" id="heap/HFPage#getRecord(Lglobal.RID;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getSlotLength" id="heap/HFPage#getSlotLength(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getSlotOffset" id="heap/HFPage#getSlotOffset(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="init" id="heap/HFPage#init(Lglobal.PageId;Ldiskmgr.Page;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="insertRecord" id="heap/HFPage#insertRecord([B)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="nextRecord" id="heap/HFPage#nextRecord(Lglobal.RID;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="openHFpage" id="heap/HFPage#openHFpage(Ldiskmgr.Page;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="returnRecord" id="heap/HFPage#returnRecord(Lglobal.RID;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setSlot" id="heap/HFPage#setSlot(III)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="heap/ConstSlot&lt;-heap/HFPage" source="//@children.13" target="//@children.14" targetEnd="//@children.13/@sourceConnections.0/@children.1" sourceEnd="//@children.13/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="67,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="66,89"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.13/@sourceConnections.0" name="ConstSlot" location="51,50" size="132,89" id="heap/ConstSlot" runTimeClassModel="iNVALID_SLOT,eMPTY_SLOT">
+    <children xsi:type="editmodel:CompartmentEditModel" size="109,36">
+      <children xsi:type="editmodel:AttributeEditModel" name="eMPTY_SLOT" id="heap/ConstSlot#eMPTY_SLOT"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="iNVALID_SLOT" id="heap/ConstSlot#iNVALID_SLOT"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.16/@sourceConnections.0" name="Filetype" location="68,846" size="113,89" id="heap/Filetype" runTimeClassModel="tEMP,oRDINARY">
+    <children xsi:type="editmodel:CompartmentEditModel" size="90,36">
+      <children xsi:type="editmodel:AttributeEditModel" name="oRDINARY" id="heap/Filetype#oRDINARY"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="tEMP" id="heap/Filetype#tEMP"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Heapfile" location="50,985" size="150,229" id="heap/Heapfile" runTimeClassModel="Heapfile(Ljava.lang.String;),getRecCnt(),insertRecord([B),deleteFile(),updateRecord(Lglobal.RID;Lheap.Tuple;),getRecord(Lglobal.RID;),openScan(),deleteRecord(Lglobal.RID;),_ftype,_firstDirPageId">
+    <children xsi:type="editmodel:CompartmentEditModel" size="127,36">
+      <children xsi:type="editmodel:AttributeEditModel" name="_firstDirPageId" id="heap/Heapfile#_firstDirPageId"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="_ftype" id="heap/Heapfile#_ftype"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="98,144">
+      <children xsi:type="editmodel:MethodEditModel" name="Heapfile" id="heap/Heapfile#Heapfile(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="deleteFile" id="heap/Heapfile#deleteFile()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="deleteRecord" id="heap/Heapfile#deleteRecord(Lglobal.RID;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getRecCnt" id="heap/Heapfile#getRecCnt()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getRecord" id="heap/Heapfile#getRecord(Lglobal.RID;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="insertRecord" id="heap/Heapfile#insertRecord([B)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="openScan" id="heap/Heapfile#openScan()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="updateRecord" id="heap/Heapfile#updateRecord(Lglobal.RID;Lheap.Tuple;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="heap/Filetype&lt;-heap/Heapfile" source="//@children.16" target="//@children.15" targetEnd="//@children.16/@sourceConnections.0/@children.1" sourceEnd="//@children.16/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="74,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="56,89"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <diagramOptions xsi:type="options:ClassDiagramOptions" level="-1" showScope="InPackage" properties="wireOptions=3"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="15,15" gridOrigin="0,0" rulerUnit="pixel">
+    <leftRuler/>
+    <topRuler/>
+  </boardSetting>
+  <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" attributeSorter="Natural" methodSorter="Natural" showClassStereotype="true" showPackageStereotype="true" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showInterfaceStereotype="true" showAttributeProperty="true"/>
+</editmodel:ClassDiagramEditModel>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="diskmgr-ai" size="574,1095" id="diskmgr" metadata="uml2-1.0" initialized="true" tag="1000" key="3230303630393033206D696E69626173652D6F7074696D697A65642F4665726E616E646F">
+  <children xsi:type="editmodel:ClassEditModel" name="InvalidPageNumberException" location="50,603" size="231,67" id="diskmgr/InvalidPageNumberException" runTimeClassModel="InvalidPageNumberException(Ljava.lang.Exception;Ljava.lang.String;)">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="168,18">
+      <children xsi:type="editmodel:MethodEditModel" name="InvalidPageNumberException" id="diskmgr/InvalidPageNumberException#InvalidPageNumberException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="InvalidRunSizeException" location="322,720" size="201,67" id="diskmgr/InvalidRunSizeException" runTimeClassModel="InvalidRunSizeException(Ljava.lang.Exception;Ljava.lang.String;)">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="147,18">
+      <children xsi:type="editmodel:MethodEditModel" name="InvalidRunSizeException" id="diskmgr/InvalidRunSizeException#InvalidRunSizeException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="FileEntryNotFoundException" location="331,603" size="222,67" id="diskmgr/FileEntryNotFoundException" runTimeClassModel="FileEntryNotFoundException(Ljava.lang.Exception;Ljava.lang.String;)">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="164,18">
+      <children xsi:type="editmodel:MethodEditModel" name="FileEntryNotFoundException" id="diskmgr/FileEntryNotFoundException#FileEntryNotFoundException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="OutOfSpaceException" location="297,837" size="181,67" id="diskmgr/OutOfSpaceException" runTimeClassModel="OutOfSpaceException(Ljava.lang.Exception;Ljava.lang.String;)">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="137,18">
+      <children xsi:type="editmodel:MethodEditModel" name="OutOfSpaceException" id="diskmgr/OutOfSpaceException#OutOfSpaceException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="DB" location="413,50" size="141,373" id="diskmgr/DB" runTimeClassModel="delete_file_entry(Ljava.lang.String;),allocate_page(Lglobal.PageId;),db_name(),DB(),db_page_size(),deallocate_page(Lglobal.PageId;I),openDB(Ljava.lang.String;I),db_num_pages(),allocate_page(Lglobal.PageId;I),openDB(Ljava.lang.String;),add_file_entry(Ljava.lang.String;Lglobal.PageId;),DBDestroy(),closeDB(),dump_space_map(),get_file_entry(Ljava.lang.String;),read_page(Lglobal.PageId;Ldiskmgr.Page;),deallocate_page(Lglobal.PageId;),write_page(Lglobal.PageId;Ldiskmgr.Page;)">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="118,324">
+      <children xsi:type="editmodel:MethodEditModel" name="DB" id="diskmgr/DB#DB()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="DBDestroy" id="diskmgr/DB#DBDestroy()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="add_file_entry" id="diskmgr/DB#add_file_entry(Ljava.lang.String;Lglobal.PageId;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="allocate_page" id="diskmgr/DB#allocate_page(Lglobal.PageId;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="allocate_page" id="diskmgr/DB#allocate_page(Lglobal.PageId;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="closeDB" id="diskmgr/DB#closeDB()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="db_name" id="diskmgr/DB#db_name()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="db_num_pages" id="diskmgr/DB#db_num_pages()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="db_page_size" id="diskmgr/DB#db_page_size()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="deallocate_page" id="diskmgr/DB#deallocate_page(Lglobal.PageId;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="deallocate_page" id="diskmgr/DB#deallocate_page(Lglobal.PageId;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="delete_file_entry" id="diskmgr/DB#delete_file_entry(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="dump_space_map" id="diskmgr/DB#dump_space_map()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="get_file_entry" id="diskmgr/DB#get_file_entry(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="openDB" id="diskmgr/DB#openDB(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="openDB" id="diskmgr/DB#openDB(Ljava.lang.String;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="read_page" id="diskmgr/DB#read_page(Lglobal.PageId;Ldiskmgr.Page;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="write_page" id="diskmgr/DB#write_page(Lglobal.PageId;Ldiskmgr.Page;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="FileNameTooLongException" location="50,720" size="222,67" id="diskmgr/FileNameTooLongException" runTimeClassModel="FileNameTooLongException(Ljava.lang.Exception;Ljava.lang.String;)">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="162,18">
+      <children xsi:type="editmodel:MethodEditModel" name="FileNameTooLongException" id="diskmgr/FileNameTooLongException#FileNameTooLongException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="DiskMgrException" location="192,954" size="155,67" id="diskmgr/DiskMgrException" runTimeClassModel="DiskMgrException(Ljava.lang.Exception;Ljava.lang.String;)">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="115,18">
+      <children xsi:type="editmodel:MethodEditModel" name="DiskMgrException" id="diskmgr/DiskMgrException#DiskMgrException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="DuplicateEntryException" location="50,837" size="197,67" id="diskmgr/DuplicateEntryException" runTimeClassModel="DuplicateEntryException(Ljava.lang.Exception;Ljava.lang.String;)">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="146,18">
+      <children xsi:type="editmodel:MethodEditModel" name="DuplicateEntryException" id="diskmgr/DuplicateEntryException#DuplicateEntryException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="FileIOException" location="397,954" size="143,67" id="diskmgr/FileIOException" runTimeClassModel="FileIOException(Ljava.lang.Exception;Ljava.lang.String;)">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="103,18">
+      <children xsi:type="editmodel:MethodEditModel" name="FileIOException" id="diskmgr/FileIOException#FileIOException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Page" location="50,954" size="92,121" id="diskmgr/Page" runTimeClassModel="Page([B),setpage([B),getpage(),Page()">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="69,72">
+      <children xsi:type="editmodel:MethodEditModel" name="Page" id="diskmgr/Page#Page()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="Page" id="diskmgr/Page#Page([B)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getpage" id="diskmgr/Page#getpage()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setpage" id="diskmgr/Page#setpage([B)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.11/@sourceConnections.0" name="PageUsedBytes" location="113,50" size="194,89" id="diskmgr/PageUsedBytes" runTimeClassModel="fIRST_PAGE_USED_BYTES,dIR_PAGE_USED_BYTES">
+    <children xsi:type="editmodel:CompartmentEditModel" size="171,36">
+      <children xsi:type="editmodel:AttributeEditModel" name="dIR_PAGE_USED_BYTES" id="diskmgr/PageUsedBytes#dIR_PAGE_USED_BYTES"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="fIRST_PAGE_USED_BYTES" id="diskmgr/PageUsedBytes#fIRST_PAGE_USED_BYTES"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.12/@sourceConnections.0" name="DBHeaderPage" location="141,189" size="139,175" id="diskmgr/DBHeaderPage" runTimeClassModel="getNumOfEntries(),DBHeaderPage(Ldiskmgr.Page;I),setNextPage(Lglobal.PageId;),setFileEntry(Lglobal.PageId;Ljava.lang.String;I),DBHeaderPage(),getFileEntry(Lglobal.PageId;I),getNextPage()">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="111,126">
+      <children xsi:type="editmodel:MethodEditModel" name="DBHeaderPage" id="diskmgr/DBHeaderPage#DBHeaderPage()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="DBHeaderPage" id="diskmgr/DBHeaderPage#DBHeaderPage(Ldiskmgr.Page;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getFileEntry" id="diskmgr/DBHeaderPage#getFileEntry(Lglobal.PageId;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getNextPage" id="diskmgr/DBHeaderPage#getNextPage()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getNumOfEntries" id="diskmgr/DBHeaderPage#getNumOfEntries()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setFileEntry" id="diskmgr/DBHeaderPage#setFileEntry(Lglobal.PageId;Ljava.lang.String;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setNextPage" id="diskmgr/DBHeaderPage#setNextPage(Lglobal.PageId;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="diskmgr/PageUsedBytes&lt;-diskmgr/DBHeaderPage" source="//@children.11" target="//@children.10" targetEnd="//@children.11/@sourceConnections.0/@children.1" sourceEnd="//@children.11/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="69,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="97,89"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="DBDirectoryPage" location="50,414" size="150,103" id="diskmgr/DBDirectoryPage" runTimeClassModel="DBDirectoryPage(Ldiskmgr.Page;),DBDirectoryPage(),openPage(Ldiskmgr.Page;)">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="112,54">
+      <children xsi:type="editmodel:MethodEditModel" name="DBDirectoryPage" id="diskmgr/DBDirectoryPage#DBDirectoryPage(Ldiskmgr.Page;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="DBDirectoryPage" id="diskmgr/DBDirectoryPage#DBDirectoryPage()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="openPage" id="diskmgr/DBDirectoryPage#openPage(Ldiskmgr.Page;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" targetConnections="//@children.13/@sourceConnections.0" autoLocated="true" id="diskmgr/DBHeaderPage&lt;-diskmgr/DBDirectoryPage" source="//@children.12" target="//@children.11" targetEnd="//@children.12/@sourceConnections.0/@children.1" sourceEnd="//@children.12/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="75,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="69,175" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="DBFirstPage" location="230,414" size="133,139" id="diskmgr/DBFirstPage" runTimeClassModel="DBFirstPage(),DBFirstPage(Ldiskmgr.Page;),openPage(Ldiskmgr.Page;),setNumDBPages(I),getNumDBPages()">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="110,90">
+      <children xsi:type="editmodel:MethodEditModel" name="DBFirstPage" id="diskmgr/DBFirstPage#DBFirstPage(Ldiskmgr.Page;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="DBFirstPage" id="diskmgr/DBFirstPage#DBFirstPage()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getNumDBPages" id="diskmgr/DBFirstPage#getNumDBPages()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="openPage" id="diskmgr/DBFirstPage#openPage(Ldiskmgr.Page;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setNumDBPages" id="diskmgr/DBFirstPage#setNumDBPages(I)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="diskmgr/DBHeaderPage&lt;-diskmgr/DBFirstPage" source="//@children.13" target="//@children.12/@sourceConnections.0" targetEnd="//@children.13/@sourceConnections.0/@children.1" sourceEnd="//@children.13/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="66,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <diagramOptions xsi:type="options:ClassDiagramOptions" level="-1" showScope="InPackage" properties="wireOptions=3"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="15,15" gridOrigin="0,0" rulerUnit="pixel">
+    <leftRuler/>
+    <topRuler/>
+  </boardSetting>
+  <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" attributeSorter="Natural" methodSorter="Natural" showClassStereotype="true" showPackageStereotype="true" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showInterfaceStereotype="true" showAttributeProperty="true"/>
+</editmodel:ClassDiagramEditModel>
