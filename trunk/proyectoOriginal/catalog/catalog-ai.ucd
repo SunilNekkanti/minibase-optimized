@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="catalog-ai" size="568,2481" id="catalog" metadata="uml2-1.0" initialized="true" scrolledY="1092" tag="1000" key="3230303630393033206D696E69626173652D6F7074696D697A65642F4665726E616E646F">
+  <children xsi:type="editmodel:ClassEditModel" name="Catalog" location="50,50" size="140,373" id="catalog/Catalog">
+    <children xsi:type="editmodel:CompartmentEditModel" size="117,54">
+      <children xsi:type="editmodel:AttributeEditModel" name="attrCat" id="catalog/Catalog#attrCat"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="indCat" id="catalog/Catalog#indCat"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="relCat" id="catalog/Catalog#relCat"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="107,270">
+      <children xsi:type="editmodel:MethodEditModel" name="Catalog" id="catalog/Catalog#Catalog()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addIndex" id="catalog/Catalog#addIndex(Ljava.lang.String;Ljava.lang.String;Lglobal.IndexType;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="createRel" id="catalog/Catalog#createRel(Ljava.lang.String;I[Lcatalog.attrInfo;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="destroyRel" id="catalog/Catalog#destroyRel(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="dropIndex" id="catalog/Catalog#dropIndex(Ljava.lang.String;Ljava.lang.String;Lglobal.IndexType;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="dumpCatalog" id="catalog/Catalog#dumpCatalog(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getAttrIndexes" id="catalog/Catalog#getAttrIndexes(Ljava.lang.String;Ljava.lang.String;I[Lcatalog.IndexDesc;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getAttributeInfo" id="catalog/Catalog#getAttributeInfo(Ljava.lang.String;Ljava.lang.String;Lcatalog.AttrDesc;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getIndexInfo" id="catalog/Catalog#getIndexInfo(Ljava.lang.String;Ljava.lang.String;Lglobal.IndexType;Lcatalog.IndexDesc;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getRelAttributes" id="catalog/Catalog#getRelAttributes(Ljava.lang.String;I[Lcatalog.AttrDesc;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getRelIndexes" id="catalog/Catalog#getRelIndexes(Ljava.lang.String;I[Lcatalog.IndexDesc;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getRelationInfo" id="catalog/Catalog#getRelationInfo(Ljava.lang.String;Lcatalog.RelDesc;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="initialize" id="catalog/Catalog#initialize()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="listRelations" id="catalog/Catalog#listRelations()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="runStats" id="catalog/Catalog#runStats(Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="RelCatalogException" location="276,1640" size="175,67" id="catalog/RelCatalogException">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="128,18">
+      <children xsi:type="editmodel:MethodEditModel" name="RelCatalogException" id="catalog/RelCatalogException#RelCatalogException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Catalogrelnotfound" location="268,1892" size="164,67" id="catalog/Catalogrelnotfound">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="121,18">
+      <children xsi:type="editmodel:MethodEditModel" name="Catalogrelnotfound" id="catalog/Catalogrelnotfound#Catalogrelnotfound(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Catalogrelexists" location="404,2126" size="144,67" id="catalog/Catalogrelexists">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="107,18">
+      <children xsi:type="editmodel:MethodEditModel" name="Catalogrelexists" id="catalog/Catalogrelexists#Catalogrelexists(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="IndexCatalogException" location="50,1497" size="190,67" id="catalog/IndexCatalogException">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="139,18">
+      <children xsi:type="editmodel:MethodEditModel" name="IndexCatalogException" id="catalog/IndexCatalogException#IndexCatalogException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Catalogattrexists" location="50,2126" size="148,67" id="catalog/Catalogattrexists">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="111,18">
+      <children xsi:type="editmodel:MethodEditModel" name="Catalogattrexists" id="catalog/Catalogattrexists#Catalogattrexists(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="RelDesc" location="50,1318" size="115,129" id="catalog/RelDesc">
+    <children xsi:type="editmodel:CompartmentEditModel" size="92,90">
+      <children xsi:type="editmodel:AttributeEditModel" name="attrCnt" id="catalog/RelDesc#attrCnt"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="indexCnt" id="catalog/RelDesc#indexCnt"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="numPages" id="catalog/RelDesc#numPages"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="numTuples" id="catalog/RelDesc#numTuples"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="relName" id="catalog/RelDesc#relName"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Catalognomem" location="50,2386" size="139,67" id="catalog/Catalognomem">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="100,18">
+      <children xsi:type="editmodel:MethodEditModel" name="Catalognomem" id="catalog/Catalognomem#Catalognomem(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Catalogioerror" location="409,2386" size="134,67" id="catalog/Catalogioerror">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="98,18">
+      <children xsi:type="editmodel:MethodEditModel" name="Catalogioerror" id="catalog/Catalogioerror#Catalogioerror(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Catalogdupattrs" location="50,2269" size="142,67" id="catalog/Catalogdupattrs">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="106,18">
+      <children xsi:type="editmodel:MethodEditModel" name="Catalogdupattrs" id="catalog/Catalogdupattrs#Catalogdupattrs(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Catalogindexexists" location="215,1318" size="163,85" id="catalog/Catalogindexexists">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="121,36">
+      <children xsi:type="editmodel:MethodEditModel" name="Catalogindexexists" id="catalog/Catalogindexexists#Catalogindexexists()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="Catalogindexexists" id="catalog/Catalogindexexists#Catalogindexexists(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="IndexCatalog" location="50,473" size="143,301" id="catalog/IndexCatalog">
+    <children xsi:type="editmodel:CompartmentEditModel" size="120,36">
+      <children xsi:type="editmodel:AttributeEditModel" name="str_sizes" id="catalog/IndexCatalog#str_sizes"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="tuple" id="catalog/IndexCatalog#tuple"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="105,216">
+      <children xsi:type="editmodel:MethodEditModel" name="IndexCatalog" id="catalog/IndexCatalog#IndexCatalog(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addIndex" id="catalog/IndexCatalog#addIndex(Ljava.lang.String;Ljava.lang.String;Lglobal.IndexType;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addInfo" id="catalog/IndexCatalog#addInfo(Lcatalog.IndexDesc;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="buildIndexName" id="catalog/IndexCatalog#buildIndexName(Ljava.lang.String;Ljava.lang.String;Lglobal.IndexType;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="dropIndex" id="catalog/IndexCatalog#dropIndex(Ljava.lang.String;Ljava.lang.String;Lglobal.IndexType;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="dropRelation" id="catalog/IndexCatalog#dropRelation(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getAttrIndexes" id="catalog/IndexCatalog#getAttrIndexes(Ljava.lang.String;Ljava.lang.String;I[Lcatalog.IndexDesc;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getInfo" id="catalog/IndexCatalog#getInfo(Ljava.lang.String;Ljava.lang.String;Lglobal.IndexType;Lcatalog.IndexDesc;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getRelInfo" id="catalog/IndexCatalog#getRelInfo(Ljava.lang.String;I[Lcatalog.IndexDesc;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="make_tuple" id="catalog/IndexCatalog#make_tuple(Lheap.Tuple;Lcatalog.IndexDesc;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="read_tuple" id="catalog/IndexCatalog#read_tuple(Lheap.Tuple;Lcatalog.IndexDesc;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="removeInfo" id="catalog/IndexCatalog#removeInfo(Ljava.lang.String;Ljava.lang.String;Lglobal.IndexType;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="RelCatalog" location="240,50" size="143,301" id="catalog/RelCatalog">
+    <children xsi:type="editmodel:CompartmentEditModel" size="120,36">
+      <children xsi:type="editmodel:AttributeEditModel" name="str_sizes" id="catalog/RelCatalog#str_sizes"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="tuple" id="catalog/RelCatalog#tuple"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="92,216">
+      <children xsi:type="editmodel:MethodEditModel" name="RelCatalog" id="catalog/RelCatalog#RelCatalog(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addIndex" id="catalog/RelCatalog#addIndex(Ljava.lang.String;Ljava.lang.String;Lglobal.IndexType;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addInfo" id="catalog/RelCatalog#addInfo(Lcatalog.RelDesc;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="createRel" id="catalog/RelCatalog#createRel(Ljava.lang.String;I[Lcatalog.attrInfo;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="destroyRel" id="catalog/RelCatalog#destroyRel(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="dropIndex" id="catalog/RelCatalog#dropIndex(Ljava.lang.String;Ljava.lang.String;Lglobal.IndexType;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="dumpCatalog" id="catalog/RelCatalog#dumpCatalog(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getInfo" id="catalog/RelCatalog#getInfo(Ljava.lang.String;Lcatalog.RelDesc;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="make_tuple" id="catalog/RelCatalog#make_tuple(Lheap.Tuple;Lcatalog.RelDesc;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="read_tuple" id="catalog/RelCatalog#read_tuple(Lheap.Tuple;Lcatalog.RelDesc;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="removeInfo" id="catalog/RelCatalog#removeInfo(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="runStats" id="catalog/RelCatalog#runStats(Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="attrData" location="248,2126" size="106,93" id="catalog/attrData">
+    <children xsi:type="editmodel:CompartmentEditModel" size="83,54">
+      <children xsi:type="editmodel:AttributeEditModel" name="floatVal" id="catalog/attrData#floatVal"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="intVal" id="catalog/attrData#intVal"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="strVal" id="catalog/attrData#strVal"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="AttrDesc" location="252,824" size="130,201" id="catalog/AttrDesc">
+    <children xsi:type="editmodel:CompartmentEditModel" size="107,162">
+      <children xsi:type="editmodel:AttributeEditModel" name="attrLen" id="catalog/AttrDesc#attrLen"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="attrName" id="catalog/AttrDesc#attrName"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="attrOffset" id="catalog/AttrDesc#attrOffset"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="attrPos" id="catalog/AttrDesc#attrPos"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="attrType" id="catalog/AttrDesc#attrType"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="indexCnt" id="catalog/AttrDesc#indexCnt"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="maxVal" id="catalog/AttrDesc#maxVal"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="minVal" id="catalog/AttrDesc#minVal"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="relName" id="catalog/AttrDesc#relName"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Utility" location="50,824" size="152,229" id="catalog/Utility">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="129,180">
+      <children xsi:type="editmodel:MethodEditModel" name="check_float" id="catalog/Utility#check_float(Lcatalog.attrNode;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="check_int" id="catalog/Utility#check_int(Lcatalog.attrNode;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="check_string" id="catalog/Utility#check_string(Lcatalog.attrNode;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="deleteRecIndexesUT" id="catalog/Utility#deleteRecIndexesUT(Ljava.lang.String;Lglobal.RID;Lheap.Tuple;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="deleteRecUT" id="catalog/Utility#deleteRecUT(Ljava.lang.String;Lcatalog.attrNode;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="deleteRecordUT" id="catalog/Utility#deleteRecordUT(Ljava.lang.String;Lcatalog.attrNode;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="insertRecUT" id="catalog/Utility#insertRecUT(Ljava.lang.String;I[Lcatalog.attrNode;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="insertRecordUT" id="catalog/Utility#insertRecordUT(Ljava.lang.String;I[Lcatalog.attrNode;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="loadRecordsUT" id="catalog/Utility#loadRecordsUT(Ljava.lang.String;Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="loadUT" id="catalog/Utility#loadUT(Ljava.lang.String;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="AttrCatalogException" location="50,1640" size="176,67" id="catalog/AttrCatalogException">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="131,18">
+      <children xsi:type="editmodel:MethodEditModel" name="AttrCatalogException" id="catalog/AttrCatalogException#AttrCatalogException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Cataloghferror" location="271,1757" size="134,85" id="catalog/Cataloghferror">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="100,36">
+      <children xsi:type="editmodel:MethodEditModel" name="Cataloghferror" id="catalog/Cataloghferror#Cataloghferror(Ljava.lang.Exception;Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="Cataloghferror" id="catalog/Cataloghferror#Cataloghferror()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Catalogmissparam" location="50,2009" size="160,67" id="catalog/Catalogmissparam">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="118,18">
+      <children xsi:type="editmodel:MethodEditModel" name="Catalogmissparam" id="catalog/Catalogmissparam#Catalogmissparam(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="attrInfo" location="290,1497" size="130,93" id="catalog/attrInfo">
+    <children xsi:type="editmodel:CompartmentEditModel" size="107,54">
+      <children xsi:type="editmodel:AttributeEditModel" name="attrLen" id="catalog/attrInfo#attrLen"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="attrName" id="catalog/attrInfo#attrName"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="attrType" id="catalog/attrInfo#attrType"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Catalogattrnotfound" location="50,1892" size="168,67" id="catalog/Catalogattrnotfound">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="125,18">
+      <children xsi:type="editmodel:MethodEditModel" name="Catalogattrnotfound" id="catalog/Catalogattrnotfound#Catalogattrnotfound(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Catalogindexnotfound" location="258,1103" size="183,85" id="catalog/Catalogindexnotfound">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="135,36">
+      <children xsi:type="editmodel:MethodEditModel" name="Catalogindexnotfound" id="catalog/Catalogindexnotfound#Catalogindexnotfound()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="Catalogindexnotfound" id="catalog/Catalogindexnotfound#Catalogindexnotfound(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Catalogbadattrcount" location="50,1757" size="171,67" id="catalog/Catalogbadattrcount">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="127,18">
+      <children xsi:type="editmodel:MethodEditModel" name="Catalogbadattrcount" id="catalog/Catalogbadattrcount#Catalogbadattrcount(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Catalogbadtype" location="242,2269" size="142,67" id="catalog/Catalogbadtype">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="105,18">
+      <children xsi:type="editmodel:MethodEditModel" name="Catalogbadtype" id="catalog/Catalogbadtype#Catalogbadtype(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="AttrCatalog" location="243,473" size="143,283" id="catalog/AttrCatalog">
+    <children xsi:type="editmodel:CompartmentEditModel" size="120,54">
+      <children xsi:type="editmodel:AttributeEditModel" name="max" id="catalog/AttrCatalog#max"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="str_sizes" id="catalog/AttrCatalog#str_sizes"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="tuple" id="catalog/AttrCatalog#tuple"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="116,180">
+      <children xsi:type="editmodel:MethodEditModel" name="AttrCatalog" id="catalog/AttrCatalog#AttrCatalog(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addIndex" id="catalog/AttrCatalog#addIndex(Ljava.lang.String;Ljava.lang.String;Lglobal.IndexType;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addInfo" id="catalog/AttrCatalog#addInfo(Lcatalog.AttrDesc;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="dropRelation" id="catalog/AttrCatalog#dropRelation(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getInfo" id="catalog/AttrCatalog#getInfo(Ljava.lang.String;Ljava.lang.String;Lcatalog.AttrDesc;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getRelInfo" id="catalog/AttrCatalog#getRelInfo(Ljava.lang.String;I[Lcatalog.AttrDesc;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getTupleStructure" id="catalog/AttrCatalog#getTupleStructure(Ljava.lang.String;I[Lglobal.AttrType;[S)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="make_tuple" id="catalog/AttrCatalog#make_tuple(Lheap.Tuple;Lcatalog.AttrDesc;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="read_tuple" id="catalog/AttrCatalog#read_tuple(Lheap.Tuple;Lcatalog.AttrDesc;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="removeInfo" id="catalog/AttrCatalog#removeInfo(Ljava.lang.String;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="IndexDesc" location="50,1103" size="158,165" id="catalog/IndexDesc">
+    <children xsi:type="editmodel:CompartmentEditModel" size="135,126">
+      <children xsi:type="editmodel:AttributeEditModel" name="accessType" id="catalog/IndexDesc#accessType"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="attrName" id="catalog/IndexDesc#attrName"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="clustered" id="catalog/IndexDesc#clustered"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="distinctKeys" id="catalog/IndexDesc#distinctKeys"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="indexPages" id="catalog/IndexDesc#indexPages"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="order" id="catalog/IndexDesc#order"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="relName" id="catalog/IndexDesc#relName"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="attrNode" location="239,2386" size="120,75" id="catalog/attrNode">
+    <children xsi:type="editmodel:CompartmentEditModel" size="97,36">
+      <children xsi:type="editmodel:AttributeEditModel" name="attrName" id="catalog/attrNode#attrName"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="attrValue" id="catalog/attrNode#attrValue"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="CatalogException" location="260,2009" size="154,67" id="catalog/CatalogException">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="113,18">
+      <children xsi:type="editmodel:MethodEditModel" name="CatalogException" id="catalog/CatalogException#CatalogException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <diagramOptions xsi:type="options:ClassDiagramOptions" level="-1" showScope="InPackage" properties="wireOptions=3"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="15,15" gridOrigin="0,0" rulerUnit="pixel">
+    <leftRuler/>
+    <topRuler/>
+  </boardSetting>
+  <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" attributeSorter="Natural" methodSorter="Natural" showClassStereotype="true" showPackageStereotype="true" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showInterfaceStereotype="true" showAttributeProperty="true"/>
+</editmodel:ClassDiagramEditModel>

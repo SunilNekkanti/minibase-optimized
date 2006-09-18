@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="bufmgr-ai" size="691,1567" id="bufmgr" metadata="uml2-1.0" initialized="true" tag="1000" key="3230303630393033206D696E69626173652D6F7074696D697A65642F4665726E616E646F">
+  <children xsi:type="editmodel:ClassEditModel" name="PageNotFoundException" location="299,1121" size="199,67" id="bufmgr/PageNotFoundException">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="147,18">
+      <children xsi:type="editmodel:MethodEditModel" name="PageNotFoundException" id="bufmgr/PageNotFoundException#PageNotFoundException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="ReplacerException" location="50,1472" size="162,67" id="bufmgr/ReplacerException">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="120,18">
+      <children xsi:type="editmodel:MethodEditModel" name="ReplacerException" id="bufmgr/ReplacerException#ReplacerException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="victim_data" location="462,1472" size="115,75" id="bufmgr/victim_data">
+    <children xsi:type="editmodel:CompartmentEditModel" size="90,36">
+      <children xsi:type="editmodel:AttributeEditModel" name="frame_num" id="bufmgr/victim_data#frame_num"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="page_id" id="bufmgr/victim_data#page_id"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="PageNotReadException" location="299,1238" size="192,67" id="bufmgr/PageNotReadException">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="142,18">
+      <children xsi:type="editmodel:MethodEditModel" name="PageNotReadException" id="bufmgr/PageNotReadException#PageNotReadException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="BufMgrException" location="262,1472" size="150,67" id="bufmgr/BufMgrException">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="112,18">
+      <children xsi:type="editmodel:MethodEditModel" name="BufMgrException" id="bufmgr/BufMgrException#BufMgrException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="InvalidBufferException" location="50,1355" size="186,67" id="bufmgr/InvalidBufferException">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="138,18">
+      <children xsi:type="editmodel:MethodEditModel" name="InvalidBufferException" id="bufmgr/InvalidBufferException#InvalidBufferException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="HashEntryNotFoundException" location="335,1004" size="229,67" id="bufmgr/HashEntryNotFoundException">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="173,18">
+      <children xsi:type="editmodel:MethodEditModel" name="HashEntryNotFoundException" id="bufmgr/HashEntryNotFoundException#HashEntryNotFoundException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="HashOperationException" location="50,1121" size="199,67" id="bufmgr/HashOperationException">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="149,18">
+      <children xsi:type="editmodel:MethodEditModel" name="HashOperationException" id="bufmgr/HashOperationException#HashOperationException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="InvalidFrameNumberException" location="405,815" size="239,67" id="bufmgr/InvalidFrameNumberException">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="174,18">
+      <children xsi:type="editmodel:MethodEditModel" name="InvalidFrameNumberException" id="bufmgr/InvalidFrameNumberException#InvalidFrameNumberException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="PagePinnedException" location="286,1355" size="183,67" id="bufmgr/PagePinnedException">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="133,18">
+      <children xsi:type="editmodel:MethodEditModel" name="PagePinnedException" id="bufmgr/PagePinnedException#PagePinnedException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="PageUnpinnedException" location="50,1238" size="199,67" id="bufmgr/PageUnpinnedException">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="146,18">
+      <children xsi:type="editmodel:MethodEditModel" name="PageUnpinnedException" id="bufmgr/PageUnpinnedException#PageUnpinnedException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="BufferPoolExceededException" location="50,1004" size="235,67" id="bufmgr/BufferPoolExceededException">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="176,18">
+      <children xsi:type="editmodel:MethodEditModel" name="BufferPoolExceededException" id="bufmgr/BufferPoolExceededException#BufferPoolExceededException(Ljava.lang.Exception;Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.20/@sourceConnections.0" name="STATE" location="587,50" size="84,57" id="bufmgr/STATE">
+    <children xsi:type="editmodel:CompartmentEditModel" size="60,18">
+      <children xsi:type="editmodel:AttributeEditModel" name="state" id="bufmgr/STATE#state"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="BufMgr" location="50,536" size="171,229" id="bufmgr/BufMgr">
+    <children xsi:type="editmodel:CompartmentEditModel" size="93,18">
+      <children xsi:type="editmodel:AttributeEditModel" name="numBuffers" id="bufmgr/BufMgr#numBuffers"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="148,162">
+      <children xsi:type="editmodel:MethodEditModel" name="BufMgr" id="bufmgr/BufMgr#BufMgr(ILjava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="flushAllPages" id="bufmgr/BufMgr#flushAllPages()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="flushPage" id="bufmgr/BufMgr#flushPage(Lglobal.PageId;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="frameTable" id="bufmgr/BufMgr#frameTable()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="freePage" id="bufmgr/BufMgr#freePage(Lglobal.PageId;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getNumUnpinnedBuffers" id="bufmgr/BufMgr#getNumUnpinnedBuffers()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="newPage" id="bufmgr/BufMgr#newPage(Ldiskmgr.Page;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="pinPage" id="bufmgr/BufMgr#pinPage(Lglobal.PageId;Ldiskmgr.Page;Z)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="unpinPage" id="bufmgr/BufMgr#unpinPage(Lglobal.PageId;Z)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="bufmgr/FrameDesc@frmeTable+bufmgr/BufMgr@" source="//@children.13" target="//@children.14" targetEnd="//@children.13/@sourceConnections.0/@children.2" label="//@children.13/@sourceConnections.0/@children.0" sourceEnd="//@children.13/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="171,87" id="bufmgr/FrameDesc@frmeTable+bufmgr/BufMgr@|bufmgr/BufMgr#" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="frmeTable" location="0,87" id="bufmgr/FrameDesc@frmeTable+bufmgr/BufMgr@|bufmgr/FrameDesc#frmeTable" multiplicityLabel="//@children.13/@sourceConnections.0/@children.2/@children.1" roleLabel="//@children.13/@sourceConnections.0/@children.2/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - frmeTable" location="221,602" size="58,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="275,630" size="4,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.13/@sourceConnections.0" name="FrameDesc" location="286,536" size="117,175" id="bufmgr/FrameDesc">
+    <children xsi:type="editmodel:CompartmentEditModel" size="94,54">
+      <children xsi:type="editmodel:AttributeEditModel" name="dirty" id="bufmgr/FrameDesc#dirty"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="pageNo" id="bufmgr/FrameDesc#pageNo"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="pin_cnt" id="bufmgr/FrameDesc#pin_cnt"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="85,72">
+      <children xsi:type="editmodel:MethodEditModel" name="FrameDesc" id="bufmgr/FrameDesc#FrameDesc()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="pin" id="bufmgr/FrameDesc#pin()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="pin_count" id="bufmgr/FrameDesc#pin_count()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="unpin" id="bufmgr/FrameDesc#unpin()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.16/@sourceConnections.0" name="BufHashTbl" location="241,815" size="114,139" id="bufmgr/BufHashTbl">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="86,90">
+      <children xsi:type="editmodel:MethodEditModel" name="BufHashTbl" id="bufmgr/BufHashTbl#BufHashTbl()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="display" id="bufmgr/BufHashTbl#display()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="insert" id="bufmgr/BufHashTbl#insert(Lglobal.PageId;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="lookup" id="bufmgr/BufHashTbl#lookup(Lglobal.PageId;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="remove" id="bufmgr/BufHashTbl#remove(Lglobal.PageId;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="BufHTEntry" location="50,815" size="124,93" id="bufmgr/BufHTEntry">
+    <children xsi:type="editmodel:CompartmentEditModel" size="101,54">
+      <children xsi:type="editmodel:AttributeEditModel" name="frameNo" id="bufmgr/BufHTEntry#frameNo"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="next" id="bufmgr/BufHTEntry#next"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="pageNo" id="bufmgr/BufHTEntry#pageNo"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="bufmgr/BufHTEntry@ht+bufmgr/BufHashTbl@" source="//@children.16" target="//@children.15" targetEnd="//@children.16/@sourceConnections.0/@children.2" label="//@children.16/@sourceConnections.0/@children.0" sourceEnd="//@children.16/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="ht" location="124,46" id="bufmgr/BufHTEntry@ht+bufmgr/BufHashTbl@|bufmgr/BufHTEntry#ht" attachSource="true" multiplicityLabel="//@children.16/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.16/@sourceConnections.0/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - ht" location="181,840" size="19,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="181,868" size="4,14" fontInfo="Arial-8-0" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,46" id="bufmgr/BufHTEntry@ht+bufmgr/BufHashTbl@|bufmgr/BufHashTbl#"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Clock" location="221,329" size="105,121" id="bufmgr/Clock">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="82,72">
+      <children xsi:type="editmodel:MethodEditModel" name="Clock" id="bufmgr/Clock#Clock(Lbufmgr.BufMgr;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="info" id="bufmgr/Clock#info()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="name" id="bufmgr/Clock#name()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="pick_victim" id="bufmgr/Clock#pick_victim()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="bufmgr/Replacer&lt;-bufmgr/Clock" source="//@children.17" target="//@children.19/@sourceConnections.0" targetEnd="//@children.17/@sourceConnections.0/@children.1" sourceEnd="//@children.17/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="52,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="MRU" location="356,329" size="141,157" id="bufmgr/MRU">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="118,108">
+      <children xsi:type="editmodel:MethodEditModel" name="MRU" id="bufmgr/MRU#MRU(Lbufmgr.BufMgr;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="info" id="bufmgr/MRU#info()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="name" id="bufmgr/MRU#name()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="pick_victim" id="bufmgr/MRU#pick_victim()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="pin" id="bufmgr/MRU#pin(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setBufferManager" id="bufmgr/MRU#setBufferManager(Lbufmgr.BufMgr;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="bufmgr/Replacer&lt;-bufmgr/MRU" source="//@children.18" target="//@children.19/@sourceConnections.0" targetEnd="//@children.18/@sourceConnections.0/@children.1" sourceEnd="//@children.18/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="70,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="LRU" location="50,329" size="141,157" id="bufmgr/LRU">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="118,108">
+      <children xsi:type="editmodel:MethodEditModel" name="LRU" id="bufmgr/LRU#LRU(Lbufmgr.BufMgr;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="info" id="bufmgr/LRU#info()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="name" id="bufmgr/LRU#name()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="pick_victim" id="bufmgr/LRU#pick_victim()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="pin" id="bufmgr/LRU#pin(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setBufferManager" id="bufmgr/LRU#setBufferManager(Lbufmgr.BufMgr;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" targetConnections="//@children.17/@sourceConnections.0 //@children.18/@sourceConnections.0" autoLocated="true" id="bufmgr/Replacer&lt;-bufmgr/LRU" source="//@children.19" target="//@children.20" targetEnd="//@children.19/@sourceConnections.0/@children.1" sourceEnd="//@children.19/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="70,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="85,229" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.19/@sourceConnections.0" name="Replacer" location="188,50" size="171,229" id="bufmgr/Replacer">
+    <children xsi:type="editmodel:CompartmentEditModel" size="93,54">
+      <children xsi:type="editmodel:AttributeEditModel" name="available" id="bufmgr/Replacer#available"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="pinned" id="bufmgr/Replacer#pinned"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="referenced" id="bufmgr/Replacer#referenced"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="148,126">
+      <children xsi:type="editmodel:MethodEditModel" name="free" id="bufmgr/Replacer#free(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getNumUnpinnedBuffers" id="bufmgr/Replacer#getNumUnpinnedBuffers()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="info" id="bufmgr/Replacer#info()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="name" id="bufmgr/Replacer#name()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="pick_victim" id="bufmgr/Replacer#pick_victim()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="pin" id="bufmgr/Replacer#pin(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="unpin" id="bufmgr/Replacer#unpin(I)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="bufmgr/STATE@state_bit+bufmgr/Replacer@" source="//@children.20" target="//@children.12" targetEnd="//@children.20/@sourceConnections.0/@children.2" label="//@children.20/@sourceConnections.0/@children.0" sourceEnd="//@children.20/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="171,28" id="bufmgr/STATE@state_bit+bufmgr/Replacer@|bufmgr/Replacer#" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="state_bit" location="0,28" id="bufmgr/STATE@state_bit+bufmgr/Replacer@|bufmgr/STATE#state_bit" multiplicityLabel="//@children.20/@sourceConnections.0/@children.2/@children.1" roleLabel="//@children.20/@sourceConnections.0/@children.2/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" # state_bit" location="527,57" size="53,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="576,85" size="4,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <diagramOptions xsi:type="options:ClassDiagramOptions" level="-1" showScope="InPackage" properties="wireOptions=3"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="15,15" gridOrigin="0,0" rulerUnit="pixel">
+    <leftRuler/>
+    <topRuler/>
+  </boardSetting>
+  <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" attributeSorter="Natural" methodSorter="Natural" showClassStereotype="true" showPackageStereotype="true" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showInterfaceStereotype="true" showAttributeProperty="true"/>
+</editmodel:ClassDiagramEditModel>
