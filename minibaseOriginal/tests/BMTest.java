@@ -17,8 +17,6 @@ import chainexception.*;
  */
 class BMDriver extends TestDriver implements GlobalConst {
   
-  private int TRUE  = 1;
-  private int FALSE = 0;
   private boolean OK = true;
   private boolean FAIL = false;
   
