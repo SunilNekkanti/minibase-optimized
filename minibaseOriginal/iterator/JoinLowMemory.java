@@ -1,9 +1,12 @@
 package iterator;
 
-import java.lang.*;
-import chainexception.*;
+import chainexception.ChainException;
 
 public class JoinLowMemory extends ChainException {
-  public JoinLowMemory(String s){super(null,s);}
-  public JoinLowMemory(Exception prev, String s){super(prev,s);}
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5243768417151092734L;
+	public JoinLowMemory(String s){super(null,s);}
+	public JoinLowMemory(Exception prev, String s){super(prev,s);}
 }

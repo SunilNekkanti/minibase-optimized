@@ -1,9 +1,12 @@
 package iterator;
 
-import chainexception.*;
-import java.lang.*;
+import chainexception.ChainException;
 
 public class NestedLoopException extends ChainException {
-  public NestedLoopException(String s){super(null,s);}
-  public NestedLoopException(Exception prev, String s){ super(prev,s);}
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4716913092560866974L;
+	public NestedLoopException(String s){super(null,s);}
+	public NestedLoopException(Exception prev, String s){ super(prev,s);}
 }
