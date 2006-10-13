@@ -1,12 +1,18 @@
 package iterator;
 
 
-import bufmgr.*;
-import diskmgr.*;
-import global.*;
-import heap.*;
-import java.io.*;
-import java.lang.*;
+import global.AttrType;
+import global.RID;
+import heap.FieldNumberOutOfBoundException;
+import heap.Heapfile;
+import heap.InvalidTupleSizeException;
+import heap.InvalidTypeException;
+import heap.Scan;
+import heap.Tuple;
+
+import java.io.IOException;
+
+import bufmgr.PageNotReadException;
 
 /**
  * open a heapfile and according to the condition expression to get output file, call get_next to get all tuples
@@ -24,7 +30,6 @@ public class FileScan extends  Iterator
 	private Scan scan;
 	private Tuple     tuple1;
 	private Tuple    Jtuple;
-	private int        t1_size;
 	private int nOutFlds;
 	/**
 	 * @uml.property  name="outputFilter"
@@ -72,8 +77,7 @@ public class FileScan extends  Iterator
 		
 		Jtuple =  new Tuple();
 		AttrType[] Jtypes = new AttrType[n_out_flds];
-		short[]    ts_size;
-		ts_size = TupleUtils.setup_op_tuple(Jtuple, Jtypes, in1, len_in1, s1_sizes, proj_list, n_out_flds);
+		TupleUtils.setup_op_tuple(Jtuple, Jtypes, in1, len_in1, s1_sizes, proj_list, n_out_flds);
 		
 		OutputFilter = outFilter;
 		perm_mat = proj_list;
@@ -85,7 +89,7 @@ public class FileScan extends  Iterator
 		}catch (Exception e){
 			throw new FileScanException(e, "setHdr() failed");
 		}
-		t1_size = tuple1.size();
+		tuple1.size();
 		
 		try {
 			f = new Heapfile(file_name);
@@ -134,15 +138,19 @@ public class FileScan extends  Iterator
 	FieldNumberOutOfBoundException,
 	WrongPermat
 	{     
-		RID rid = new RID();;
+		RID rid = new RID();
 		
 		while(true) {
-			if((tuple1 =  scan.getNext(rid)) == null) {
+			
+			tuple1 =  scan.getNext(rid);
+			
+			if(tuple1 == null) {
 				return null;
 			}
 			
 			tuple1.setHdr(in1_len, _in1, s_sizes);
-			if (PredEval.Eval(OutputFilter, tuple1, null, _in1, null) == true){
+			
+			if (PredEval.Eval(OutputFilter, tuple1, null, _in1, null)){
 				Projection.Project(tuple1, _in1,  Jtuple, perm_mat, nOutFlds); 
 				return  Jtuple;
 			}        

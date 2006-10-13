@@ -1,9 +1,12 @@
 package iterator;
 
-import chainexception.*;
-import java.lang.*;
+import chainexception.ChainException;
 
 public class IteratorBMException extends ChainException {
-  public IteratorBMException(String s){super(null,s);}
-  public IteratorBMException(Exception prev, String s){ super(prev,s);}
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5651359507056417872L;
+	public IteratorBMException(String s){super(null,s);}
+	public IteratorBMException(Exception prev, String s){ super(prev,s);}
 }
