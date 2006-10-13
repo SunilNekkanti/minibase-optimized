@@ -1,0 +1,1016 @@
+#LyX 1.4.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 245
+\begin_document
+\begin_header
+\textclass article
+\language spanish
+\inputencoding auto
+\fontscheme default
+\graphics default
+\paperfontsize default
+\spacing single
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+markboth{left head}{Base de datos - 2do Cuatrimestre 2006}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+pagestyle{myheadings}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Title
+
+\size giant
+Base de datos
+\size normal
+
+\newline
+ 
+\size small
+1er.
+ Cuatrimestre 2006
+\size normal
+
+\newline
+ 
+\size small
+
+\begin_inset VSpace 3mm
+\end_inset
+
+ 
+\size larger
+Proyecto: Minibase
+\size normal
+
+\newline
+ 
+\size larger
+Informe: Diseño Detallado
+\size normal
+
+\newline
+ 
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size small
+Número de Grupo: 
+\size normal
+
+\newline
+ 
+\size small
+Nombre del Grupo: ?
+\size normal
+
+\newline
+ 
+\size small
+
+\begin_inset VSpace 5mm
+\end_inset
+
+ 
+\size normal
+ 
+\series bold
+\size small
+Integrantes
+\series default
+\size normal
+
+\newline
+ 
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size normal
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="3">
+<features>
+<column alignment="left" valignment="top" leftline="true" rightline="true" width="0">
+<column alignment="left" valignment="top" rightline="true" width="0">
+<column alignment="left" valignment="top" rightline="true" width="0">
+<row topline="true">
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\size small
+Apellido y Nombre 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\size small
+L.U.
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\size small
+Mail 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\size small
+Leandro Groisman  
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\size small
+222/03 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\size small
+gleandro@gmail.com 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\size small
+Fernando Rodriguez
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\size small
+XXX/XX 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\size small
+ferrod20@gmail.com
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\size small
+Guillermo Amaral
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\size small
+522/98 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\size small
+Guillermo.AMARAL@total.com
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true" bottomline="true">
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\size small
+Facioni Francisco 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\size small
+004/04 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\size small
+fran6co@fibertel.com.ar 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
+\size small
+\begin_inset VSpace 5mm
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size normal
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="3">
+<features>
+<column alignment="left" valignment="top" leftline="true" rightline="true" width="0">
+<column alignment="left" valignment="top" rightline="true" width="0">
+<column alignment="left" valignment="top" rightline="true" width="0">
+<row topline="true">
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\size small
+Instancia 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\size small
+Corrector 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\size small
+Nota 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\size small
+Entrega 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="none" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true" bottomline="true">
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\size small
+Reentrega 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="none" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
+\size small
+\begin_inset VSpace 10mm
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+
+\size small
+Comentarios del corrector: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\newpage
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+setcounter{page}{1}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+pagenumbering{roman}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset LatexCommand \tableofcontents{}
+
+\end_inset
+
+
+\newpage
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+setcounter{page}{1}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+pagenumbering{arabic}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Introducción a Minibase
+\end_layout
+
+\begin_layout Standard
+
+\newpage
+
+\end_layout
+
+\begin_layout Section
+BufferManager-Heap
+\end_layout
+
+\begin_layout Subsection
+Descripción general
+\end_layout
+
+\begin_layout Subsection
+Clases principales y sus protocolos principales
+\end_layout
+
+\begin_layout Subsection
+Interacción con otros componentes
+\end_layout
+
+\begin_layout Subsection
+Ejemplo de uso
+\end_layout
+
+\begin_layout Standard
+Si se justifica
+\end_layout
+
+\begin_layout Subsubsection
+Diagramas de secuencia
+\end_layout
+
+\begin_layout Subsubsection
+Script de ejemplo
+\end_layout
+
+\begin_layout Subsection
+Evaluación del componente (opinión acerca de la calidad de código, diseño,
+ etc.)
+\end_layout
+
+\begin_layout Standard
+
+\newpage
+
+\end_layout
+
+\begin_layout Section
+DiskManager
+\end_layout
+
+\begin_layout Subsection
+Descripción general
+\end_layout
+
+\begin_layout Subsection
+Clases principales y sus protocolos principales
+\end_layout
+
+\begin_layout Subsection
+Interacción con otros componentes
+\end_layout
+
+\begin_layout Subsection
+Ejemplo de uso
+\end_layout
+
+\begin_layout Standard
+Si se justifica
+\end_layout
+
+\begin_layout Subsubsection
+Diagramas de secuencia
+\end_layout
+
+\begin_layout Subsubsection
+Script de ejemplo
+\end_layout
+
+\begin_layout Subsection
+Evaluación del componente (opinión acerca de la calidad de código, diseño,
+ etc.)
+\end_layout
+
+\begin_layout Standard
+
+\newpage
+
+\end_layout
+
+\begin_layout Section
+Catalog
+\end_layout
+
+\begin_layout Subsection
+Descripción general
+\end_layout
+
+\begin_layout Subsection
+DER
+\end_layout
+
+\begin_layout Subsection
+Clases principales y sus protocolos principales
+\end_layout
+
+\begin_layout Subsection
+Interacción con otros componentes
+\end_layout
+
+\begin_layout Subsection
+Ejemplo de uso
+\end_layout
+
+\begin_layout Standard
+Si se justifica
+\end_layout
+
+\begin_layout Subsubsection
+Diagramas de secuencia
+\end_layout
+
+\begin_layout Subsubsection
+Script de ejemplo
+\end_layout
+
+\begin_layout Subsection
+Evaluación del componente (opinión acerca de la calidad de código, diseño,
+ etc.)
+\end_layout
+
+\begin_layout Standard
+
+\newpage
+
+\end_layout
+
+\begin_layout Section
+Iterator
+\end_layout
+
+\begin_layout Standard
+TODO: Revisar los arboles binarios como estan construido y hacer un analisis
+ mas profundo
+\end_layout
+
+\begin_layout Standard
+TODO: Realizar una descripcion mas profunda de cada clase
+\end_layout
+
+\begin_layout Standard
+TODO: Mencionar las clases de excepciones que estan desperdigadas por ahi
+\end_layout
+
+\begin_layout Standard
+TODO: Revisar con mas detenimiento las clases IoBuf y OBuf, q parecen un
+ poco al pedo
+\end_layout
+
+\begin_layout Standard
+TODO: Analizar mas profundamente las clases de eval y projection, y en la
+ parte de uso explicar como se introduce una condicion
+\end_layout
+
+\begin_layout Subsection
+Descripción general
+\end_layout
+
+\begin_layout Standard
+La componente iterator es el punto de acceso a las tablas y a sus registros.
+ Como tal ofrece, tambien, las operaciones basicas sobre tablas, como join,
+ proyeccion y seleccion.
+ La iterfaz usada, como dice el nombre, es la de un iterador, el cual se
+ inicializa en base a otros iteradores o heapfiles y despues se va accediendo
+ elemento por elemento en un orden definido por el iterador.
+\end_layout
+
+\begin_layout Subsection
+Clases principales y sus protocolos principales
+\end_layout
+
+\begin_layout Standard
+Como dice el nombre de la componente, la interfaz que ofrece es la de un
+ iterador.
+ Esta interfaz es implementada usando una clase abstracta de la cual heredan
+ todas las clases que ofrecen acceso a un conjunto de registros.
+\end_layout
+
+\begin_layout Subsubsection
+FileScan
+\end_layout
+
+\begin_layout Standard
+FileScan permite iterar sobre los registros de un heapfile que cumplen una
+ condicion de seleccion.
+ Esta condicion puede ser nula, permitiendo iterar sobre todos los registros
+ del heapfile.
+ Tambien se puede especificar los atributos de las tuplas de salidas, permitiend
+o hacer una proyeccion.
+\end_layout
+
+\begin_layout Standard
+La evaluación de la condicion de seleccion y la proyeccion son proveidas
+ por las clases PredEval y Projection, respectivamente.
+\end_layout
+
+\begin_layout Subsubsection
+NestedLoopsJoins
+\end_layout
+
+\begin_layout Standard
+NestedLoopsJoins permite realizar un join entre un iterador y un heapfile.
+ El algoritmo utilizado es el más simple de los implementados, es un doble
+ loop donde, en el cuerpo del loop interno, se verfican la condicion de
+ join.
+ Tambien se puede realizar una proyeccion en la salida.
+\end_layout
+
+\begin_layout Subsubsection
+SortMerge
+\end_layout
+
+\begin_layout Standard
+SortMerge realiza un join utilizando el algoritmo de merge sort.
+ Como NestedLoopsJoins permite realizar una proyeccion en la salida.
+\end_layout
+
+\begin_layout Standard
+Para realizar el sort utiliza varias clases auxiliares, como Sort (que se
+ encarga de iterar de una manera ordenada un heapfile) y IoBuf (que permite
+ almacenar en memoria paginas).
+\end_layout
+
+\begin_layout Standard
+Esta implementacion no elimina los registros duplicados.
+\end_layout
+
+\begin_layout Subsubsection
+Sort
+\end_layout
+
+\begin_layout Standard
+Sort permite iterar de una manera ordenada la salida de otro iterador.
+ Utiliza un arbol binario ordenado para establecer el orden de la salida.
+\end_layout
+
+\begin_layout Subsection
+Interacción con otros componentes
+\end_layout
+
+\begin_layout Standard
+Esta clase es el punto de acceso principal a los registros.
+ En general con esta clase es con la cual se realiza toda interaccion con
+ la base de datos (salvo la modificacion de las tablas o de los registros).
+ 
+\end_layout
+
+\begin_layout Standard
+Respecto a la utilizacion de las otras componentes, Iterator se limita a
+ utilizar heapfile para la interaccion con las tablas.
+\end_layout
+
+\begin_layout Subsection
+Ejemplo de uso
+\end_layout
+
+\begin_layout Standard
+TODO: algun ejemplo de uso q muestre claramente los detalles
+\end_layout
+
+\begin_layout Subsubsection
+Diagramas de secuencia
+\end_layout
+
+\begin_layout Standard
+No se justifica
+\end_layout
+
+\begin_layout Subsubsection
+Script de ejemplo
+\end_layout
+
+\begin_layout Standard
+?
+\end_layout
+
+\begin_layout Subsection
+Evaluación del componente
+\end_layout
+
+\begin_layout Standard
+Iterator ofrece una interfaz poco practica para el uso frecuente.
+ Mucha funcionalidad esta repetida, como la proyeccion, que simplemente
+ se podria implementar como otro iterador.
+ Tambien resulta incomoda la construccion de un iterador por la cantidad
+ de estructuras de datos que hay que generar.
+ Igualmente esto se debe a pobre diseño de las clases y su modularización
+ a favor de un estilo que se encuentra, por lo general, en programas escritos
+ en C.
+\end_layout
+
+\begin_layout Standard
+
+\newpage
+
+\end_layout
+
+\begin_layout Section
+Index-BTree
+\end_layout
+
+\begin_layout Subsection
+Descripción general
+\end_layout
+
+\begin_layout Subsection
+Clases principales y sus protocolos principales
+\end_layout
+
+\begin_layout Subsection
+Interacción con otros componentes
+\end_layout
+
+\begin_layout Subsection
+Ejemplo de uso
+\end_layout
+
+\begin_layout Standard
+Si se justifica
+\end_layout
+
+\begin_layout Subsubsection
+Diagramas de secuencia
+\end_layout
+
+\begin_layout Subsubsection
+Script de ejemplo
+\end_layout
+
+\begin_layout Subsection
+Evaluación del componente (opinión acerca de la calidad de código, diseño,
+ etc.)
+\end_layout
+
+\begin_layout Standard
+
+\newpage
+
+\end_layout
+
+\begin_layout Section
+Optimizer (no existente!)
+\end_layout
+
+\begin_layout Subsection
+Descripción general
+\end_layout
+
+\begin_layout Subsection
+Clases principales y sus protocolos principales
+\end_layout
+
+\begin_layout Subsection
+Interacción con otros componentes
+\end_layout
+
+\begin_layout Subsection
+Ejemplo de uso
+\end_layout
+
+\begin_layout Standard
+Si se justifica
+\end_layout
+
+\begin_layout Subsubsection
+Diagramas de secuencia
+\end_layout
+
+\begin_layout Subsubsection
+Script de ejemplo
+\end_layout
+
+\begin_layout Subsection
+Evaluación del componente (opinión acerca de la calidad de código, diseño,
+ etc.)
+\end_layout
+
+\begin_layout Standard
+
+\newpage
+
+\end_layout
+
+\begin_layout Section
+Tests
+\end_layout
+
+\begin_layout Subsection
+Descripción
+\end_layout
+
+\begin_layout Subsection
+Resultados obtenidos
+\end_layout
+
+\begin_layout Subsection
+Ejemplos de uso
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Section
+Herramienta de carga de datos
+\end_layout
+
+\begin_layout Subsection
+Descripción
+\end_layout
+
+\begin_layout Subsection
+Ejemplos de uso
+\end_layout
+
+\begin_layout Section
+Conclusiones generales
+\end_layout
+
+\begin_layout Section
+Apendices
+\end_layout
+
+\begin_layout Section
+Código fuente
+\end_layout
+
+\begin_layout Section
+Referencias/Bibliografía
+\end_layout
+
+\end_body
+\end_document
