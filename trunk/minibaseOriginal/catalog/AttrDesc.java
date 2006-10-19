@@ -14,6 +14,10 @@ import global.*;
  */
 public class AttrDesc
 {
+	public AttrDesc(){
+		minVal = new attrData();
+		maxVal = new attrData();
+	}
 	String relName;                       // relation name
 	String attrName;                      // attribute name
 	int      attrOffset = 0;                  // attribute offset

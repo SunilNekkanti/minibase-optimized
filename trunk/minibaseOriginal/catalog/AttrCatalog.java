@@ -200,7 +200,7 @@ public class AttrCatalog extends Heapfile
 	    throw new AttrCatalogException(e4, "read_tuple failed");
 	  }
 	  
-	  if(attrRec.relName.equalsIgnoreCase(relation)==true) 
+	  if(attrRec.relName.equalsIgnoreCase(relation)) 
 	    {
 	      Attrs[attrRec.attrPos - 1] = attrRec;  
 	      count++;
