@@ -6,11 +6,14 @@
 
 package catalog;
 
-import bufmgr.*;
-import diskmgr.*;
-import global.*;
-import heap.*;
-import java.io.*;
+import global.AttrType;
+import global.Catalogglobal;
+import global.ExtendedSystemDefs;
+import global.GlobalConst;
+import global.IndexType;
+import heap.Scan;
+
+import java.io.IOException;
 
 /**
  * @author  Fernando
@@ -41,7 +44,7 @@ public class Catalog
   
   
   // get catalog entry for a relation
-  void getRelationInfo(String relation, RelDesc record)
+  public void getRelationInfo(String relation, RelDesc record)
     throws Catalogmissparam, 
 	   Catalogrelexists, 
 	   Catalogdupattrs, 
@@ -62,7 +65,7 @@ public class Catalog
     };
   
   // create a new relation
-  void createRel(String relation, int attrCnt, attrInfo [] attrList)
+    public  void createRel(String relation, attrInfo [] attrList)
     throws Catalogmissparam, 
 	   Catalogrelexists, 
 	   Catalogdupattrs, 
@@ -79,17 +82,17 @@ public class Catalog
 	   Catalogbadtype,
 	   RelCatalogException
     {
-      relCat.createRel( relation, attrCnt, attrList);
+      relCat.createRel( relation, attrList);
     };
   
   // destroy a relation
-  void destroyRel(String relation)
+    public  void destroyRel(String relation)
     {
       relCat.destroyRel( relation);
     };
   
   // add a index to a relation
-  void addIndex(String relation, String attrname,
+    public  void addIndex(String relation, String attrname,
 		IndexType accessType, int buckets)
     throws Catalogmissparam, 
 	   Catalogrelexists, 
@@ -111,14 +114,14 @@ public class Catalog
     };
   
   // drop an index from a relation
-  void dropIndex(String relation, String attrname,
+    public  void dropIndex(String relation, String attrname,
 		 IndexType accessType)
     {
       relCat.dropIndex(relation, attrname, accessType);
     };
   
   // get a catalog entry for an attribute
-  void getAttributeInfo(String relation, String attrName,
+    public  void getAttributeInfo(String relation, String attrName,
 			AttrDesc record)
     throws Catalogmissparam, 
 	   Catalogrelexists, 
@@ -141,7 +144,7 @@ public class Catalog
   
   // get catalog entries for all attributes of a relation
   // return attrCnt.
-  int getRelAttributes(String relation, int attrCnt,
+    public  int getRelAttributes(String relation, int attrCnt,
 		       AttrDesc [] attrs)
     throws Catalogmissparam, 
 	   Catalogrelexists, 
@@ -166,7 +169,7 @@ public class Catalog
     };
   
   // get catalog entries for all indexes for a relation
-  int getRelIndexes(String relation, int indexCnt,
+    public  int getRelIndexes(String relation, int indexCnt,
 		    IndexDesc [] indexes)
     throws Catalogmissparam, 
 	   Catalogrelexists, 
@@ -192,7 +195,7 @@ public class Catalog
     };
   
   // get catalog entries for all indexes for an attribute 
-  int getAttrIndexes(String relation, String attrName,
+    public  int getAttrIndexes(String relation, String attrName,
 		     int indexCnt, IndexDesc [] indexes)
     throws Catalogmissparam, 
 	   Catalogrelexists, 
@@ -217,7 +220,7 @@ public class Catalog
     };
   
   // get catalog entry on an index
-  void getIndexInfo(String relation, String attrName,
+    public void getIndexInfo(String relation, String attrName,
 		    IndexType accessType, IndexDesc record)
     throws Catalogmissparam, 
 	   Catalogrelexists, 
@@ -239,18 +242,18 @@ public class Catalog
     };
   
   // dump catalogs to a disk file for optimizer
-  void dumpCatalog(String filename)
+    public void dumpCatalog(String filename)
     {
       relCat.dumpCatalog(filename);
     };
   
   // Runs stats on the database...
-  void runStats(String filename)
+    public void runStats(String filename)
     {
       relCat.runStats(filename); 
     };
   
-  void listRelations()
+    public void listRelations()
     throws CatalogException
     {
       try {
@@ -261,7 +264,7 @@ public class Catalog
       }
     };
   
-  void initialize()
+    void initialize()
     throws Catalogmissparam, 
 	   Catalogrelexists, 
 	   Catalogdupattrs, 
@@ -308,7 +311,7 @@ public class Catalog
       attrs[4].attrName = new String("numPages" );
       attrs[4].attrLen = sizeOfInt;
       
-      ExtendedSystemDefs.MINIBASE_CATALOGPTR.createRel(RELCATNAME, 5, attrs);
+      ExtendedSystemDefs.MINIBASE_CATALOGPTR.createRel(RELCATNAME, attrs);
       
       
       // ***************  ATTRCATALOG ****************
@@ -361,7 +364,7 @@ public class Catalog
       attrs[8].attrName = new String("maxVal" );
       attrs[8].attrLen = max;
       
-      ExtendedSystemDefs.MINIBASE_CATALOGPTR.createRel(ATTRCATNAME, 9, attrs);
+      ExtendedSystemDefs.MINIBASE_CATALOGPTR.createRel(ATTRCATNAME,attrs);
       
       
       // ************* INDEXCATALOG ******************
@@ -402,7 +405,7 @@ public class Catalog
       attrs[6].attrName = new String("indexPages" );
       attrs[6].attrLen = sizeOfInt;
       
-      ExtendedSystemDefs.MINIBASE_CATALOGPTR.createRel(INDEXCATNAME, 7, attrs);
+      ExtendedSystemDefs.MINIBASE_CATALOGPTR.createRel(INDEXCATNAME, attrs);
     };
   
   /**
