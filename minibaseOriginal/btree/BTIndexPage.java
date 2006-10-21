@@ -9,6 +9,13 @@
 package btree;
 import java.io.*;
 import java.lang.*;
+
+import btree.exceptions.ConstructPageException;
+import btree.exceptions.IndexFullDeleteException;
+import btree.exceptions.IndexInsertRecException;
+import btree.exceptions.IndexSearchException;
+import btree.exceptions.IteratorException;
+import btree.exceptions.RedistributeException;
 import global.*;
 import diskmgr.*;
 import heap.*;

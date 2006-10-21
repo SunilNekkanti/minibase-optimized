@@ -9,6 +9,9 @@ package heap;
 import bufmgr.*;
 import diskmgr.*;
 import global.*;
+import heap.exceptions.HFBufMgrException;
+import heap.exceptions.InvalidTupleSizeException;
+
 import java.io.*;
 
 

@@ -3,6 +3,15 @@ package heap;
 import bufmgr.*;
 import diskmgr.*;
 import global.*;
+import heap.exceptions.FileAlreadyDeletedException;
+import heap.exceptions.HFBufMgrException;
+import heap.exceptions.HFDiskMgrException;
+import heap.exceptions.HFException;
+import heap.exceptions.InvalidSlotNumberException;
+import heap.exceptions.InvalidTupleSizeException;
+import heap.exceptions.InvalidUpdateException;
+import heap.exceptions.SpaceNotAvailableException;
+
 import java.io.*;
 
 /**  This heapfile implementation is directory-based. We maintain a

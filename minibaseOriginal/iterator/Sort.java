@@ -4,9 +4,14 @@ import global.AttrType;
 import global.GlobalConst;
 import global.PageId;
 import global.TupleOrder;
-import heap.FieldNumberOutOfBoundException;
 import heap.Heapfile;
 import heap.Tuple;
+import heap.exceptions.FieldNumberOutOfBoundException;
+import iterator.exceptions.JoinsException;
+import iterator.exceptions.LowMemException;
+import iterator.exceptions.SortException;
+import iterator.exceptions.TupleUtilsException;
+import iterator.exceptions.UnknowAttrType;
 
 import java.io.IOException;
 

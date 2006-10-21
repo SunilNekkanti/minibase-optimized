@@ -3,6 +3,7 @@ package iterator;
 import global.GlobalConst;
 import heap.Heapfile;
 import heap.Tuple;
+import iterator.exceptions.NoOutputBuffer;
 
 import java.io.IOException;
 

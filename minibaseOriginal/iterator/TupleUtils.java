@@ -2,8 +2,11 @@ package iterator;
 
 
 import global.AttrType;
-import heap.FieldNumberOutOfBoundException;
 import heap.Tuple;
+import heap.exceptions.FieldNumberOutOfBoundException;
+import iterator.exceptions.InvalidRelation;
+import iterator.exceptions.TupleUtilsException;
+import iterator.exceptions.UnknowAttrType;
 
 import java.io.IOException;
 

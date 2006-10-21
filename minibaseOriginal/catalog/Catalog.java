@@ -15,6 +15,23 @@ import heap.Scan;
 
 import java.io.IOException;
 
+import catalog.exceptions.AttrCatalogException;
+import catalog.exceptions.CatalogException;
+import catalog.exceptions.Catalogattrexists;
+import catalog.exceptions.Catalogattrnotfound;
+import catalog.exceptions.Catalogbadattrcount;
+import catalog.exceptions.Catalogbadtype;
+import catalog.exceptions.Catalogdupattrs;
+import catalog.exceptions.Cataloghferror;
+import catalog.exceptions.Catalogindexnotfound;
+import catalog.exceptions.Catalogioerror;
+import catalog.exceptions.Catalogmissparam;
+import catalog.exceptions.Catalognomem;
+import catalog.exceptions.Catalogrelexists;
+import catalog.exceptions.Catalogrelnotfound;
+import catalog.exceptions.IndexCatalogException;
+import catalog.exceptions.RelCatalogException;
+
 /**
  * @author  Fernando
  */

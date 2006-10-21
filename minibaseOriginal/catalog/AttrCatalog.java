@@ -6,12 +6,31 @@
 
 package catalog;
 
-import bufmgr.*;
-import diskmgr.*;
-import global.*;
-import heap.*;
+import global.AttrType;
+import global.Catalogglobal;
+import global.ExtendedSystemDefs;
+import global.GlobalConst;
+import global.IndexType;
+import global.RID;
+import heap.Heapfile;
+import heap.Scan;
+import heap.Tuple;
+import heap.exceptions.HFBufMgrException;
+import heap.exceptions.HFDiskMgrException;
+import heap.exceptions.HFException;
+import heap.exceptions.InvalidTupleSizeException;
+import heap.exceptions.InvalidTypeException;
 
-import java.io.*;
+import java.io.IOException;
+
+import catalog.exceptions.AttrCatalogException;
+import catalog.exceptions.Catalogattrnotfound;
+import catalog.exceptions.Cataloghferror;
+import catalog.exceptions.Catalogindexnotfound;
+import catalog.exceptions.Catalogioerror;
+import catalog.exceptions.Catalogmissparam;
+import catalog.exceptions.Catalognomem;
+import catalog.exceptions.Catalogrelnotfound;
 
 
 /**

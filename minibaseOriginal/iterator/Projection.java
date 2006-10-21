@@ -1,8 +1,10 @@
 package iterator;
 
 import global.AttrType;
-import heap.FieldNumberOutOfBoundException;
 import heap.Tuple;
+import heap.exceptions.FieldNumberOutOfBoundException;
+import iterator.exceptions.UnknowAttrType;
+import iterator.exceptions.WrongPermat;
 
 import java.io.IOException;
 /**

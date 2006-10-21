@@ -10,6 +10,7 @@ package btree;
 
 import java.io.*;
 import diskmgr.*;
+import btree.exceptions.ConstructPageException;
 import bufmgr.*;
 import global.*;
 import heap.*;

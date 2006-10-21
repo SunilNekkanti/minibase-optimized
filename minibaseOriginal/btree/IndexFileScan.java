@@ -1,5 +1,8 @@
 package btree;
 
+import btree.exceptions.ScanDeleteException;
+import btree.exceptions.ScanIteratorException;
+
 
 /**
  * Base class for a index file scan

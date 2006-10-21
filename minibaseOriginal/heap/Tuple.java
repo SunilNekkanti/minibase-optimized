@@ -5,6 +5,9 @@ package heap;
 import global.AttrType;
 import global.Convert;
 import global.GlobalConst;
+import heap.exceptions.FieldNumberOutOfBoundException;
+import heap.exceptions.InvalidTupleSizeException;
+import heap.exceptions.InvalidTypeException;
 
 import java.io.IOException;
 

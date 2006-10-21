@@ -3,6 +3,9 @@ package iterator;
 import global.AttrType;
 import global.TupleOrder;
 
+import iterator.exceptions.TupleUtilsException;
+import iterator.exceptions.UnknowAttrType;
+
 import java.io.IOException;
 
 /**

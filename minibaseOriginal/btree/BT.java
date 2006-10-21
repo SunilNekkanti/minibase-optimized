@@ -10,7 +10,16 @@ import java.io.*;
 import java.lang.*;
 import global.*;
 import diskmgr.*;
+import btree.exceptions.ConstructPageException;
+import btree.exceptions.ConvertException;
+import btree.exceptions.IteratorException;
+import btree.exceptions.KeyNotMatchException;
+import btree.exceptions.NodeNotMatchException;
 import bufmgr.*;
+import bufmgr.exceptions.HashEntryNotFoundException;
+import bufmgr.exceptions.InvalidFrameNumberException;
+import bufmgr.exceptions.PageUnpinnedException;
+import bufmgr.exceptions.ReplacerException;
 import heap.*;
 
 /**  

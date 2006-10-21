@@ -9,6 +9,9 @@ import global.*;
 import heap.*;
 import java.io.*;
 
+import btree.exceptions.ScanDeleteException;
+import btree.exceptions.ScanIteratorException;
+
 /**
  * BTFileScan implements a search/iterate interface to B+ tree  index files (class BTreeFile).  It derives from abstract base class IndexFileScan.
  */
@@ -134,14 +137,14 @@ public class BTFileScan  extends IndexFileScan
   * unpin some pages if they are not unpinned already.
   * and do some clearing work.
   *@exception IOException  error from the lower layer
-  *@exception bufmgr.InvalidFrameNumberException  error from the lower layer
-  *@exception bufmgr.ReplacerException  error from the lower layer
-  *@exception bufmgr.PageUnpinnedException  error from the lower layer
-  *@exception bufmgr.HashEntryNotFoundException   error from the lower layer
+  *@exception bufmgr.exceptions.InvalidFrameNumberException  error from the lower layer
+  *@exception bufmgr.exceptions.ReplacerException  error from the lower layer
+  *@exception bufmgr.exceptions.PageUnpinnedException  error from the lower layer
+  *@exception bufmgr.exceptions.HashEntryNotFoundException   error from the lower layer
   */
   public  void DestroyBTreeFileScan()
-    throws  IOException, bufmgr.InvalidFrameNumberException,bufmgr.ReplacerException,
-            bufmgr.PageUnpinnedException,bufmgr.HashEntryNotFoundException   
+    throws  IOException, bufmgr.exceptions.InvalidFrameNumberException,bufmgr.exceptions.ReplacerException,
+            bufmgr.exceptions.PageUnpinnedException,bufmgr.exceptions.HashEntryNotFoundException   
   { 
      if (leafPage != null) {
          SystemDefs.JavabaseBM.unpinPage(leafPage.getCurPage(), true);

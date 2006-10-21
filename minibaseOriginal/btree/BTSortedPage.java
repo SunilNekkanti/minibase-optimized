@@ -9,9 +9,14 @@ package btree;
 
 import java.io.*;
 import java.lang.*;
+
+import btree.exceptions.ConstructPageException;
+import btree.exceptions.DeleteRecException;
+import btree.exceptions.InsertRecException;
 import global.*;
 import diskmgr.*;
 import heap.*;
+import heap.exceptions.InvalidSlotNumberException;
 
 
 /**

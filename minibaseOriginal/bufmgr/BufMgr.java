@@ -3,9 +3,24 @@
 package bufmgr;
 
 import diskmgr.*;
+import diskmgr.exceptions.DiskMgrException;
+import diskmgr.exceptions.FileIOException;
+import diskmgr.exceptions.InvalidPageNumberException;
 import global.*;
 import java.io.*;
 import java.util.*;
+
+import bufmgr.exceptions.BufMgrException;
+import bufmgr.exceptions.BufferPoolExceededException;
+import bufmgr.exceptions.HashEntryNotFoundException;
+import bufmgr.exceptions.HashOperationException;
+import bufmgr.exceptions.InvalidBufferException;
+import bufmgr.exceptions.InvalidFrameNumberException;
+import bufmgr.exceptions.PageNotFoundException;
+import bufmgr.exceptions.PageNotReadException;
+import bufmgr.exceptions.PagePinnedException;
+import bufmgr.exceptions.PageUnpinnedException;
+import bufmgr.exceptions.ReplacerException;
 
 /**
  * A frame description class. It describes each page in the buffer pool, the
@@ -555,7 +570,7 @@ public class BufMgr implements GlobalConst
 		PageId oldpageNo = new PageId(-1);
 		int needwrite = 0;
 
-		frameNo = hashTable.lookup(pin_pgid);//Busca la página en el buffer pool	( tabla de hash )
+		frameNo = hashTable.lookup(pin_pgid);//Busca la pï¿½gina en el buffer pool	( tabla de hash )
 
 		if (frameNo < 0)
 		{ // Not in the buffer pool
@@ -585,10 +600,10 @@ public class BufMgr implements GlobalConst
 			frmeTable[frameNo].pageNo.pid = INVALID_PAGE; // frame is empty
 			frmeTable[frameNo].dirty = false; // not dirty
 
-			bst2 = hashTable.insert(pin_pgid, frameNo);//Inserta la nueva asociación en la tabla de hash
+			bst2 = hashTable.insert(pin_pgid, frameNo);//Inserta la nueva asociaciï¿½n en la tabla de hash
 
 			(frmeTable[frameNo].pageNo).pid = pin_pgid.pid;
-			frmeTable[frameNo].dirty = false;				//Inserta la asociación en la frmeTable
+			frmeTable[frameNo].dirty = false;				//Inserta la asociaciï¿½n en la frmeTable
 
 			if (bst2 != true)
 			{
@@ -599,10 +614,10 @@ public class BufMgr implements GlobalConst
 			Page apage = new Page(bufPool[frameNo]);
 			if (needwrite == 1)
 			{
-				write_page(oldpageNo, apage);//Si necesita escribir la página vieja que fue removida, lo hace
+				write_page(oldpageNo, apage);//Si necesita escribir la pï¿½gina vieja que fue removida, lo hace
 			} // end of needwrite..
 
-			//Si la página no está vacía la lee de disco y la mete en el bufPool
+			//Si la pï¿½gina no estï¿½ vacï¿½a la lee de disco y la mete en el bufPool
 			if (emptyPage == false)
 			{
 				try
@@ -640,7 +655,7 @@ public class BufMgr implements GlobalConst
 
 		} 
 		else
-		{ // la página está en el buffer pool ( frameNo > 0 )
+		{ // la pï¿½gina estï¿½ en el buffer pool ( frameNo > 0 )
 
 			page.setpage(bufPool[frameNo]);
 			replacer.pin(frameNo);
