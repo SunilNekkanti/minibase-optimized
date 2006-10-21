@@ -11,6 +11,7 @@ import global.Catalogglobal;
 import global.ExtendedSystemDefs;
 import global.IndexType;
 import global.RID;
+import global.SystemDefs;
 import heap.Heapfile;
 import heap.Tuple;
 
@@ -147,12 +148,8 @@ public class Utility implements Catalogglobal{
 //		CREATE TUPLE  	
 		Tuple tuple = new Tuple(Tuple.max_size);
 		
+		ExtendedSystemDefs.MINIBASE_ATTRCAT.getTupleStructure(relation,tuple);
 		
-		AttrType  [] typeArray = null;
-		short []    sizeArray = null;
-		int count = ExtendedSystemDefs.MINIBASE_ATTRCAT.getTupleStructure(relation,0, typeArray,sizeArray);
-		
-		tuple.setHdr((short)count, typeArray, sizeArray);
 		
 //		CONVERT DATA STRINGS TO VARIABLE VALUES & INSERT INTO TUPLE
 		
@@ -271,6 +268,7 @@ public class Utility implements Catalogglobal{
 		DataInputStream in = new DataInputStream(fstream);
 		
 		List<attrNode> record = new ArrayList<attrNode>();
+		List<attrInfo> attributes = new ArrayList<attrInfo>();
 		
 		// Leemos la primera fila con la informacion sobre las columnas
 		if(in.available() != 0){
@@ -279,10 +277,35 @@ public class Utility implements Catalogglobal{
 			String[]  columnsFile = line.split("\t");
 			
 			for(String column: columnsFile){
+				String[] attr = column.split(":");
 				attrNode attribute = new attrNode();
-				attribute.attrName = column;
+				attribute.attrName = attr[0];
 				record.add(attribute);
+				attrInfo info = null;
+				
+				if(attr[1].equalsIgnoreCase("Integer")){
+					info = new attrInfo(attribute.attrName,new AttrType(AttrType.attrInteger),0);
+				}
+				else if(attr[1].equalsIgnoreCase("Real")){
+					info = new attrInfo(attribute.attrName,new AttrType(AttrType.attrReal),0);
+				}
+				else if(attr[1].toLowerCase().startsWith("string")){
+					info = new attrInfo(attribute.attrName,new AttrType(AttrType.attrString),Integer.parseInt(attr[1].substring(6)));
+				}
+				attributes.add(info);
 			}
+		}
+		
+		attrInfo[] listInfo = new attrInfo[attributes.size()];
+		attributes.toArray(listInfo);
+		try {
+			SystemDefs.JavabaseCatalog.createRel(relation,listInfo);
+			
+		} catch (Catalogrelexists e1) {
+			
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 		
 		while (in.available() !=0) {
@@ -295,7 +318,7 @@ public class Utility implements Catalogglobal{
 			}
 			
 			for(int i=0;i<values.length;i++){
-				record.get(i).attrValue = values[i];
+				record.get(i).attrValue = values[i].trim();
 			}
 			
 			attrNode[] list = new attrNode[record.size()];

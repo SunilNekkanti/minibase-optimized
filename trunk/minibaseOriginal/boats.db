@@ -1,0 +1,6 @@
+bid:Integer	bname:String30	color:String30
+1	Onion	white
+2	Buckey	red
+3	Enterprise	blue
+4	Voyager	green
+5	Wisconsin	red

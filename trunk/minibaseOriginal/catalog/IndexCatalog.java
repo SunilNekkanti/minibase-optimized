@@ -554,23 +554,16 @@ public class IndexCatalog extends Heapfile
       
       // PREPARE TUPLE
       
-      try {
-	ExtendedSystemDefs.MINIBASE_ATTRCAT.getTupleStructure(relation, attrCnt, typeArray, sizeArray);
-      }
-      catch (Exception e) {
-	throw new IndexCatalogException(e,"getTupleStructure");
-      }
-      
       tuple = new Tuple(Tuple.max_size);
       if (tuple == null)
 	throw new Catalognomem(null, "Catalog, No Enough Memory!");
       
       try {
-	tuple.setHdr((short)attrCnt, typeArray, sizeArray);
-      }
-      catch (Exception e) {
-	throw new IndexCatalogException(e, "setHdr() failed");
-      }
+    		ExtendedSystemDefs.MINIBASE_ATTRCAT.getTupleStructure(relation, tuple);
+    	      }
+    	      catch (Exception e) {
+    		throw new IndexCatalogException(e,"getTupleStructure");
+    	      }
 
       recSize = tuple.size();
       

@@ -18,6 +18,19 @@ public class AttrDesc
 		minVal = new attrData();
 		maxVal = new attrData();
 	}
+	
+	public String getName(){
+		return attrName;
+	}
+	
+	public int getLength(){
+		return attrLen;
+	}
+	
+	public AttrType getType(){
+		return attrType;
+	}
+	
 	String relName;                       // relation name
 	String attrName;                      // attribute name
 	int      attrOffset = 0;                  // attribute offset
