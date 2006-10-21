@@ -46,7 +46,7 @@ public boolean runTests () {
     
     newdbpath = dbpath;
     newlogpath = logpath;
-    
+    /*
     remove_logcmd = remove_cmd + logpath;
     remove_dbcmd = remove_cmd + dbpath;
     
@@ -59,7 +59,13 @@ public boolean runTests () {
     catch (IOException e) {
       System.err.println ("IO error: "+e);
     }
-    
+    */
+    File file = new File(logpath);
+	file.delete();
+	file = new File(dbpath);
+	file.delete();
+	
+    /*
     remove_logcmd = remove_cmd + newlogpath;
     remove_dbcmd = remove_cmd + newdbpath;
     
@@ -70,10 +76,20 @@ public boolean runTests () {
     catch (IOException e) {
       System.err.println ("IO error: "+e);
     }
+    */
+    file = new File(newlogpath);
+	file.delete();
+	file = new File(newdbpath);
+	file.delete();
     
     //Run the tests. Return type different from C++
     boolean _pass = runAllTests();
     
+    file = new File(newlogpath);
+	file.delete();
+	file = new File(newdbpath);
+	file.delete();
+	/*
     //Clean up again
     try {
       Runtime.getRuntime().exec(remove_logcmd);
@@ -82,7 +98,7 @@ public boolean runTests () {
     catch (IOException e) {
       System.err.println ("IO error: "+e);
     }
-    
+    */
     System.out.print ("\n" + "..." + testName() + " tests ");
     System.out.print (_pass==OK ? "completely successfully" : "failed");
     System.out.print (".\n\n");

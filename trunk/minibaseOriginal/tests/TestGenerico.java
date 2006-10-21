@@ -67,7 +67,8 @@ public class TestGenerico  implements GlobalConst {
 		file.delete();
 		
 		//Con catalogo
-		ExtendedSystemDefs extSysDef = new ExtendedSystemDefs( dbpath, logpath, 1000,500,200,"Clock");
+		//ExtendedSystemDefs extSysDef = 
+		new ExtendedSystemDefs( dbpath, logpath, 1000,500,200,"Clock");
 		//Sin catalogo
 		//SystemDefs sysdef = new SystemDefs( dbpath, 1000, NUMBUF, "Clock" );
 		

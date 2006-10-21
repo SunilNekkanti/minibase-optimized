@@ -61,7 +61,7 @@ public class IndexCatalog extends Heapfile
   
   // GET ALL INDEXES FOR A RELATION
   // Return indexCnt.
-  public int getRelInfo(String relation, int indexCnt, IndexDesc [] indexes)
+  public IndexDesc [] getRelInfo(String relation)
     throws Catalogmissparam, 
 	   Catalogioerror, 
 	   Cataloghferror, 
@@ -73,7 +73,7 @@ public class IndexCatalog extends Heapfile
 	   RelCatalogException,
 	   Catalogrelnotfound
     {
-      RelDesc record = null;
+      
       int status;
       int recSize;
       RID rid = null;
@@ -82,7 +82,7 @@ public class IndexCatalog extends Heapfile
       
       if (relation == null)
 	throw new Catalogmissparam(null, "MISSING_PARAM");
-      
+      RelDesc record = new RelDesc();
       try {
 	ExtendedSystemDefs.MINIBASE_RELCAT.getInfo(relation, record);
       }
@@ -105,16 +105,16 @@ public class IndexCatalog extends Heapfile
       
       // SET INDEX COUNT BY REFERENCE 
       
-      indexCnt = record.indexCnt;
+      int indexCnt = record.indexCnt;
       
       if (indexCnt == 0)
-	return indexCnt;
+	return new IndexDesc [0];
       
       
       // OPEN SCAN
       
       try {
-	pscan = new Scan(this);
+	pscan = this.openScan();
       }
       catch (Exception e) {
 	throw new IndexCatalogException(e,"scan() failed");
@@ -122,7 +122,7 @@ public class IndexCatalog extends Heapfile
       
       // ALLOCATE INDEX ARRAY
       
-      indexes = new IndexDesc[indexCnt];
+      IndexDesc[] indexes = new IndexDesc[indexCnt];
       if (indexes == null)
 	throw new Catalognomem(null, "Catalog: No Enough Memory!");
       
@@ -148,7 +148,7 @@ public class IndexCatalog extends Heapfile
 	    break;
 	}
       
-      return indexCnt;
+      return indexes;
       
     };
   

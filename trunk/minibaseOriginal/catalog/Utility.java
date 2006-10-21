@@ -15,9 +15,7 @@ import heap.Heapfile;
 import heap.Tuple;
 
 import java.io.DataInputStream;
-import java.io.EOFException;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -91,7 +89,7 @@ public class Utility implements Catalogglobal{
 		int attrCnt = attrList.length;
 		
 		// GET RELATION
-		RelDesc  relRec = null;
+		RelDesc  relRec = new RelDesc();
 		ExtendedSystemDefs.MINIBASE_RELCAT.getInfo(relation, relRec);
 		
 		// CHECK FOR VALID NO OF RECORDS		
@@ -102,23 +100,23 @@ public class Utility implements Catalogglobal{
 		// GET INFO ON ATTRIBUTES
 		AttrDesc  [] attrRecs = null;
 		
-		int attrCount = ExtendedSystemDefs.MINIBASE_ATTRCAT.getRelInfo(relation, 0, attrRecs);
+		attrRecs = ExtendedSystemDefs.MINIBASE_ATTRCAT.getRelInfo(relation );
 		
 		// CHECK ATTRIBUTE LIST
 		for(int i = 0; i < attrCnt; i++){ 
-			if (attrRecs[i].attrName.equalsIgnoreCase(attrList[i].attrName)){
-				throw new Catalogattrexists(null, "Catalog: Attribute Exists!");
+			if (!attrRecs[i].attrName.equalsIgnoreCase(attrList[i].attrName)){
+				throw new Catalogattrexists(null, "Catalog: Attribute Not Exists!");
 			}
 		}
 		
 		// GET INFO ON INDEXES
 		IndexDesc [] indexRecs = null;
-		ExtendedSystemDefs.MINIBASE_INDCAT.getRelInfo(relation,0, indexRecs);
+		indexRecs = ExtendedSystemDefs.MINIBASE_INDCAT.getRelInfo(relation);
 		
 		// TYPE CHECK RIGHT HERE......Make sure that the values being
 		// passed are valid
 		
-		for (int i = 0; i < attrCount; i++) {
+		for (int i = 0; i < attrRecs.length; i++) {
 			switch (attrRecs[i].attrType.attrType) {
 			case(AttrType.attrInteger):
 				if (!check_int(attrList[i])) {
@@ -300,7 +298,10 @@ public class Utility implements Catalogglobal{
 				record.get(i).attrValue = values[i];
 			}
 			
-			insertRecordUT(relation,(attrNode[])record.toArray());
+			attrNode[] list = new attrNode[record.size()];
+			record.toArray(list);
+			
+			insertRecordUT(relation,list);
 		}
 	};
 	
@@ -324,11 +325,17 @@ public class Utility implements Catalogglobal{
 		index = N.attrValue.getBytes();
 		int length = N.attrValue.length();
 		
-		int count = 0;
-		if ((length >1) && (index[count] == '-'))
-			count ++;	
-		else
+		if(length<1){
 			return false;
+		}
+		
+		int count = 0;
+		if (index[count] == '-'){
+			if(length <=1){
+				return false;
+			}
+			count++;
+		}
 		
 		for (int i = count; i < length; i++)	
 			if ((index[i] < '0') || (index[i] > '9'))
@@ -350,11 +357,18 @@ public class Utility implements Catalogglobal{
 		byte [] index = N.attrValue.getBytes();
 		int length = N.attrValue.length();
 		
-		int count = 0;
-		if ((length >1) && (index[count] == '-'))
-			count ++;	
-		else
+		if(length<1){
 			return false;
+		}
+		
+		int count = 0;
+		if (index[count] == '-'){
+			if(length <=1){
+				return false;
+			}
+			count++;
+		}
+		
 		
 		if ((length >1)&&(index[count] == '.')) {   // If we begin with a ., then we must check to make
 			// sure that all characters following it are numbers

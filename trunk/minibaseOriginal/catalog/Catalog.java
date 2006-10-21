@@ -161,11 +161,10 @@ public class Catalog
 	   Catalogattrexists,
 	   Catalogbadtype,
 	   AttrCatalogException
-    {
-      int count; 
-      count = attrCat.getRelInfo(relation, attrCnt, attrs);
+    { 
+      attrs = attrCat.getRelInfo(relation);
       
-      return count;
+      return attrs.length;
     };
   
   // get catalog entries for all indexes for a relation
@@ -188,10 +187,9 @@ public class Catalog
 	   IndexCatalogException,
 	   RelCatalogException
     {
-      int count;
-      count = indCat.getRelInfo(relation, indexCnt, indexes);
+      indexes = indCat.getRelInfo(relation);
       
-      return count;
+      return indexes.length;
     };
   
   // get catalog entries for all indexes for an attribute 

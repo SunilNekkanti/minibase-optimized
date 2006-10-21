@@ -14,6 +14,7 @@ import global.IndexType;
 import global.RID;
 import heap.Heapfile;
 import heap.InvalidTupleSizeException;
+import heap.InvalidTypeException;
 import heap.Scan;
 import heap.Tuple;
 
@@ -69,15 +70,14 @@ implements  GlobalConst, Catalogglobal
 	RelCatalogException, 
 	IOException, 
 	Catalogrelnotfound
-	{
-		RID rid = null;
-		Scan pscan = null;
-		
-		if (relation == null)
+	{		
+		if (relation == null){
 			throw new Catalogmissparam(null, "MISSING_PARAM");
+		}
 		
+		Scan pscan = null;
 		try {
-			pscan = new Scan(this);
+			pscan = this.openScan();
 		}
 		catch (Exception e1) {
 			System.err.println ("Scan"+e1);
@@ -86,21 +86,38 @@ implements  GlobalConst, Catalogglobal
 		
 		while (true) {
 			Tuple tuple = null;
-				try {
-					 tuple = pscan.getNext(rid);
-				} catch (InvalidTupleSizeException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				if (tuple == null)
-					throw new Catalogrelnotfound(null, "Catalog: Relation not Found!");
-				read_tuple(tuple, record);
+			try {
+				RID rid = new RID();
+				tuple = pscan.getNext(rid);
+			} catch (InvalidTupleSizeException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
-			if (record.relName.equalsIgnoreCase(relation) == true)
+			if (tuple == null){
+				throw new Catalogrelnotfound(null, "Catalog: Relation not Found!");
+			}
+			
+			try {
+				tuple.setHdr((short)5, attrs, str_sizes);
+			} catch (InvalidTypeException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvalidTupleSizeException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			read_tuple(tuple, record);
+			
+			if (record.relName.equalsIgnoreCase(relation)){
 				return;
+			}
 		}
 	};
 	
@@ -147,24 +164,9 @@ implements  GlobalConst, Catalogglobal
 		}
 		
 		// MAKE SURE THERE ARE NO DUPLICATE ATTRIBUTE NAMES		
-		int sizeOfInt = 4;
-		int sizeOfFloat = 4;
-		
-		int tupleWidth = 0;
-		for(int i = 0,j=0; i < attrCnt; i++) {
-			if(attrList[i].attrType.attrType == AttrType.attrString){
-				j=0;
-				//tupleWidth += sizeof(String);
-			}
-			else if(attrList[i].attrType.attrType == AttrType.attrInteger){
-				tupleWidth += sizeOfInt;
-			}
-			else if(attrList[i].attrType.attrType == AttrType.attrReal){
-				tupleWidth += sizeOfFloat;
-			}
-			
+		for(int i = 0; i < attrCnt; i++) {
 			/* Duplicate attributes.*/
-			for(j = 0; j < i; j++){
+			for(int j = 0; j < i; j++){
 				if (attrList[i].attrName.equalsIgnoreCase(attrList[j].attrName)){
 					throw new Catalogdupattrs(null, "Duplicate Attributes!");
 				}
@@ -417,38 +419,37 @@ implements  GlobalConst, Catalogglobal
 	void destroyRel(String relation){};
 	
 	// DROP AN INDEX FROM A RELATION
-	void dropIndex(String relation, String attrname, 
-			IndexType accessType){};
-			
-			// DUMPS A CATALOG TO A DISK FILE (FOR OPTIMIZER)
-			void dumpCatalog(String filename){};
-			
-			// Collects stats from all the tables of the database.
-			void runStats(String filename){};
-			
-			// OUTPUTS A RELATION TO DISK FOR OPTIMIZER
-			// void dumpRelation(fstream outFile, RelDesc relRec, int tupleSize){}; 
-			
-			// OUTPUTS ATTRIBUTES TO DISK FOR OPTIMIZER (used by runstats)
-			// void rsdumpRelAttributes (fstream outFile,AttrDesc [] attrRecs,
-			//        int attrCnt, String relName){};
-			
-			// OUTPUTS ATTRIBUTES TO DISK FOR OPTIMIZER
-			// void dumpRelAttributes (fstream outFile, AttrDesc [] attrRecs,
-			//        int attrCnt){};
-			
-			// OUTPUTS ACCESS METHODS TO DISK FOR OPTIMIZER
-			// void dumpRelIndex(fstream outFile,IndexDesc [] indexRecs,
-			//                    int indexCnt, int attrsize){};
-			
-			
-			Tuple tuple;
-			short [] str_sizes;
-			/**
-			 * @uml.property  name="attrs"
-			 * @uml.associationEnd  multiplicity="(0 -1)"
-			 */
-			AttrType [] attrs;
-			
+	void dropIndex(String relation, String attrname, IndexType accessType){};
+	
+	// DUMPS A CATALOG TO A DISK FILE (FOR OPTIMIZER)
+	void dumpCatalog(String filename){};
+	
+	// Collects stats from all the tables of the database.
+	void runStats(String filename){};
+	
+	// OUTPUTS A RELATION TO DISK FOR OPTIMIZER
+	// void dumpRelation(fstream outFile, RelDesc relRec, int tupleSize){}; 
+	
+	// OUTPUTS ATTRIBUTES TO DISK FOR OPTIMIZER (used by runstats)
+	// void rsdumpRelAttributes (fstream outFile,AttrDesc [] attrRecs,
+	//        int attrCnt, String relName){};
+	
+	// OUTPUTS ATTRIBUTES TO DISK FOR OPTIMIZER
+	// void dumpRelAttributes (fstream outFile, AttrDesc [] attrRecs,
+	//        int attrCnt){};
+	
+	// OUTPUTS ACCESS METHODS TO DISK FOR OPTIMIZER
+	// void dumpRelIndex(fstream outFile,IndexDesc [] indexRecs,
+	//                    int indexCnt, int attrsize){};
+	
+	
+	Tuple tuple;
+	short [] str_sizes;
+	/**
+	 * @uml.property  name="attrs"
+	 * @uml.associationEnd  multiplicity="(0 -1)"
+	 */
+	AttrType [] attrs;
+	
 };
 
