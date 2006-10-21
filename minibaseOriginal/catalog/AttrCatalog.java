@@ -10,6 +10,7 @@ import bufmgr.*;
 import diskmgr.*;
 import global.*;
 import heap.*;
+
 import java.io.*;
 
 
@@ -213,8 +214,7 @@ implements GlobalConst, Catalogglobal
 	};
 	
 	// RETURNS ATTRTYPE AND STRINGSIZE ARRAYS FOR CONSTRUCTING TUPLES
-	public int getTupleStructure(String relation, int attrCnt,
-			AttrType [] typeArray, short [] sizeArray)
+	public void getTupleStructure(String relation, Tuple tuple)
 	throws Catalogmissparam, 
 	Catalogioerror, 
 	Cataloghferror,
@@ -223,15 +223,10 @@ implements GlobalConst, Catalogglobal
 	Catalognomem, 
 	Catalogindexnotfound,
 	Catalogattrnotfound, 
-	Catalogrelnotfound
+	Catalogrelnotfound, InvalidTypeException, InvalidTupleSizeException
 	{
-		int  status;
-		int stringcount = 0;
-		AttrDesc [] attrs = null;
-		int i, x;
-		
+		AttrDesc [] attrs = null;	
 		// GET ALL OF THE ATTRIBUTES
-		
 		try {
 			attrs = getRelInfo(relation);
 		}
@@ -260,23 +255,22 @@ implements GlobalConst, Catalogglobal
 			throw new Catalogrelnotfound(null, "");
 		}
 		
-		
 		// ALLOCATE TYPEARRAY
-		
-		typeArray = new AttrType[attrCnt];
+		int attrCnt = attrs.length;
+		AttrType [] typeArray = new AttrType[attrCnt];
 		if (typeArray == null)
 			throw new Catalognomem(null, "Catalog, No Enough Memory!");
 		
 		// LOCATE STRINGS
-		
-		for(i = 0; i < attrCnt; i++)
+		int stringcount = 0;
+		for(int i = 0; i < attrCnt; i++)
 		{
 			if(attrs[i].attrType.attrType == AttrType.attrString)
 				stringcount++;
 		}
 		
 		// ALLOCATE STRING SIZE ARRAY
-		
+		short[] sizeArray = null;
 		if(stringcount > 0) 
 		{
 			sizeArray = new short[stringcount];
@@ -286,17 +280,17 @@ implements GlobalConst, Catalogglobal
 		
 		// FILL ARRAYS WITH TYPE AND SIZE DATA
 		
-		for(x = 0, i = 0; i < attrCnt; i++)
+		for(int j = 0, i = 0; i < attrCnt; i++)
 		{
-			typeArray[i].attrType= attrs[i].attrType.attrType;
+			typeArray[i] = new AttrType(attrs[i].attrType.attrType);
 			if(attrs[i].attrType.attrType == AttrType.attrString)
 			{
-				sizeArray[x] = (short) attrs[i].attrLen;
-				x++;
+				sizeArray[j] = (short) attrs[i].attrLen;
+				j++;
 			}
 		}
 		
-		return attrCnt;    
+		tuple.setHdr((short)attrCnt, typeArray, sizeArray); 
 	};
 	
 	

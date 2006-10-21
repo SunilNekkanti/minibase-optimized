@@ -12,6 +12,7 @@ import global.ExtendedSystemDefs;
 import global.GlobalConst;
 import global.IndexType;
 import global.RID;
+import heap.FieldNumberOutOfBoundException;
 import heap.Heapfile;
 import heap.InvalidTupleSizeException;
 import heap.InvalidTypeException;
@@ -19,6 +20,8 @@ import heap.Scan;
 import heap.Tuple;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import bufmgr.BufMgrException;
 import diskmgr.DiskMgrException;
@@ -61,7 +64,20 @@ implements  GlobalConst, Catalogglobal
 		}
 	};
 	
-	
+	public List<String> getRelationName () throws InvalidTupleSizeException, IOException, FieldNumberOutOfBoundException, InvalidTypeException{
+		List<String> names = new ArrayList<String> ();
+		Scan scan = null;
+		
+		scan = openScan();
+
+		Tuple tuple = null;
+		while((tuple = scan.getNext(new RID())) != null){
+			tuple.setHdr((short)5, attrs, str_sizes);
+			names.add(tuple.getStrFld(1));
+		}
+		
+		return names;
+	}
 	// GET RELATION DESCRIPTION FOR A RELATION
 	public void getInfo(String relation, RelDesc record)
 	throws Catalogmissparam, 
@@ -139,7 +155,7 @@ implements  GlobalConst, Catalogglobal
 		}
 		
 		boolean status = true;
-		RelDesc rd = null;
+		RelDesc rd = new RelDesc();
 		try {
 			getInfo(relation, rd);
 		}
