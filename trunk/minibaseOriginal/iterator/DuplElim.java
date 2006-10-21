@@ -2,14 +2,22 @@ package iterator;
 
 import global.AttrType;
 import global.TupleOrder;
-import heap.InvalidTupleSizeException;
-import heap.InvalidTypeException;
 import heap.Tuple;
-import index.IndexException;
+import heap.exceptions.InvalidTupleSizeException;
+import heap.exceptions.InvalidTypeException;
+import index.exceptions.IndexException;
+import iterator.exceptions.DuplElimException;
+import iterator.exceptions.JoinsException;
+import iterator.exceptions.LowMemException;
+import iterator.exceptions.PredEvalException;
+import iterator.exceptions.SortException;
+import iterator.exceptions.TupleUtilsException;
+import iterator.exceptions.UnknowAttrType;
+import iterator.exceptions.UnknownKeyTypeException;
 
 import java.io.IOException;
 
-import bufmgr.PageNotReadException;
+import bufmgr.exceptions.PageNotReadException;
 
 /**
  * Eleminate the duplicate tuples from the input relation

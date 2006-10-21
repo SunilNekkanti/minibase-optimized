@@ -4,14 +4,23 @@ import global.AttrType;
 import global.GlobalConst;
 import global.TupleOrder;
 import heap.Heapfile;
-import heap.InvalidTupleSizeException;
-import heap.InvalidTypeException;
 import heap.Tuple;
-import index.IndexException;
+import heap.exceptions.InvalidTupleSizeException;
+import heap.exceptions.InvalidTypeException;
+import index.exceptions.IndexException;
+import iterator.exceptions.JoinLowMemory;
+import iterator.exceptions.JoinNewFailed;
+import iterator.exceptions.JoinsException;
+import iterator.exceptions.LowMemException;
+import iterator.exceptions.PredEvalException;
+import iterator.exceptions.SortException;
+import iterator.exceptions.TupleUtilsException;
+import iterator.exceptions.UnknowAttrType;
+import iterator.exceptions.UnknownKeyTypeException;
 
 import java.io.IOException;
 
-import bufmgr.PageNotReadException;
+import bufmgr.exceptions.PageNotReadException;
 
 /**
  * This file contains the interface for the sort_merg joins. We name the two relations being joined as R and S. This file contains an implementation of the sort merge join algorithm as described in the Shapiro paper. It makes use of the external sorting utility to generate runs, and then uses the iterator interface to get successive tuples for the final merge.

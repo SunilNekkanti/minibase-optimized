@@ -8,10 +8,23 @@ package catalog;
 
 import btree.*;
 import bufmgr.*;
+import bufmgr.exceptions.BufMgrException;
 import diskmgr.*;
+import diskmgr.exceptions.DiskMgrException;
 import global.*;
 import heap.*;
 import java.io.*;
+
+import catalog.exceptions.Catalogattrnotfound;
+import catalog.exceptions.Catalogbadtype;
+import catalog.exceptions.Cataloghferror;
+import catalog.exceptions.Catalogindexnotfound;
+import catalog.exceptions.Catalogioerror;
+import catalog.exceptions.Catalogmissparam;
+import catalog.exceptions.Catalognomem;
+import catalog.exceptions.Catalogrelnotfound;
+import catalog.exceptions.IndexCatalogException;
+import catalog.exceptions.RelCatalogException;
 
 /**
  * @author  Fernando

@@ -5,15 +5,15 @@ import global.ExtendedSystemDefs;
 import global.GlobalConst;
 import global.RID;
 import global.SystemDefs;
-import heap.FieldNumberOutOfBoundException;
-import heap.HFBufMgrException;
-import heap.HFDiskMgrException;
-import heap.HFException;
 import heap.Heapfile;
-import heap.InvalidTupleSizeException;
-import heap.InvalidTypeException;
 import heap.Scan;
 import heap.Tuple;
+import heap.exceptions.FieldNumberOutOfBoundException;
+import heap.exceptions.HFBufMgrException;
+import heap.exceptions.HFDiskMgrException;
+import heap.exceptions.HFException;
+import heap.exceptions.InvalidTupleSizeException;
+import heap.exceptions.InvalidTypeException;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,18 +21,18 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import catalog.AttrCatalogException;
 import catalog.AttrDesc;
-import catalog.Catalogattrnotfound;
-import catalog.Cataloghferror;
-import catalog.Catalogindexnotfound;
-import catalog.Catalogioerror;
-import catalog.Catalogmissparam;
-import catalog.Catalognomem;
-import catalog.Catalogrelexists;
-import catalog.Catalogrelnotfound;
 import catalog.Utility;
 import catalog.attrInfo;
+import catalog.exceptions.AttrCatalogException;
+import catalog.exceptions.Catalogattrnotfound;
+import catalog.exceptions.Cataloghferror;
+import catalog.exceptions.Catalogindexnotfound;
+import catalog.exceptions.Catalogioerror;
+import catalog.exceptions.Catalogmissparam;
+import catalog.exceptions.Catalognomem;
+import catalog.exceptions.Catalogrelexists;
+import catalog.exceptions.Catalogrelnotfound;
 
 public class TestGenerico  implements GlobalConst {
 	public static void main(String argv[]) throws InvalidTupleSizeException, IOException, FieldNumberOutOfBoundException, InvalidTypeException, Catalogmissparam, Catalogioerror, Cataloghferror, AttrCatalogException, Catalognomem, Catalogattrnotfound, Catalogindexnotfound, Catalogrelnotfound, HFException, HFBufMgrException, HFDiskMgrException  {

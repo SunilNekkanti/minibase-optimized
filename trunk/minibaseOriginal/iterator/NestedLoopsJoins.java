@@ -4,15 +4,23 @@ package iterator;
 import global.AttrType;
 import global.RID;
 import heap.Heapfile;
-import heap.InvalidTupleSizeException;
-import heap.InvalidTypeException;
 import heap.Scan;
 import heap.Tuple;
-import index.IndexException;
+import heap.exceptions.InvalidTupleSizeException;
+import heap.exceptions.InvalidTypeException;
+import index.exceptions.IndexException;
+import iterator.exceptions.JoinsException;
+import iterator.exceptions.LowMemException;
+import iterator.exceptions.NestedLoopException;
+import iterator.exceptions.PredEvalException;
+import iterator.exceptions.SortException;
+import iterator.exceptions.TupleUtilsException;
+import iterator.exceptions.UnknowAttrType;
+import iterator.exceptions.UnknownKeyTypeException;
 
 import java.io.IOException;
 
-import bufmgr.PageNotReadException;
+import bufmgr.exceptions.PageNotReadException;
 /**
  * This file contains an implementation of the nested loops join algorithm as described in the Shapiro paper. The algorithm is extremely simple: foreach tuple r in R do foreach tuple s in S do if (ri == sj) then add (r, s) to the result.
  */

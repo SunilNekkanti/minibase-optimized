@@ -1,5 +1,9 @@
 package bufmgr;
 
+import bufmgr.exceptions.BufferPoolExceededException;
+import bufmgr.exceptions.InvalidFrameNumberException;
+import bufmgr.exceptions.PagePinnedException;
+import bufmgr.exceptions.PageUnpinnedException;
 import global.*;
 
 /** This interface assocaites with the replace algorithm,

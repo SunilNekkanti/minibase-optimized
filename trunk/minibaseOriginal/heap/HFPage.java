@@ -4,6 +4,8 @@ package heap;
 
 import diskmgr.*;
 import global.*;
+import heap.exceptions.InvalidSlotNumberException;
+
 import java.io.*;
 import java.lang.*;
 

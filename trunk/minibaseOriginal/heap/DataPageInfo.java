@@ -5,6 +5,8 @@ package heap;
 
 
 import global.*;
+import heap.exceptions.InvalidTupleSizeException;
+
 import java.io.*;
 
 /**

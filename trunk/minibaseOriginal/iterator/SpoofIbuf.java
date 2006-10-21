@@ -3,9 +3,9 @@ package iterator;
 import global.GlobalConst;
 import global.RID;
 import heap.Heapfile;
-import heap.InvalidTupleSizeException;
 import heap.Scan;
 import heap.Tuple;
+import heap.exceptions.InvalidTupleSizeException;
 
 import java.io.IOException;
 

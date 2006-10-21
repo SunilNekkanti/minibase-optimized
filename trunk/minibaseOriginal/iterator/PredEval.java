@@ -2,10 +2,13 @@ package iterator;
 
 import global.AttrOperator;
 import global.AttrType;
-import heap.FieldNumberOutOfBoundException;
-import heap.InvalidTupleSizeException;
-import heap.InvalidTypeException;
 import heap.Tuple;
+import heap.exceptions.FieldNumberOutOfBoundException;
+import heap.exceptions.InvalidTupleSizeException;
+import heap.exceptions.InvalidTypeException;
+import iterator.exceptions.PredEvalException;
+import iterator.exceptions.TupleUtilsException;
+import iterator.exceptions.UnknowAttrType;
 
 import java.io.IOException;
 

@@ -12,19 +12,31 @@ import global.ExtendedSystemDefs;
 import global.GlobalConst;
 import global.IndexType;
 import global.RID;
-import heap.FieldNumberOutOfBoundException;
 import heap.Heapfile;
-import heap.InvalidTupleSizeException;
-import heap.InvalidTypeException;
 import heap.Scan;
 import heap.Tuple;
+import heap.exceptions.FieldNumberOutOfBoundException;
+import heap.exceptions.InvalidTupleSizeException;
+import heap.exceptions.InvalidTypeException;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import bufmgr.BufMgrException;
-import diskmgr.DiskMgrException;
+import catalog.exceptions.Catalogattrnotfound;
+import catalog.exceptions.Catalogbadtype;
+import catalog.exceptions.Catalogdupattrs;
+import catalog.exceptions.Cataloghferror;
+import catalog.exceptions.Catalogindexnotfound;
+import catalog.exceptions.Catalogioerror;
+import catalog.exceptions.Catalogmissparam;
+import catalog.exceptions.Catalognomem;
+import catalog.exceptions.Catalogrelexists;
+import catalog.exceptions.Catalogrelnotfound;
+import catalog.exceptions.RelCatalogException;
+
+import bufmgr.exceptions.BufMgrException;
+import diskmgr.exceptions.DiskMgrException;
 /**
  * @author  Fernando
  */

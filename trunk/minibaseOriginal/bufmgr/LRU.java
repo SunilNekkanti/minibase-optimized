@@ -2,6 +2,7 @@
 
 package bufmgr;
 
+import bufmgr.exceptions.InvalidFrameNumberException;
 import diskmgr.*;
 import global.*;
 

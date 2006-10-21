@@ -2,6 +2,11 @@ package tests;
 //From db_driver.C
 
 import diskmgr.*;
+import diskmgr.exceptions.DuplicateEntryException;
+import diskmgr.exceptions.FileEntryNotFoundException;
+import diskmgr.exceptions.FileNameTooLongException;
+import diskmgr.exceptions.InvalidRunSizeException;
+import diskmgr.exceptions.OutOfSpaceException;
 import global.*;
 import java.io.*;
 import java.lang.*;

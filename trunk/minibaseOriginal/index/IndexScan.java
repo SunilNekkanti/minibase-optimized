@@ -4,7 +4,15 @@ import bufmgr.*;
 import diskmgr.*;
 import global.*;
 import heap.*;
+import heap.exceptions.InvalidTupleSizeException;
+import heap.exceptions.InvalidTypeException;
+import index.exceptions.IndexException;
+import index.exceptions.UnknownIndexTypeException;
 import iterator.*;
+import iterator.exceptions.InvalidRelation;
+import iterator.exceptions.TupleUtilsException;
+import iterator.exceptions.UnknownKeyTypeException;
+
 import java.io.*;
 
 
