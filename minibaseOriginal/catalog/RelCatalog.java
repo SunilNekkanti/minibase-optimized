@@ -76,7 +76,7 @@ implements  GlobalConst, Catalogglobal
 		}
 	};
 	
-	public List<String> getRelationName () throws InvalidTupleSizeException, IOException, FieldNumberOutOfBoundException, InvalidTypeException{
+	public List<String> getRelationNames () throws InvalidTupleSizeException, IOException, FieldNumberOutOfBoundException, InvalidTypeException{
 		List<String> names = new ArrayList<String> ();
 		Scan scan = null;
 		
