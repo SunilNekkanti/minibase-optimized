@@ -1,18 +1,32 @@
 package tests;
 //originally from : joins.C
 
-import iterator.*;
-import heap.*;
-import global.*;
-import index.*;
-import java.io.*;
-import java.util.*;
-import java.lang.*;
-import diskmgr.*;
-import bufmgr.*;
-import btree.*; 
-import catalog.*;
-//import java.util.Iterator.*;
+import global.AttrOperator;
+import global.AttrType;
+import global.ExtendedSystemDefs;
+import global.GlobalConst;
+import global.IndexType;
+import global.RID;
+import global.TupleOrder;
+import heap.Heapfile;
+import heap.Scan;
+import heap.Tuple;
+import index.IndexScan;
+import iterator.CondExpr;
+import iterator.DuplElim;
+import iterator.FileScan;
+import iterator.FldSpec;
+import iterator.NestedLoopsJoins;
+import iterator.RelSpec;
+import iterator.Sort;
+import iterator.SortMerge;
+
+import java.io.IOException;
+import java.util.Vector;
+
+import btree.BTreeFile;
+import btree.IntegerKey;
+
 /**
    Here is the implementation for the tests. There are N tests performed.
    We start off by showing that each operator works on its own.
@@ -123,11 +137,8 @@ class JoinsDriver implements GlobalConst {
 
     boolean status = OK;
     int numsailors = 25;
-    int numsailors_attrs = 4;
     int numreserves = 10;
-    int numreserves_attrs = 3;
     int numboats = 5;
-    int numboats_attrs = 3;
     
     String logpath = "/tmp/joinlog";
     String dbpath = "/tmp/minibase.jointestdb";
@@ -147,13 +158,10 @@ class JoinsDriver implements GlobalConst {
     }
 
    
-    /*
-    ExtendedSystemDefs extSysDef = 
-      new ExtendedSystemDefs( "/tmp/minibase.jointestdb", "/tmp/joinlog",
-			      1000,500,200,"Clock");
-    */
+   
+   new ExtendedSystemDefs( dbpath, logpath,     1000,500,200,"Clock");
 
-    SystemDefs sysdef = new SystemDefs( dbpath, 1000, NUMBUF, "Clock" );
+    //SystemDefs sysdef = new SystemDefs( dbpath, 1000, NUMBUF, "Clock" );
     
     // creating the sailors relation
     AttrType [] Stypes = new AttrType[4];
@@ -178,8 +186,6 @@ class JoinsDriver implements GlobalConst {
     
     int size = t.size();
     
-    // inserting the tuple into file "sailors"
-    RID             rid;
     Heapfile        f = null;
     try {
       f = new Heapfile("sailors.in");
@@ -214,7 +220,7 @@ class JoinsDriver implements GlobalConst {
       }
       
       try {
-	rid = f.insertRecord(t.returnTupleByteArray());
+	f.insertRecord(t.returnTupleByteArray());
       }
       catch (Exception e) {
 	System.err.println("*** error in Heapfile.insertRecord() ***");
@@ -285,7 +291,7 @@ class JoinsDriver implements GlobalConst {
       }
       
       try {
-	rid = f.insertRecord(t.returnTupleByteArray());
+	f.insertRecord(t.returnTupleByteArray());
       }
       catch (Exception e) {
 	System.err.println("*** error in Heapfile.insertRecord() ***");
@@ -355,7 +361,7 @@ class JoinsDriver implements GlobalConst {
       }      
       
       try {
-	rid = f.insertRecord(t.returnTupleByteArray());
+	 f.insertRecord(t.returnTupleByteArray());
       }
       catch (Exception e) {
 	System.err.println("*** error in Heapfile.insertRecord() ***");
@@ -566,10 +572,6 @@ class JoinsDriver implements GlobalConst {
     Sprojection[2] = new FldSpec(new RelSpec(RelSpec.outer), 3);
     Sprojection[3] = new FldSpec(new RelSpec(RelSpec.outer), 4);
 
-    CondExpr [] selects = new CondExpr [1];
-    selects = null;
-    
- 
     FileScan am = null;
     try {
       am  = new FileScan("sailors.in", Stypes, Ssizes, 
@@ -1043,9 +1045,6 @@ class JoinsDriver implements GlobalConst {
        new FldSpec(new RelSpec(RelSpec.outer), 4)
     };
 
-    CondExpr[] selects = new CondExpr [1];
-    selects = null;
- 
     iterator.Iterator am = null;
     try {
       am  = (iterator.Iterator)new FileScan("sailors.in", Stypes, Ssizes,
@@ -1199,9 +1198,6 @@ class JoinsDriver implements GlobalConst {
        new FldSpec(new RelSpec(RelSpec.outer), 4)
     };
 
-    CondExpr[] selects = new CondExpr [1];
-    selects = null;
- 
     iterator.Iterator am = null;
     try {
       am  = new FileScan("sailors.in", Stypes, Ssizes,
