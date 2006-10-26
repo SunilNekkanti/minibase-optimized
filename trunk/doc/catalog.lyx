@@ -1,0 +1,243 @@
+#LyX 1.4.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 245
+\begin_document
+\begin_header
+\textclass article
+\language spanish
+\inputencoding auto
+\fontscheme default
+\graphics default
+\paperfontsize default
+\spacing single
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Catalogo
+\end_layout
+
+\begin_layout Subsection
+Descripción general
+\end_layout
+
+\begin_layout Standard
+Este módulo se encarga de administrar el catálogo de la base de datos (ie.
+ donde se mantiene la información de las relaciones o tablas, sus atributos
+ y sus índices) y de proveer las siguientes funcionalidades:
+\end_layout
+
+\begin_layout Enumerate
+Agregar/eliminar una tabla al/del catálogo
+\end_layout
+
+\begin_layout Enumerate
+Agregar/eliminar un índice a/de una tabla
+\end_layout
+
+\begin_layout Enumerate
+Proporcionar información acerca de:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Una tabla
+\end_layout
+
+\begin_layout Enumerate
+Un atributo en particular
+\end_layout
+
+\begin_layout Enumerate
+Todos los atributos de una tabla
+\end_layout
+
+\begin_layout Enumerate
+Un índice en particular
+\end_layout
+
+\begin_layout Enumerate
+Todos los índices de un atributo
+\end_layout
+
+\begin_layout Enumerate
+Todos los índices de una tabla 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Proveer la interfaz para el optimizador
+\end_layout
+
+\begin_layout Subsection
+DER
+\end_layout
+
+\begin_layout Standard
+(Este DER representa el modelo conceptual deseado y no el existente en el
+ Minibase)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename der.png
+	lyxscale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Clases principales y sus protocolos principales
+\end_layout
+
+\begin_layout Standard
+Las clases principales del catálogo son las siguientes:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename clases.png
+	lyxscale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Catalog 
+\end_layout
+
+\begin_layout Standard
+La clase Catalog proporciona una interfaz externa para las funcionalidades
+ antes mencionadas, delegando dichas funcionalidades en las clases RelCatalog,
+ AttrCatalog e IndexCatalogs.
+\end_layout
+
+\begin_layout Subsubsection
+RelCatalog, AttrCatalog e IndexCatalogs
+\end_layout
+
+\begin_layout Standard
+Las clases RelCatalog, AttrCatalog e IndexCatalog mantienen información
+ sobre las tablas, los campos y los índices existentes en la base de datos,
+ respectivamente.
+ Estas clases están implementadas como heapfiles (heredan de la clase HeapFile)
+ extendiendo el comportamiento básico de un heapfile con la funcionalidad
+ particular para la administración la información que mantienen.
+\end_layout
+
+\begin_layout Subsubsection
+RelDesc, AttrDesc e IndexDesc 
+\end_layout
+
+\begin_layout Standard
+Para administrar la información de tablas, campos e índices, se utilizan
+ las clases RelDesc, AttrDesc e IndexDesc, las cuales modelan la especificación
+ de una relación, de un atributo y de un índice respectivamente.
+ Mediante estas especificaciones es posible interactuar con los catálogos
+ respectivos (por ejemplo, para crear una nueva relación se debe especificar
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Clases para manejo de excepciones 
+\end_layout
+
+\begin_layout Standard
+Para cada una de los servicios provistos por el catálogo se manejan diversas
+ excepciones tanto de bajo nivel (acceso al heapfile) como de alto nivel
+ (información lógica contenida en los catálogos).
+\end_layout
+
+\begin_layout Subsubsection
+AttrType 
+\end_layout
+
+\begin_layout Standard
+Las instancias de esta clase representan los posibles tipos de datos que
+ puede contener un campo (Integer, Float, String, etc.).
+\end_layout
+
+\begin_layout Subsubsection
+IndexType 
+\end_layout
+
+\begin_layout Standard
+Las instancias de esta clase representan los posibles tipos de índices que
+ pueden crearse sobre una tabla (B-Tree, Hashed).
+\end_layout
+
+\begin_layout Standard
+(No creo que sea muy significativo describir estas clases? preguntar)
+\end_layout
+
+\begin_layout Subsection
+attrData
+\end_layout
+
+\begin_layout Standard
+//attrData class for minimum and maximum attribute values
+\end_layout
+
+\begin_layout Subsubsection
+TupleOrder
+\end_layout
+
+\begin_layout Standard
+attrInfo // class used for creating relations
+\end_layout
+
+\begin_layout Subsubsection
+attrNode
+\end_layout
+
+\begin_layout Subsection
+Interacción con otros componentes
+\end_layout
+
+\begin_layout Standard
+Falta?
+\end_layout
+
+\begin_layout Subsection
+Ejemplo de uso
+\end_layout
+
+\begin_layout Standard
+Si se justifica
+\end_layout
+
+\begin_layout Subsubsection
+Diagramas de secuencia
+\end_layout
+
+\begin_layout Subsection
+Evaluación del componente (opinión acerca de la calidad de código, diseño,
+ etc.)
+\end_layout
+
+\begin_layout Standard
+Falta?
+\end_layout
+
+\end_body
+\end_document

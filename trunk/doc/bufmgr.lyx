@@ -1,0 +1,2140 @@
+#LyX 1.4.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 245
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+
+\end_preamble
+\language english
+\inputencoding latin1
+\fontscheme default
+\graphics default
+\paperfontsize default
+\spacing single
+\papersize default
+\use_geometry false
+\use_amsmath 0
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+BufferManager
+\end_layout
+
+\begin_layout Subsection
+Descripción general
+\end_layout
+
+\begin_layout Standard
+Es la estructura encargada de traer páginas de memoria secundaria a memoria
+ principal sin la necesidad de leerlas de la memoria secundaria constantemente.
+ Para este propósito, posee una colección frames, que son los encargados
+ de alojar las páginas en la memoria principal.
+ Como ya mencionamos, la utilidad fundamental del Buffer Manager es traer
+ páginas de disco y brindarle a las clases superiores los métodos necesarios
+ para mantenerlas en memoria hasta que estos digan lo contrario.
+ Sin embargo estas paginas liberadas solo serán removidas del Buffer y grabadas
+ nuevamente en el disco, en el caso de haber sido modificadas, cuando no
+ existan más frames libres en el Buffer y se solicite alojar una pagina
+ que no se encuentra en el mismo en ese momento.
+ Para realizar este procedimiento se utiliza un algoritmo de remoción de
+ páginas.
+ La implementación del Buffer Manager utiliza una Interfaz para acceder
+ a la política de remoción( clase Replacer ).
+ Minibase presenta implementaciones distintas implementaciones de esta interfaz
+ para proveer algoritmos FIFO( clase Clock ), LRU y MRU.
+ Cuando se desea acceder o modificar una tabla, se le pide al Buffer Manager
+ que traiga las páginas correspondientes a memoria, en caso de no encontrase
+ allí con anterioridad.
+ Estas páginas serán marcadas ( pin ) mientras se esté operando con ellas
+ y luego se liberarán( unpin ) para que sean candidatas para la remoción.
+ El Buffer Manager contiene métodos para obtener una página, liberarla,
+ crearla, borrarla, saber si se encuentra en memoria y guardar las páginas
+ que fueron modificadas.
+ Para la mayoría de ellos, luego de realizar las acciones necesarias se
+ llama al DiskSpace Manager para que persista los resultados.
+ Las páginas cuentan con una marca que indica si han sido modificadas (
+ dirty ).
+ La misma es marcada cuando se realiza una inserción, actualización o remoción
+ de un registro de tal página.
+ Luego, antes de remover la página de memoria, el Buffer Manager la persiste
+ (llamando al DiskSpace Manager) en caso de estar marcada, para evitar que
+ se pierdan los cambios realizados.
+\end_layout
+
+\begin_layout Subsubsection
+Diseño interno - estructuras
+\end_layout
+
+\begin_layout Standard
+El buffer pool es una collección de frames ( secuencia de paginas de tamaño
+ fijo de bytes de memoria principal ) que son manejadas por el Buffer Manager.
+ Físicamente guardado como un arreglo (bufPool) Adicionalmente, se mantiene
+ un arreglo de bufDescr[numbuf] de descriptores, uno por cada frame.
+ Cada descriptor tiene los siguientes campos:
+\end_layout
+
+\begin_layout Itemize
+numero de pagina (PageId) 
+\end_layout
+
+\begin_layout Itemize
+pin count (entero) 
+\end_layout
+
+\begin_layout Itemize
+dirtybit (bool) 
+\end_layout
+
+\begin_layout Standard
+Esto describe la página que es guardada en el frame correspondiente.
+ Una página es identificada por un número de página que es generado por
+ DM cuando la página es alojada, y es único para todas las páginas en la
+ base de datos.
+ El objeto PageId es la encapsulación de un entero.
+\end_layout
+
+\begin_layout Standard
+Se usa una tabla de hash para identificar que páginas de disco ocupan un
+ frame.
+ La tabla de hash está implementada( enteramente en memoria principal )
+ usando un arreglo de pares
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+textless
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{}
+\end_layout
+
+\end_inset
+
+numero de pagina, numero de frame
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+textgreater
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{}
+\end_layout
+
+\end_inset
+
+.
+ El arreglo es llamado directorio.
+ Dado un número de página, se puede aplicar la función de hash para encontrar
+ la entrada del directorio que apunta al bucket que contiene el número de
+ frame para esa página, si esa pagina esta en el buffer pool.
+ Si se busca en el bucket y no se encuentra un par conteniendo el número
+ de página, la página no está en el pool.
+ Si se encuentra tal par, este dirá en que frame reside la pagina.
+\end_layout
+
+\begin_layout Standard
+Cuando se solicita una página, el buffer manager debe hacer lo siguiente:
+\end_layout
+
+\begin_layout Itemize
+Buscar en el buffer pool (usando la tabla de hash) para ver si contiene
+ la pagina solicitada.
+ 
+\end_layout
+
+\begin_layout Itemize
+Si la pagina no esta en el buffer pool, debe hacer lo que sigue:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Elegir un frame para remover la página que contiene, usando las políticas
+ de remocion (Clock, MRU o LRU) 
+\end_layout
+
+\begin_layout Enumerate
+Si el frame elegido para remover tiene una página que ha sido modificada(
+ dirty= true ), se deben escribir los datos de la página que el frame contiene
+ a disco, mediante DM.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Se lee la pagina solicitada desde disco(otra vez, llamando a la DM) y ubicarla
+ dentro del frame elegido para remover.
+ El pin count y el dirtybit para el frame son inicializados en 0 y falso
+ respectivamente.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Se borra la entrada para la página vieja en la tabla de hash del Buffer
+ Manager y se inserta una entrada para la página nueva.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Tambien, se actualiza la entrada para este frame en el arreglo del bufDescr.
+ 
+\end_layout
+
+\begin_layout Itemize
+Se pincha( pin ) la página requerida incrementando el pin count en el descriptor
+ para este frame.
+ 
+\end_layout
+
+\begin_layout Subsection
+Clases principales y sus protocolos principales
+\end_layout
+
+\begin_layout Subsubsection
+FrameDesc
+\end_layout
+
+\begin_layout Standard
+Es una clase que describe un frame.
+ Describe cada página que está en el buffer pool: el número de página en
+ el archivo, si esta marcada como modificada( dirty ) sus pin count.
+ El pin count cambia cuando se pincha ( pin ) o despincha ( unpin ) una
+ página.
+\end_layout
+
+\begin_layout Standard
+Atributos miembro 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+public boolean dirty
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Indica si la página que contiene el frame ha sido modificada.
+ true, para frames cuyas páginas han sido modificados, false para frames
+ cuyas páginas no han sido modificadas.
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+public PageId pageNo
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ El id de la página, o INVALID_PAGE si el frame está vacío.
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+public int pincnt 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ cantidad de pinches: Si la página está pinchada mas de una vez ( pin_cnt
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+textgreater
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{}
+\end_layout
+
+\end_inset
+
+ 0 ) no puede ser removida.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Métodos relevantes
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+public int pin()
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Incrementa pin_cnt en 1
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+public int unpin()
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Decrementa pin_cnt en 1
+\end_layout
+
+\begin_layout Subsubsection
+BufHTEntry
+\end_layout
+
+\begin_layout Standard
+Es el nodo que se utiliza para representar una lista simplemente encadenada,
+ que es guardada en los buckets de la tabla de hash.
+ Guarda informacion sobre:
+\end_layout
+
+\begin_layout Itemize
+el número de página 
+\end_layout
+
+\begin_layout Itemize
+el número de frame en donde está esa página 
+\end_layout
+
+\begin_layout Itemize
+y tiene un puntero a la próxima entrada.
+ 
+\end_layout
+
+\begin_layout Standard
+Atributos miembro
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+public BufHTEntry next
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ La próxima entrada.
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+public PageId pageNo
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ El número de página.
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+public int frameNo
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ El frame en el que esta la página.
+\end_layout
+
+\begin_layout Subsubsection
+BufHashTbl
+\end_layout
+
+\begin_layout Standard
+Una tabla de hash para mantener el seguimiento de las páginas que están
+ en el buffer pool( memoria principal ) Sus funciones son insertar, obtener
+ y remover páginas de la tabla de hash.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Función de hash:
+\series default
+ pageNo.pid % HTSIZE
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Atributos miembro
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+private static final int HTSIZE = 20
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ El tamaño de la tabla de hash.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+private BufHTEntry ht[] = new BufHTEntry[HTSIZE]
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Cada bucket mantiene una lista enlazada de BufHTEntrys, NULL significa
+ que no hay nada.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Métodos relevantes
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+public boolean insert(PageId pageNo, int frameNo)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Inserta una asociación ( BufHEntry ) entre la página( pageNo ) y el frame
+ ( frameNo ).
+\end_layout
+
+\begin_layout Standard
+Esta asociación es utilizada para indicar que el frame ( frameNo ) aloja
+ la página ( pageNo ).
+\end_layout
+
+\begin_layout Standard
+Dicha asociación es insertada en el primer lugar del bucket.
+\end_layout
+
+\begin_layout Standard
+Ej:
+\end_layout
+
+\begin_layout Standard
+b11-
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+textgreater
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{}
+\end_layout
+
+\end_inset
+
+b12-
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+textgreater
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{}
+\end_layout
+
+\end_inset
+
+b13
+\end_layout
+
+\begin_layout Standard
+b21-
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+textgreater
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{}
+\end_layout
+
+\end_inset
+
+b22-
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+textgreater
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{}
+\end_layout
+
+\end_inset
+
+b23
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+bn1
+\end_layout
+
+\begin_layout Standard
+Al insertar b0 ( supongamos que la funcion de hash me da el bucket de b11
+ ) queda:
+\end_layout
+
+\begin_layout Standard
+b0-
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+textgreater
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{}
+\end_layout
+
+\end_inset
+
+b11-
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+textgreater
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{}
+\end_layout
+
+\end_inset
+
+b12-
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+textgreater
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{}
+\end_layout
+
+\end_inset
+
+b13
+\end_layout
+
+\begin_layout Standard
+b21-
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+textgreater
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{}
+\end_layout
+
+\end_inset
+
+b22-
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+textgreater
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{}
+\end_layout
+
+\end_inset
+
+b23
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+bn1
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+public int lookup(PageId pageNo)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Busca el frame en el que está alojada la página con el id "pageNo".
+\end_layout
+
+\begin_layout Standard
+Si lo encuentra devuelve su número, caso contrario, INVALID_PAGE.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+public boolean remove(PageId pageNo)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Elimina una página de la tabla de hash.
+\end_layout
+
+\begin_layout Subsubsection
+BufMgr
+\end_layout
+
+\begin_layout Standard
+Asigna páginas nuevas en el buffer pool.
+\end_layout
+
+\begin_layout Standard
+Asocia y desasocia páginas con frames ( pins y unpins )
+\end_layout
+
+\begin_layout Standard
+Libera las páginas en el frame y usa algoritmos de remoción para reemplazar
+ las páginas.
+ ( LRU, MRU o Clock )
+\end_layout
+
+\begin_layout Standard
+pinPage: guarda una página en un frame, si no hay ninguno libre el algoritmo
+ de reemnplazo elige una.
+\end_layout
+
+\begin_layout Standard
+Si esa página contenia info, la guarda.
+ Luego asocia la página al frame.
+\end_layout
+
+\begin_layout Standard
+El que escribe y lee a disco es DM
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Atributos miembro
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+private BufHashTbl hashTable = new BufHashTbl();
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ La tabla de hash.
+ Sirve para indicar en que frame está alojada la página.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+private int numBuffers; Numero total de frames en el buffer pool.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+private byte[][] bufPool; default = byte[NUMBUF][MAXSPACE];
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ buffer pool físico( donde se guaran físicamente las páginas del buffer
+ ).
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+private FrameDesc[] frmeTable; default = new FrameDesc[NUMBUF];
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Un arreglo de descriptores, uno por cada frame.
+ Sirve para indicar si la página que está alojadas en el buffer está siendo
+ utilizada ( pin_cnt 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+textgreater
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{}
+\end_layout
+
+\end_inset
+
+ 0 ) y si fué modificada ( dirty = true ).
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+private Replacer replacer
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ El objeto Replacer, encargado de obtener una página para su remoción implementa
+ndo una política de remoción particular.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Métodos
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+public BufMgr( int numbufs, String replacerArg )
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Constructor: Crea un objeto buffer manager estableciendo la política de
+ remoción.
+\end_layout
+
+\begin_layout Standard
+Parámetros:
+\end_layout
+
+\begin_layout Standard
+numbufs número de buffers en el buffer pool.
+\end_layout
+
+\begin_layout Standard
+replacerArg nombre de la política de remoción.( LRU, MRU o Clock )
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+private void privFlushPages(PageId pageid, int allpages)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Si all_pages es distinto de 0, escribe todas las páginas válidas y dirty
+ a disco.
+\end_layout
+
+\begin_layout Standard
+Si all_pages es 0, escribe la página pageid a disco ( solo si es válida
+ y dirty ).
+\end_layout
+
+\begin_layout Standard
+Luego libera el frame.
+\end_layout
+
+\begin_layout Standard
+Este método se puede ejecutar únicamente si no hay páginas asociadas al
+ frame.
+\end_layout
+
+\begin_layout Standard
+Obtengo el id de la página asociada al frame
+\end_layout
+
+\begin_layout Standard
+Obtengo la página del buffer pool
+\end_layout
+
+\begin_layout Standard
+Escribo la página a disco
+\end_layout
+
+\begin_layout Standard
+Elimino la página de la tabla de hash
+\end_layout
+
+\begin_layout Standard
+Libero el frame de la página en el arreglo frmaTable
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+public void pinPage(PageId pinpgid, Page page, boolean emptyPage)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Page_Id_in_a_DB número de página en la base de datos.
+\end_layout
+
+\begin_layout Standard
+page: objeto pagina
+\end_layout
+
+\begin_layout Standard
+emptyPage: true-
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+textgreater
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{}
+\end_layout
+
+\end_inset
+
+ página vacía, false-
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+textgreater
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{}
+\end_layout
+
+\end_inset
+
+ página no vacía
+\end_layout
+
+\begin_layout Standard
+Pincha una página; esto significa que la página no puede ser removida.
+\end_layout
+
+\begin_layout Standard
+Busca la página en el buffer pool( por medio de la tabla de hash ).
+ Si la encuentra, incrementa pin_count del frame en donde está alojada.
+\end_layout
+
+\begin_layout Standard
+Si no está busca un frame mediante la política de remoción para alojarla.
+\end_layout
+
+\begin_layout Standard
+Para esto hace lo siguiente:
+\end_layout
+
+\begin_layout Standard
+Elimina la asociacion página-frame en la tabla de hash
+\end_layout
+
+\begin_layout Standard
+Inserta la nueva asociación en la tabla de hash
+\end_layout
+
+\begin_layout Standard
+Inserta la asociación en la frmeTable
+\end_layout
+
+\begin_layout Standard
+Si tuvo que remover una página para alojar esta, escribe la página vieja
+ que estaba en el frame seleccionado si fué modificada (dirty = true).
+\end_layout
+
+\begin_layout Standard
+Si la página no está vacía (emptyPage=false )la lee de disco usando el metodo
+ apropiado del paquete diskmgr , la inserta en el bufPool y luego incrementa
+ el pin_cpunt del frame en donde está alojada.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+public void unpinPage(PageId PageIdinaDB, boolean dirty)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+globalPageId_in_a_DB numero de página en minibase.
+\end_layout
+
+\begin_layout Standard
+dirty: indica si está marcada como modificada.
+\end_layout
+
+\begin_layout Standard
+Despincha una página especificada por el id de la página.
+\end_layout
+
+\begin_layout Standard
+Decrementa pincount, y si llega a cero, la página queda en el grupo de candidato
+s para la remoción.
+\end_layout
+
+\begin_layout Standard
+Este metodo debe ser llamado con dirty==true si el cliente ha modificado
+ la pagina.
+\end_layout
+
+\begin_layout Standard
+Si esto sucede, esta llamada debe establecer el dirty bit para este frame.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+public PageId newPage(Page firstpage, int howmany)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+firstpage la primer página.
+\end_layout
+
+\begin_layout Standard
+howmany número total de páginas nuevas a alojar.
+\end_layout
+
+\begin_layout Standard
+devuelve el id de la primer página de las páginas nuevas.
+\end_layout
+
+\begin_layout Standard
+Aloja nuevas paginas.
+\end_layout
+
+\begin_layout Standard
+Llama al DM para alojar un conjunto de páginas nuevas.
+\end_layout
+
+\begin_layout Standard
+Busca un frame en el buffer pool para la primer página y la pincha( pin
+ ).
+\end_layout
+
+\begin_layout Standard
+Si el buffer está lleno, llama al DM desalojando todas esas páginas y devuelve
+ un error ( null ).
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+public void freePage(PageId globalPageId)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+globalPageId el número de página en la Base de Datos.
+\end_layout
+
+\begin_layout Standard
+Borra la página globalPageId.
+\end_layout
+
+\begin_layout Standard
+Si la página estaba en el buffer pool, antes de hacer esto, llama a replacer.free.
+\end_layout
+
+\begin_layout Standard
+Elimina la entrada de la tabla de hash.
+\end_layout
+
+\begin_layout Standard
+Elimina la entrada en el descriptor de frames y luego desaloja la página,
+ llamando a BD.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+public void flushPage(PageId pageid)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Escribe la página pageid a disco, si es válida y fué modificada (dirty=true).
+\end_layout
+
+\begin_layout Standard
+Para hacer esto, llama ejecuta el método write_page de DiskManager.
+\end_layout
+
+\begin_layout Standard
+Luego libera el frame.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+public void flushAllPages()
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Escribe todas las páginas válidas y modificadas ( dirty=true) a disco.
+\end_layout
+
+\begin_layout Standard
+Luego libera el frame.
+\end_layout
+
+\begin_layout Standard
+Este método se puede ejecutar únicamente si no hay páginas asociadas al
+ frame.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Proyectores y delegados
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+ getNumBuffers-> numBuffers
+\end_layout
+
+\begin_layout Standard
+getNumUnpinnedBuffers->replacer.getNumUnpinnedBuffers
+\end_layout
+
+\begin_layout Standard
+frameTable()->frmeTable
+\end_layout
+
+\begin_layout Standard
+writepage->DB.writepage
+\end_layout
+
+\begin_layout Standard
+readpage->DB.readpage
+\end_layout
+
+\begin_layout Standard
+allocatepage->DB.allocatepage
+\end_layout
+
+\begin_layout Standard
+deallocatepage->DB.deallocatepage
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Replacer
+\end_layout
+
+\begin_layout Standard
+Esta interfaz se asocia con el algoritmo de reemplazo.
+ Describe si la página de un frame esta asociada(pin), desasociada(unpin)
+ o disponible.
+\end_layout
+
+\begin_layout Standard
+Describe que frame debe ser elegido para su remoción.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Atributos miembro
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+protected BufMgr mgr;
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Objeto buffer manager
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+protected int head;
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Manejador de reloj.
+ Esta variable es utilizada por el algoritmo de reloj.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+protected STATE statebit[];
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Guarda el estado de un frame.
+ este puede ser ( Avaible, Referenced o Pinned )
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Métodos
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+public void pin( int frameNo )
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+frameNo número de frame de la página.
+\end_layout
+
+\begin_layout Standard
+Devuelve true si todo estuvo bien.
+\end_layout
+
+\begin_layout Standard
+Asocia una página candidata en el buffer pool.
+\end_layout
+
+\begin_layout Standard
+Hace un pin en el frame de la tabla de descriptores de frame del buffer
+ pool.
+\end_layout
+
+\begin_layout Standard
+Establece su estado como Pinned.
+\end_layout
+
+\begin_layout Standard
+----------------------------------- Unpins a page in the buffer pool.
+\end_layout
+
+\begin_layout Standard
+frameNo número de frame de la página.
+\end_layout
+
+\begin_layout Standard
+Devuelve true si todo estuvo bien
+\end_layout
+
+\begin_layout Standard
+Hace un unpin en el frame de la tabla de descriptores de frame del buffer
+ pool.
+\end_layout
+
+\begin_layout Standard
+Establece su estado como Referenced si no tiene ningun pin (pin_count =
+ 0 ).
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+public void free( int frameNo )
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+frameNo frame number of the page.
+\end_layout
+
+\begin_layout Standard
+Libera y desasocia una página en el buffer pool.
+\end_layout
+
+\begin_layout Standard
+Hace un unpin en el frame de la tabla de descriptores de frame del buffer
+ pool.
+\end_layout
+
+\begin_layout Standard
+Establece su estado como Avaible.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+public abstract int pickvictim()
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Debe asociar el frame devuelto
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+public abstract String name();
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Devuelve el nombre del algoritmo de remoción
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+public int getNumUnpinnedBuffers()
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Devuelve la cantidad de frames libres ( un frame está libre si pin_count
+ = 0 )
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+protected void setBufferManager( BufMgr mgrArg )
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Asocia el el bufMgr con esta clase de remoción.
+\end_layout
+
+\begin_layout Subsection
+Interacción con otros componentes
+\end_layout
+
+\begin_layout Subsection
+Ejemplo de uso
+\end_layout
+
+\begin_layout Standard
+Si se justifica
+\end_layout
+
+\begin_layout Subsubsection
+Diagramas de secuencia
+\end_layout
+
+\begin_layout Subsubsection
+Script de ejemplo
+\end_layout
+
+\begin_layout Subsection
+Evaluación del componente (opinión acerca de la calidad de código, diseño,
+ etc.)
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\end_body
+\end_document

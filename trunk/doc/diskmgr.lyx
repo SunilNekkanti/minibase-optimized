@@ -1,0 +1,1286 @@
+#LyX 1.4.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 245
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+
+\end_preamble
+\language english
+\inputencoding latin1
+\fontscheme default
+\graphics default
+\paperfontsize default
+\spacing single
+\papersize default
+\use_geometry false
+\use_amsmath 0
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+DiskManager
+\end_layout
+
+\begin_layout Subsection
+Descripción general
+\end_layout
+
+\begin_layout Standard
+Se encarga de crear, abrir, cerrar o borrar una base de datos, que no es
+ otra cosa que un archivo en el disco.
+ Provee diversos métodos para acceder a las páginas en el disco y manejar
+ el Space Map, que sirve para saber cuáles páginas están siendo utilizadas.
+ También permite mantener el nombre y la ubicación de los archivos lógicos
+ de la base, manejando el Directorio de Archivos.
+ 
+\end_layout
+
+\begin_layout Subsection
+Clases principales y sus protocolos principales
+\end_layout
+
+\begin_layout Subsubsection
+Clase Page
+\end_layout
+
+\begin_layout Standard
+Funciona como un buffer para guardar una página en memoria al momento de
+ leer o escribir de disco, o para su utilización temporal.
+\end_layout
+
+\begin_layout Subsubsection
+Clase DB
+\end_layout
+
+\begin_layout Standard
+Esta es la clase que se encarga de ser la interfaz del Disk Manager.
+ Exporta la funcionalidad de crear, abrir, cerrar o borrar una base de datos.
+ La unidad mínima física de lectura y escritura en Minibase es una página
+ y, por lo tanto, el archivo está dividido en varias páginas.
+ El tamaño de una de ellas está dado por una constante, por lo que esta
+ clase no provee un método para inicializarlo; en este caso, es de 1024
+ bytes.
+\end_layout
+
+\begin_layout Subsubsection
+Space Map
+\end_layout
+
+\begin_layout Standard
+El mapa de bits representa, usando un bit por página, si una página de la
+ base de datos está siendo utilizada o no.
+ Como en Minibase las páginas ocupan 1024 bytes, entonces podremos llevar
+ registro de 8 * 1024 páginas, por cada página que utilice el Space Map.
+ Por supuesto, las páginas usadas por el Space Map son marcadas como usadas.
+\end_layout
+
+\begin_layout Standard
+El bit enésimo significa:
+\end_layout
+
+\begin_layout Standard
+0: La página enésima esta libre.
+ 1: La página enésima esta utilizada.
+\end_layout
+
+\begin_layout Standard
+Como esta estructura no es una lista enlazada y, como la primer página que
+ no pertenece al Space Map en sí es justamente la primera inmediata que
+ le sucede, entonces el Space Map como estructura de datos no puede crecer
+ una vez creado.
+ Por ende, la cantidad de páginas del Space Map es fija, la cantidad de
+ páginas que se pueden reservar queda acotada y el tamaño de la base de
+ datos queda acotado como consecuencia.
+\end_layout
+
+\begin_layout Standard
+Por ejemplo, si se desea crear una base de datos de 2000 páginas, entonces
+ se necesitará sólo una página de Space Map para marcarlas.
+\end_layout
+
+\begin_layout Subsubsection
+Directorio de Archivos
+\end_layout
+
+\begin_layout Standard
+El directorio de archivos es una lista simplemente encadenada de páginas,
+ en donde se guarda la siguiente información:
+\end_layout
+
+\begin_layout Itemize
+Next Page: PageID de la próxima página del Directorio.
+ En la última página, este valor es INVALID_PAGE (-1).
+ Ocupa 4 bytes.
+ 
+\end_layout
+
+\begin_layout Itemize
+Number of Entries: Cantidad de Entries que entran en la página.
+ Ocupa 4 bytes.
+ 
+\end_layout
+
+\begin_layout Itemize
+Entry: 
+\end_layout
+
+\begin_layout Itemize
+PageID: PageID de la primer página del archivo.
+ Ocupa 4 bytes.
+ 
+\end_layout
+
+\begin_layout Itemize
+File Name: Nombre del archivo.
+ Ocupa 52 bytes.
+ 
+\end_layout
+
+\begin_layout Itemize
+Number of Pages: Cantidad total de páginas de la base de datos.
+ Este atributo figura sólo en la primera página del Directorio.
+ 
+\end_layout
+
+\begin_layout Standard
+Este formato de página se encuentra reflejado en la clase DBHeaderPage,
+ y es heredado por las clases DBFirstPage, que se encarga del formato de
+ la primer página, y por DBDirectoryPage, que se encarga de las demás páginas
+ del directorio.
+\end_layout
+
+\begin_layout Standard
+Es bueno resaltar que tanto el Directorio como el Space Map son parte del
+ archivo de la base de datos.
+ Y la página 0 siempre es la primera página del Directorio.
+\end_layout
+
+\begin_layout Standard
+Sería útil aclarar preliminarmente que el Disk Manager actúa tanto como
+ productor de datos para el Buffer Manager que como consumidor de éste último.
+ Como productor, recibe pedidos de lectura y escritura de páginas y se las
+ suministra o recibe del BM.
+ Como consumidor, utiliza al BM como cache para las páginas de su estructura
+ interna, es decir, las del Space Map y las del Directorio.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Constructores
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+OpenDB(fname)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Abre un archivo de base de datos existente con el nombre fname.
+\end_layout
+
+\begin_layout Enumerate
+Abre el archivo con ese nombre para lectura y escritura.
+\end_layout
+
+\begin_layout Enumerate
+Como toda base de datos tiene al menos una página, inicializa la cantidad
+ de páginas en 1.
+ Pide un PinPage al Buffer Manager de la página 0, pues utiliza de entrada
+ el BM como cache.
+ El BM, en consecuencia, le pide al DM, en 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+"{m}
+\end_layout
+
+\end_inset
+
+odo productor
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+"{,}
+\end_layout
+
+\end_inset
+
+ que lea la página 0.
+\end_layout
+
+\begin_layout Enumerate
+Una vez leída del disco la página 0, se la da al BM.
+ El BM le devuelve la página al DM (quien actúa nuevamente en 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+"{m}
+\end_layout
+
+\end_inset
+
+odo consumidor
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+"{d}
+\end_layout
+
+\end_inset
+
+el cache).
+ Ahora sí, extrae la cantidad total de páginas verdadera y la actualiza.
+ Luego, hace un UnPinPage de la página 0 y la marca como undirty, ya que
+ no escribió nada en ella.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+OpenDB(fname, numpages) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Crea un archivo de base de datos nuevo con nombre fname (si existe, la borra)
+ y de num_pages páginas:
+\end_layout
+
+\begin_layout Enumerate
+Crea un archivo del tamaño correspondiente y lo llena de ceros.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Inicializa la primer página de la base de datos utilizando pinPage del Buffer
+ Manager sin escribir en disco.
+ Esto lo hace para poder escribir en memoria.
+ 
+\end_layout
+
+\begin_layout Enumerate
+En esta primer página, inicializa la primer página del Directorio (y de
+ la base de datos) donde guardará los nombres (MAX_NAME = 50 bytes de largo
+ + 4b de página donde comienza el archivo + 2b para que quede múltiplo de
+ 4bytes) de archivos lógicos (Heap Files).
+ Para esto, utiliza el constructor de DBFirstPage, que no es otra cosa que
+ un DBHeaderPage (ver Páginas del Directorio).
+ 
+\end_layout
+
+\begin_layout Enumerate
+Calcula el espacio que necesitará el Space Map para todas las páginas de
+ la base.
+ Inicializa las páginas necesarias del space map con los bits correspondientes
+ a las páginas ya utilizadas (incluídas las del space map).
+ Véase Mapa de Bits.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+allocatePage(PageID, int x)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Trata de reservar en el archivo de base de datos x páginas.
+\end_layout
+
+\begin_layout Enumerate
+Busca en el SpaceMap si existen x páginas contiguas en 0.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Si las encuentra, devuelve en PageID el número de la primer página e inicializa
+ x páginas en el SpaceMap en 1 para reservarlas.
+ Está de más aclarar que, para hacer todo esto, debe llamar al BufferManager
+ para realizar las operaciones con el SpaceMap en el buffer pool.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Métodos relevantes
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+closeDB() 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Lo único que hace es cerrar el archivo único de base de datos.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+DBDestroy() 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Elimina del disco el archivo de la base de datos.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+ReadPage(PageID, Page) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Lee del disco la página PageID y la guarda en un buffer temporal al que
+ apunta Page.
+ Esto lo realiza con la función seek del filesystem, ya que PageID es un
+ entero que corresponde al orden en que están las páginas en el disco.
+ Por ejemplo, para acceder a la página 3, se realiza un seek(3 * 1024).
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+WritePage(PageID, Page)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ De la misma manera en que ReadPage lee una página del disco, esta función
+ la escribe.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+allocatepage(PageID, int n)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Esta función se encarga de reservar n páginas (n >= 1) contiguas en el
+ archivo de la base de datos, devolviendo la PageID de la primera reservada:
+ 
+\end_layout
+
+\begin_layout Enumerate
+Necesita recorrer el Space Map para tratar de encontrar n bits contiguos
+ en 0.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Luego de encontrarlos los marca como 1 
+\end_layout
+
+\begin_layout Enumerate
+Devuelve la PageID de la primer página de las reservadas.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+allocatepage(PageID)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Esta función se encarga de reservar 1 página en el archivo de la base de
+ datos, devolviendo su PageID.
+ Llama a la anterior con n=1.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+deallocatepage(PageId, int n)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Se encarga de marcar con 0 n páginas contiguas desde PageID.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+deallocatepage(PageId)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Se encarga de marcar con 0 la página PageID.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+addfileentry(fname, PageID)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Esta función se encarga de agregar una entry en el Directorio de Archivos
+ de la base de datos con fname como nombre del archivo lógico y PageID un
+ puntero a la primer página del archivo.
+\end_layout
+
+\begin_layout Enumerate
+Recorre todas las páginas del directorio hasta encontrar alguna entry que
+ apunte a una página inválida.
+ Esto es gracias a que cada página del directorio se inicializa con entries
+ que apuntan a INVALID_PAGE.
+ Pueden darse dos casos: 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Encuentra: Agrega el entry con la funcion setFileEntry de DBHeaderPage.
+ 
+\end_layout
+
+\begin_layout Enumerate
+No encuentra: Debe crear una nueva página del Directorio de Páginas, y luego
+ agregar el entry con la función setFileEntry de DBHeaderPage.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+deletefileentry(fname)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Esta función se encarga de "borrar" el entry del Directorio de Archivos.
+ Para realizar esto debe buscar por todas las páginas hasta encontrar el
+ entry con ese mismo fname.
+ Una vez encontrado debe llamar a la función setFileEntry con INVALID_PAGE
+ y cualquier string para "anular" el entry.
+ De esta manera al agregar en otro momento otro entry este pueda ser guardado
+ en este lugar.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+getfileentry(fname)->PageId
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Esta función se encarga de devolver la primer PageID de un archivo lógico
+ con nombre fname de la base de datos.
+ Debe recorrer todas las páginas del Directorio de Archivos y a cada uno
+ de sus entries; y luego devolver la PageID correspondiente a ese fname.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+string dbname()
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Retorna el nombre del archivo de la base de datos.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+int dbnumpages()
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Retorna la cantidad de páginas de la base de datos.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+int dbpagesize()
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Retorna el tamaño de una página de la base de datos.
+ En este caso es fijo y esta función siempre devolverá 1024 que es el valor
+ de la constante MINIBASE_PAGESIZE.
+\end_layout
+
+\begin_layout Standard
+Aclaración: Todas las funciones que recorren el Diccionario de Archivos
+ o el Space Map utilizan al Buffer Manager para trabajar en memoria.
+ Esto lo realizan con las funciones pinPage y unPinPage.
+\end_layout
+
+\begin_layout Subsubsection
+Clase DBHeaderPage
+\end_layout
+
+\begin_layout Standard
+Se encarga de reflejar el formato de una página cualquiera del Directorio
+ de Archivos y provee ciertas funcionalidades tanto para modificar como
+ para leer los datos de estas páginas.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Constructores
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+DBHeaderPage(page, int pageusedbytes)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Crea una página Header inicializando los datos que corresponden.
+ Para esto debe poner como INVALID_PAGE la página siguiente, debe calcular
+ la cantidad de entries que va a tener.
+ Como esta clase inicializa los datos de una página culquiera debe calcular
+ la cantidad de entries en base a pageusedbytes.
+ (ver Constructores de DBDirectoryPage y DBFirstPage) que son los que llaman
+ a este constructor con el pageusedbytes correcto.
+ Además de debe inicializar todos los entries con PageID = INVALID_PAGE,
+ ya que de esta manera es como se consideran habilitados para ser usados.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+DBHeaderPage(page, int pageusedbytes)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Crea una página Header inicializando los datos que corresponden.
+ Para esto debe poner como INVALID_PAGE la página siguiente, debe calcular
+ la cantidad de entries que va a tener.
+ Como esta clase inicializa los datos de una página culquiera debe calcular
+ la cantidad de entries en base a pageusedbytes.
+ (ver Constructores de DBDirectoryPage y DBFirstPage) que son los que llaman
+ a este constructor con pageusedbytes correcto.
+ Además de debe inicializar todos los entries con PageID = INVALID_PAGE,
+ ya que de esta manera es como se consideran habilitados para ser usados.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Métodos relevantes
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+PageID getNextPage()
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Retorna la PageID de proxima página almacenada en esta página.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+setNextPage(PageID)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Guarda la PageID de proxima página en esta Página.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+int getNumberOfEntries()
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Retorna la cantidad de entries en esta página.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+setFileEntry(pageID, fname, int pos)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Guarda la entry en esta página en la posición pos.
+ Con pos calcula el offset correspondiente y escribe desde ahí, primero
+ el pageID y luego fname.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+fname getFileEntry(pageID, int pos)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Retorna la entry en esta página en la posición pos.
+ Con pos calcula el offset correspondiente y lee desde ahí, primero el pageID
+ y luego fname.
+\end_layout
+
+\begin_layout Subsubsection
+Clase DBFirstPage
+\end_layout
+
+\begin_layout Standard
+Llama al constructor de DBHeaderPage con los datos correspondientes al momento
+ de crear la primer página de la base de datos (página 0) que es también
+ la primer página del Diccionario de Archivos.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Métodos relevantes
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+OpenPage(page)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Inicializa la página con los datos de page.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+num getNumDBPages()
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Permite obtener la cantidad de páginas de la base de datos.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+setNumDBPages(num)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Permite setear la cantidad de páginas de la base de datos.
+\end_layout
+
+\begin_layout Subsubsection
+Clase DBDirectoryPage
+\end_layout
+
+\begin_layout Standard
+Llama al constructor de DBHeaderPage con los datos correspondientes al momento
+ de crear cualquier página del Diccionario de Archivos menos la primer página
+ de la base de datos (página 0).
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Métodos relevantes
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+OpenPage(page)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ Inicializa la página con los datos de page.
+ 
+\end_layout
+
+\begin_layout Subsection
+Interacción con otros componentes
+\end_layout
+
+\begin_layout Subsection
+Ejemplo de uso
+\end_layout
+
+\begin_layout Standard
+Si se justifica 
+\end_layout
+
+\begin_layout Subsubsection
+Diagramas de secuencia
+\end_layout
+
+\begin_layout Standard
+
+\newpage
+ 
+\end_layout
+
+\end_body
+\end_document

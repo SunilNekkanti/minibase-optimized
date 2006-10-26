@@ -1,0 +1,70 @@
+#LyX 1.4.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 245
+\begin_document
+\begin_header
+\textclass article
+\language spanish
+\inputencoding auto
+\fontscheme default
+\graphics default
+\paperfontsize default
+\spacing single
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Index-BTree
+\end_layout
+
+\begin_layout Subsection
+Descripción general
+\end_layout
+
+\begin_layout Subsection
+Clases principales y sus protocolos principales
+\end_layout
+
+\begin_layout Subsection
+Interacción con otros componentes
+\end_layout
+
+\begin_layout Subsection
+Ejemplo de uso
+\end_layout
+
+\begin_layout Standard
+Si se justifica
+\end_layout
+
+\begin_layout Subsubsection
+Diagramas de secuencia
+\end_layout
+
+\begin_layout Subsubsection
+Script de ejemplo
+\end_layout
+
+\begin_layout Subsection
+Evaluación del componente (opinión acerca de la calidad de código, diseño,
+ etc.)
+\end_layout
+
+\end_body
+\end_document
