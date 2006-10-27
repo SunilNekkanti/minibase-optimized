@@ -45,28 +45,43 @@ Es la estructura encargada de traer páginas de memoria secundaria a memoria
  principal sin la necesidad de leerlas de la memoria secundaria constantemente.
  Para este propósito, posee una colección frames, que son los encargados
  de alojar las páginas en la memoria principal.
- Como ya mencionamos, la utilidad fundamental del Buffer Manager es traer
+ 
+\end_layout
+
+\begin_layout Standard
+Como ya mencionamos, la utilidad fundamental del Buffer Manager es traer
  páginas de disco y brindarle a las clases superiores los métodos necesarios
  para mantenerlas en memoria hasta que estos digan lo contrario.
- Sin embargo estas paginas liberadas solo serán removidas del Buffer y grabadas
- nuevamente en el disco, en el caso de haber sido modificadas, cuando no
- existan más frames libres en el Buffer y se solicite alojar una pagina
- que no se encuentra en el mismo en ese momento.
+ Sin embargo estas paginas solo serán removidas del Buffer y grabadas nuevamente
+ en el disco, en el caso de haber sido modificadas, cuando no existan más
+ frames libres en el Buffer y se solicite alojar una pagina que no se encuentra
+ en el mismo en ese momento.
  Para realizar este procedimiento se utiliza un algoritmo de remoción de
  páginas.
- La implementación del Buffer Manager utiliza una Interfaz para acceder
- a la política de remoción( clase Replacer ).
- Minibase presenta implementaciones distintas implementaciones de esta interfaz
- para proveer algoritmos FIFO( clase Clock ), LRU y MRU.
- Cuando se desea acceder o modificar una tabla, se le pide al Buffer Manager
+ 
+\end_layout
+
+\begin_layout Standard
+La implementación del Buffer Manager utiliza una Interfaz para acceder a
+ la política de remoción( clase Replacer ).
+ Minibase presenta distintas implementaciones de esta interfaz para proveer
+ algoritmos FIFO( clase Clock ), LRU y MRU.
+\end_layout
+
+\begin_layout Standard
+Cuando se desea acceder o modificar una tabla, se le pide al Buffer Manager
  que traiga las páginas correspondientes a memoria, en caso de no encontrase
  allí con anterioridad.
  Estas páginas serán marcadas ( pin ) mientras se esté operando con ellas
  y luego se liberarán( unpin ) para que sean candidatas para la remoción.
- El Buffer Manager contiene métodos para obtener una página, liberarla,
- crearla, borrarla, saber si se encuentra en memoria y guardar las páginas
- que fueron modificadas.
- Para la mayoría de ellos, luego de realizar las acciones necesarias se
+ 
+\end_layout
+
+\begin_layout Standard
+El Buffer Manager contiene métodos para obtener una página, liberarla, crearla,
+ borrarla, saber si se encuentra en memoria y guardar las páginas que fueron
+ modificadas.
+ Para la mayoría de ellos, luego de realizar las acciones necesarias, se
  llama al DiskSpace Manager para que persista los resultados.
  Las páginas cuentan con una marca que indica si han sido modificadas (
  dirty ).
@@ -78,7 +93,7 @@ Es la estructura encargada de traer páginas de memoria secundaria a memoria
 \end_layout
 
 \begin_layout Subsubsection
-Diseño interno - estructuras
+Diseño interno, estructuras
 \end_layout
 
 \begin_layout Standard
@@ -113,55 +128,7 @@ Esto describe la página que es guardada en el frame correspondiente.
 Se usa una tabla de hash para identificar que páginas de disco ocupan un
  frame.
  La tabla de hash está implementada( enteramente en memoria principal )
- usando un arreglo de pares
-\begin_inset ERT
-status collapsed
-
-\begin_layout Standard
-
-
-\backslash
-textless
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Standard
-
-{}
-\end_layout
-
-\end_inset
-
-numero de pagina, numero de frame
-\begin_inset ERT
-status collapsed
-
-\begin_layout Standard
-
-
-\backslash
-textgreater
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Standard
-
-{}
-\end_layout
-
-\end_inset
-
-.
+ usando un arreglo de pares <numero de pagina, numero de frame>.
  El arreglo es llamado directorio.
  Dado un número de página, se puede aplicar la función de hash para encontrar
  la entrada del directorio que apunta al bucket que contiene el número de
@@ -242,6 +209,9 @@ Es una clase que describe un frame.
 
 \begin_layout Standard
 Atributos miembro 
+\end_layout
+
+\begin_layout Standard
 \begin_inset ERT
 status collapsed
 
@@ -267,10 +237,17 @@ end{verbatim}
 
 \end_inset
 
- Indica si la página que contiene el frame ha sido modificada.
+ 
+\end_layout
+
+\begin_layout Standard
+Indica si la página que contiene el frame ha sido modificada.
  true, para frames cuyas páginas han sido modificados, false para frames
  cuyas páginas no han sido modificadas.
  
+\end_layout
+
+\begin_layout Standard
 \begin_inset ERT
 status collapsed
 
@@ -296,8 +273,14 @@ end{verbatim}
 
 \end_inset
 
- El id de la página, o INVALID_PAGE si el frame está vacío.
- 
+
+\end_layout
+
+\begin_layout Standard
+El id de la página, o INVALID_PAGE si el frame está vacío.
+\end_layout
+
+\begin_layout Standard
 \begin_inset ERT
 status collapsed
 
@@ -323,35 +306,15 @@ end{verbatim}
 
 \end_inset
 
- cantidad de pinches: Si la página está pinchada mas de una vez ( pin_cnt
  
-\begin_inset ERT
-status collapsed
-
-\begin_layout Standard
-
-
-\backslash
-textgreater
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Standard
-
-{}
-\end_layout
-
-\end_inset
-
- 0 ) no puede ser removida.
 \end_layout
 
 \begin_layout Standard
+cantidad de pinches: Si la página está pinchada mas de una vez ( pin_cnt
+ > 0 ) no puede ser removida.
+\end_layout
+
+\begin_layout Paragraph
 
 \series bold
 Métodos relevantes
@@ -383,7 +346,11 @@ end{verbatim}
 
 \end_inset
 
- Incrementa pin_cnt en 1
+
+\end_layout
+
+\begin_layout Standard
+Incrementa pin_cnt en 1
 \end_layout
 
 \begin_layout Standard
@@ -412,7 +379,11 @@ end{verbatim}
 
 \end_inset
 
- Decrementa pin_cnt en 1
+
+\end_layout
+
+\begin_layout Standard
+Decrementa pin_cnt en 1
 \end_layout
 
 \begin_layout Subsubsection
@@ -468,8 +439,15 @@ end{verbatim}
 
 \end_inset
 
- La próxima entrada.
  
+\end_layout
+
+\begin_layout Standard
+La próxima entrada.
+ 
+\end_layout
+
+\begin_layout Standard
 \begin_inset ERT
 status collapsed
 
@@ -495,8 +473,15 @@ end{verbatim}
 
 \end_inset
 
- El número de página.
+
+\end_layout
+
+\begin_layout Standard
+El número de página.
  
+\end_layout
+
+\begin_layout Standard
 \begin_inset ERT
 status collapsed
 
@@ -522,7 +507,11 @@ end{verbatim}
 
 \end_inset
 
- El frame en el que esta la página.
+ 
+\end_layout
+
+\begin_layout Standard
+El frame en el que esta la página.
 \end_layout
 
 \begin_layout Subsubsection
@@ -543,7 +532,7 @@ Función de hash:
  pageNo.pid % HTSIZE
 \end_layout
 
-\begin_layout Standard
+\begin_layout Paragraph
 
 \series bold
 Atributos miembro
@@ -575,7 +564,11 @@ end{verbatim}
 
 \end_inset
 
- El tamaño de la tabla de hash.
+ 
+\end_layout
+
+\begin_layout Standard
+El tamaño de la tabla de hash.
 \end_layout
 
 \begin_layout Standard
@@ -604,11 +597,15 @@ end{verbatim}
 
 \end_inset
 
- Cada bucket mantiene una lista enlazada de BufHTEntrys, NULL significa
- que no hay nada.
+ 
 \end_layout
 
 \begin_layout Standard
+Cada bucket mantiene una lista enlazada de BufHTEntrys, NULL significa que
+ no hay nada.
+\end_layout
+
+\begin_layout Paragraph
 
 \series bold
 Métodos relevantes
@@ -664,7 +661,7 @@ Ej:
 \begin_layout Standard
 b11-
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Standard
 
@@ -1056,7 +1053,11 @@ end{verbatim}
 
 \end_inset
 
- La tabla de hash.
+ 
+\end_layout
+
+\begin_layout Standard
+La tabla de hash.
  Sirve para indicar en que frame está alojada la página.
 \end_layout
 
@@ -1073,7 +1074,24 @@ begin{verbatim}
 
 \end_inset
 
-private int numBuffers; Numero total de frames en el buffer pool.
+private int numBuffers; 
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+Numero total de frames en el buffer pool.
 \end_layout
 
 \begin_layout Standard
@@ -1102,8 +1120,11 @@ end{verbatim}
 
 \end_inset
 
- buffer pool físico( donde se guaran físicamente las páginas del buffer
- ).
+ 
+\end_layout
+
+\begin_layout Standard
+buffer pool físico( donde se guaran físicamente las páginas del buffer ).
 \end_layout
 
 \begin_layout Standard
@@ -1132,7 +1153,11 @@ end{verbatim}
 
 \end_inset
 
- Un arreglo de descriptores, uno por cada frame.
+ 
+\end_layout
+
+\begin_layout Standard
+Un arreglo de descriptores, uno por cada frame.
  Sirve para indicar si la página que está alojadas en el buffer está siendo
  utilizada ( pin_cnt 
 \begin_inset ERT
@@ -1187,8 +1212,12 @@ end{verbatim}
 
 \end_inset
 
- El objeto Replacer, encargado de obtener una página para su remoción implementa
-ndo una política de remoción particular.
+ 
+\end_layout
+
+\begin_layout Standard
+El objeto Replacer, encargado de obtener una página para su remoción implementan
+do una política de remoción particular.
 \end_layout
 
 \begin_layout Standard
@@ -1795,7 +1824,11 @@ end{verbatim}
 
 \end_inset
 
- Objeto buffer manager
+
+\end_layout
+
+\begin_layout Standard
+Objeto buffer manager
 \end_layout
 
 \begin_layout Standard
@@ -1824,7 +1857,11 @@ end{verbatim}
 
 \end_inset
 
- Manejador de reloj.
+
+\end_layout
+
+\begin_layout Standard
+Manejador de reloj.
  Esta variable es utilizada por el algoritmo de reloj.
 \end_layout
 
@@ -1854,7 +1891,11 @@ end{verbatim}
 
 \end_inset
 
- Guarda el estado de un frame.
+
+\end_layout
+
+\begin_layout Standard
+Guarda el estado de un frame.
  este puede ser ( Avaible, Referenced o Pinned )
 \end_layout
 
@@ -2008,7 +2049,11 @@ end{verbatim}
 
 \end_inset
 
- Debe asociar el frame devuelto
+ 
+\end_layout
+
+\begin_layout Standard
+Debe asociar el frame devuelto
 \end_layout
 
 \begin_layout Standard
@@ -2037,7 +2082,11 @@ end{verbatim}
 
 \end_inset
 
- Devuelve el nombre del algoritmo de remoción
+ 
+\end_layout
+
+\begin_layout Standard
+Devuelve el nombre del algoritmo de remoción
 \end_layout
 
 \begin_layout Standard
