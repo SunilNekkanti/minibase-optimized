@@ -39,19 +39,6 @@ TODO: Revisar los arboles binarios como estan construido y hacer un analisis
 \end_layout
 
 \begin_layout Standard
-TODO: Realizar una descripcion mas profunda de cada clase
-\end_layout
-
-\begin_layout Standard
-TODO: Mencionar las clases de excepciones que estan desperdigadas por ahi
-\end_layout
-
-\begin_layout Standard
-TODO: Revisar con mas detenimiento las clases IoBuf y OBuf, q parecen un
- poco al pedo
-\end_layout
-
-\begin_layout Standard
 TODO: Analizar mas profundamente las clases de eval y projection, y en la
  parte de uso explicar como se introduce una condicion
 \end_layout
@@ -74,10 +61,40 @@ Clases principales y sus protocolos principales
 \end_layout
 
 \begin_layout Standard
-Como dice el nombre de la componente, la interfaz que ofrece es la de un
- iterador.
- Esta interfaz es implementada usando una clase abstracta de la cual heredan
- todas las clases que ofrecen acceso a un conjunto de registros.
+La interfaz de iterador abstaida por la clase 
+\emph on
+Iterator
+\emph default
+ de la cual heredan todas las clases que ofrecen acceso a un conjunto de
+ registros.
+\end_layout
+
+\begin_layout Subsubsection
+Scan
+\end_layout
+
+\begin_layout Standard
+Scan se decidió tratarla en esta sección, por más que se encuentre en el
+ paquete de 
+\emph on
+Heapfile
+\emph default
+ y no herede de 
+\emph on
+Iterator
+\emph default
+, porque su funcionalidad es la de un iterador e implementa la interfaz
+ de 
+\emph on
+Iterator.
+\end_layout
+
+\begin_layout Standard
+Este iterador se ocupa de iterar sobre todos los registros de un 
+\emph on
+Heapfile
+\emph default
+, sin ninguna condición.
 \end_layout
 
 \begin_layout Subsubsection
@@ -85,17 +102,45 @@ FileScan
 \end_layout
 
 \begin_layout Standard
-FileScan permite iterar sobre los registros de un heapfile que cumplen una
- condicion de seleccion.
- Esta condicion puede ser nula, permitiendo iterar sobre todos los registros
- del heapfile.
- Tambien se puede especificar los atributos de las tuplas de salidas, permitiend
-o hacer una proyeccion.
+
+\emph on
+FileScan
+\emph default
+ es simplemente un wrapper de la clase 
+\emph on
+Scan,
+\emph default
+ o sea que no ofrece casi funcionalidad adicional a Scan salvo por algunas
+ que se deberian abstraer a otros iteradores.
+\end_layout
+
+\begin_layout Standard
+La funcionalidad adicional que ofrece es la de realizar un selección sobre
+ el 
+\emph on
+Scan
+\emph default
+ y realizar una proyeccion.
+ Estas dos se deberian implementar utilizando iteradores.
+ Notar que si la condición de seleccion es nula, se itera sobre todos los
+ registros del 
+\emph on
+Heapfile
+\emph default
+.
 \end_layout
 
 \begin_layout Standard
 La evaluación de la condicion de seleccion y la proyeccion son proveidas
- por las clases PredEval y Projection, respectivamente.
+ por las clases 
+\emph on
+PredEval
+\emph default
+ y 
+\emph on
+Projection
+\emph default
+, respectivamente.
 \end_layout
 
 \begin_layout Subsubsection
@@ -103,9 +148,25 @@ NestedLoopsJoins
 \end_layout
 
 \begin_layout Standard
-NestedLoopsJoins permite realizar un join entre un iterador y un heapfile.
+
+\emph on
+NestedLoopsJoins
+\emph default
+ permite realizar un join entre un 
+\emph on
+Iterator
+\emph default
+ y un 
+\emph on
+Heapfile
+\emph default
+ (aunque seria más correcto que fuera entre dos 
+\emph on
+Iterator
+\emph default
+).
  El algoritmo utilizado es el más simple de los implementados, es un doble
- loop donde, en el cuerpo del loop interno, se verfican la condicion de
+ ciclo donde, en el cuerpo del ciclo interno, se verfican la condicion de
  join.
  Tambien se puede realizar una proyeccion en la salida.
 \end_layout
@@ -115,14 +176,36 @@ SortMerge
 \end_layout
 
 \begin_layout Standard
-SortMerge realiza un join utilizando el algoritmo de merge sort.
- Como NestedLoopsJoins permite realizar una proyeccion en la salida.
+
+\emph on
+SortMerge
+\emph default
+ realiza un join utilizando el algoritmo de merge sort.
+ Como 
+\emph on
+NestedLoopsJoins
+\emph default
+ permite realizar una proyeccion en la salida.
 \end_layout
 
 \begin_layout Standard
-Para realizar el sort utiliza varias clases auxiliares, como Sort (que se
- encarga de iterar de una manera ordenada un heapfile) y IoBuf (que permite
- almacenar en memoria paginas).
+Para realizar el sort utiliza varias clases auxiliares, como 
+\emph on
+Sort
+\emph default
+ (que se encarga de iterar de una manera ordenada un 
+\emph on
+Heapfile
+\emph default
+) y 
+\emph on
+IoBuf
+\emph default
+ (un simple wrapper para el 
+\emph on
+BufMgr
+\emph default
+ para que trabaje con tuplas).
 \end_layout
 
 \begin_layout Standard
@@ -134,7 +217,11 @@ Sort
 \end_layout
 
 \begin_layout Standard
-Sort permite iterar de una manera ordenada la salida de otro iterador.
+
+\emph on
+Sort
+\emph default
+ permite iterar de una manera ordenada la salida de otro iterador.
  Utiliza un arbol binario ordenado para establecer el orden de la salida.
 \end_layout
 
@@ -146,12 +233,55 @@ Interacción con otros componentes
 Esta clase es el punto de acceso principal a los registros.
  En general con esta clase es con la cual se realiza toda interaccion con
  la base de datos (salvo la modificacion de las tablas o de los registros).
- 
 \end_layout
 
 \begin_layout Standard
-Respecto a la utilizacion de las otras componentes, Iterator se limita a
- utilizar heapfile para la interaccion con las tablas.
+El paquete utiliza las clases 
+\emph on
+OBuf
+\emph default
+ e 
+\emph on
+IoBuf
+\emph default
+ para interactuar con el 
+\emph on
+BufMgr
+\emph default
+.
+ Estas clases simplemente permiten a los iteradores comunicarse con el BufMgr
+ usando tuplas.
+ Con lo cual deberian estar definidas en en el paquete de 
+\emph on
+BufMgr
+\emph default
+ para maximizar la modularidad del sistema.
+ Esto se debe a que, como esta implementado actualmente, el paquete 
+\emph on
+Iterator
+\emph default
+ utiliza directamente funcionalidad del 
+\emph on
+BufMgr
+\emph default
+ que no deberia ser necesaria para las tareas que realiza.
+\end_layout
+
+\begin_layout Standard
+Respecto a la utilizacion de las otras componentes, 
+\emph on
+Iterator
+\emph default
+ se limita a utilizar 
+\emph on
+Scan
+\emph default
+ del paquete 
+\emph on
+Heapfile
+\emph default
+ para la interaccion con las tablas.
+ Esta clase deberia heredar de Iterator para reforzar los protocolos.
 \end_layout
 
 \begin_layout Subsection
@@ -170,20 +300,16 @@ Diagramas de secuencia
 No se justifica
 \end_layout
 
-\begin_layout Subsubsection
-Script de ejemplo
-\end_layout
-
-\begin_layout Standard
-?
-\end_layout
-
 \begin_layout Subsection
 Evaluación del componente
 \end_layout
 
 \begin_layout Standard
-Iterator ofrece una interfaz poco practica para el uso frecuente.
+
+\emph on
+Iterator
+\emph default
+ ofrece una interfaz poco practica para el uso frecuente.
  Mucha funcionalidad esta repetida, como la proyeccion, que simplemente
  se podria implementar como otro iterador.
  Tambien resulta incomoda la construccion de un iterador por la cantidad
