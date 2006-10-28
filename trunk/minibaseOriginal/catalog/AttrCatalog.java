@@ -52,7 +52,7 @@ implements GlobalConst, Catalogglobal
 		int sizeOfInt = 4;
 		int sizeOfFloat = 4;
 		tuple = new Tuple(Tuple.max_size);
-		attrs = new AttrType[9];
+		attrs = new AttrType[10];
 		
 		attrs[0] = new AttrType(AttrType.attrString);
 		attrs[1] = new AttrType(AttrType.attrString);
@@ -65,6 +65,7 @@ implements GlobalConst, Catalogglobal
 		attrs[6] = new AttrType(AttrType.attrInteger);
 		attrs[7] = new AttrType(AttrType.attrString);   // ?????  BK ?????
 		attrs[8] = new AttrType(AttrType.attrString);   // ?????  BK ?????
+		attrs[9] = new AttrType(AttrType.attrInteger);
 		
 		
 		// Find the largest possible tuple for values attrs[7] & attrs[8]
@@ -83,7 +84,7 @@ implements GlobalConst, Catalogglobal
 		str_sizes[3] = max;
 		
 		try {
-			tuple.setHdr((short)9, attrs, str_sizes);
+			tuple.setHdr((short)attrs.length, attrs, str_sizes);
 		}
 		catch (Exception e) {
 			throw new AttrCatalogException(e, "setHdr() failed");
@@ -125,7 +126,7 @@ implements GlobalConst, Catalogglobal
 				if (tuple == null)
 					throw new Catalogattrnotfound(null,"Catalog: Attribute not Found!");
 				
-				tuple.setHdr((short)9, attrs, str_sizes);
+				tuple.setHdr((short)attrs.length, attrs, str_sizes);
 				read_tuple(tuple, record);
 				
 			}
@@ -133,8 +134,8 @@ implements GlobalConst, Catalogglobal
 				throw new AttrCatalogException(e4, "read_tuple failed");
 			}
 			
-			if ( record.relName.equalsIgnoreCase(relation)==true 
-					&& record.attrName.equalsIgnoreCase(attrName)==true )
+			if ( record.relName.equalsIgnoreCase(relation)
+					&& record.attrName.equalsIgnoreCase(attrName) )
 				return;
 		}
 	};
@@ -213,7 +214,7 @@ implements GlobalConst, Catalogglobal
 				if (tuple == null) 
 					throw new Catalogindexnotfound(null,
 					"Catalog: Index not Found!");
-				tuple.setHdr((short)9, attrs, str_sizes);
+				tuple.setHdr((short)attrs.length, attrs, str_sizes);
 				read_tuple(tuple, attrRec);
 			}
 			catch (Exception e4) {
@@ -404,22 +405,22 @@ implements GlobalConst, Catalogglobal
 			tuple.setStrFld(2, record.attrName);
 			tuple.setIntFld(3, record.attrOffset);
 			tuple.setIntFld(4, record.attrPos);
-			
+
 			if (record.attrType.attrType == AttrType.attrString) {
 				tuple.setIntFld(5, 0);
 				tuple.setStrFld(8, record.minVal.strVal);
 				tuple.setStrFld(9, record.maxVal.strVal);
-			} else
-				if (record.attrType.attrType== AttrType.attrReal) {
-					tuple.setIntFld(5, 1);
-					tuple.setFloFld(8,record.minVal.floatVal);
-					tuple.setFloFld(9,record.minVal.floatVal);
-				} else {
-					tuple.setIntFld(5, 2);
-					tuple.setIntFld(8,record.minVal.intVal);
-					tuple.setIntFld(9,record.maxVal.intVal);
-				}
+			} else if (record.attrType.attrType== AttrType.attrReal) {
+				tuple.setIntFld(5, 1);
+				tuple.setFloFld(8,record.minVal.floatVal);
+				tuple.setFloFld(9,record.minVal.floatVal);
+			} else {
+				tuple.setIntFld(5, 2);
+				tuple.setIntFld(8,record.minVal.intVal);
+				tuple.setIntFld(9,record.maxVal.intVal);
+			}	
 			
+			tuple.setIntFld(10, record.isPk()?1:0);
 			tuple.setIntFld(6, record.attrLen);
 			tuple.setIntFld(7, record.indexCnt);
 		}
@@ -442,7 +443,7 @@ implements GlobalConst, Catalogglobal
 			record.attrName = tuple.getStrFld(2);
 			record.attrOffset = tuple.getIntFld(3);
 			record.attrPos = tuple.getIntFld(4);
-			
+			record.setPk(tuple.getIntFld(10)!=0);
 			int temp;
 			temp = tuple.getIntFld(5);
 			if (temp == 0)

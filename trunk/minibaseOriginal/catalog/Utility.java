@@ -13,7 +13,16 @@ import global.IndexType;
 import global.RID;
 import global.SystemDefs;
 import heap.Heapfile;
+import heap.Scan;
 import heap.Tuple;
+import heap.exceptions.FieldNumberOutOfBoundException;
+import heap.exceptions.HFBufMgrException;
+import heap.exceptions.HFDiskMgrException;
+import heap.exceptions.HFException;
+import heap.exceptions.InvalidSlotNumberException;
+import heap.exceptions.InvalidTupleSizeException;
+import heap.exceptions.InvalidTypeException;
+import heap.exceptions.SpaceNotAvailableException;
 
 import java.io.DataInputStream;
 import java.io.FileInputStream;
@@ -21,6 +30,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import catalog.exceptions.AttrCatalogException;
+import catalog.exceptions.CatalogPKException;
 import catalog.exceptions.Catalogattrexists;
 import catalog.exceptions.Catalogattrnotfound;
 import catalog.exceptions.Catalogbadattrcount;
@@ -33,6 +44,8 @@ import catalog.exceptions.Catalogmissparam;
 import catalog.exceptions.Catalognomem;
 import catalog.exceptions.Catalogrelexists;
 import catalog.exceptions.Catalogrelnotfound;
+import catalog.exceptions.IndexCatalogException;
+import catalog.exceptions.RelCatalogException;
 
 import btree.BTreeFile;
 import btree.IntegerKey;
@@ -85,20 +98,7 @@ public class Utility implements Catalogglobal{
 //	---------------------------------------------------
 	
 	public static void insertRecUT(String relation, attrNode [] attrList)
-	throws Catalogmissparam, 
-	Catalogrelexists, 
-	Catalogdupattrs, 
-	Catalognomem,
-	IOException, 
-	Catalogioerror,
-	Cataloghferror, 
-	Catalogrelnotfound, 
-	Catalogindexnotfound,
-	Catalogattrnotfound, 
-	Catalogbadattrcount, 
-	Catalogattrexists,
-	Catalogbadtype,
-	Exception
+	throws Exception
 	{
 		int attrCnt = attrList.length;
 		
@@ -190,11 +190,49 @@ public class Utility implements Catalogglobal{
 			}
 		}
 		
-		tuple.size();
-		
 //		GET DATAFILE
 		Heapfile heap = new Heapfile(relation);
 		
+		
+		Scan scan = heap.openScan();
+		
+		Tuple scanTuple = null;
+		while((scanTuple = scan.getNext(new RID())) != null){
+			ExtendedSystemDefs.MINIBASE_ATTRCAT.getTupleStructure(relation,scanTuple);
+			boolean repetido = false;
+			boolean entreAlguna = false;
+			for(int i=0;i<attrRecs.length;i++){
+				
+				if(attrRecs[i].isPk()){
+					if(!entreAlguna){
+						repetido = true;
+						entreAlguna = true;
+					}
+					
+					boolean temp =false;
+					
+					switch (attrRecs[i].attrType.attrType){
+					case(AttrType.attrInteger):
+						temp = tuple.getIntFld(attrRecs[i].attrPos) == scanTuple.getIntFld(attrRecs[i].attrPos);
+					break;
+					
+					case (AttrType.attrReal):
+						temp =tuple.getFloFld(attrRecs[i].attrPos) == scanTuple.getFloFld(attrRecs[i].attrPos);
+					break;
+					
+					case (AttrType.attrString):
+						temp = tuple.getStrFld(attrRecs[i].attrPos).equals(scanTuple.getStrFld(attrRecs[i].attrPos));
+					break;
+					}
+					
+					repetido = repetido && temp;
+				}
+			}
+			
+			if(repetido){
+				throw new CatalogPKException(null,"PK Violated!!!!");
+			}
+		}
 		
 //		INSERT INTO DATAFILE
 		heap.insertRecord(tuple.getTupleByteArray());
@@ -296,14 +334,20 @@ public class Utility implements Catalogglobal{
 				record.add(attribute);
 				attrInfo info = null;
 				
+				boolean pk = false;
+				
+				if(attr.length == 3 && attr[2].equalsIgnoreCase("pk")){
+					pk = true;
+				}
+				
 				if(attr[1].equalsIgnoreCase("Integer")){
-					info = new attrInfo(attribute.attrName,new AttrType(AttrType.attrInteger),0);
+					info = new attrInfo(attribute.attrName,new AttrType(AttrType.attrInteger),0,pk);
 				}
 				else if(attr[1].equalsIgnoreCase("Real")){
-					info = new attrInfo(attribute.attrName,new AttrType(AttrType.attrReal),0);
+					info = new attrInfo(attribute.attrName,new AttrType(AttrType.attrReal),0,pk);
 				}
 				else if(attr[1].toLowerCase().startsWith("string")){
-					info = new attrInfo(attribute.attrName,new AttrType(AttrType.attrString),Integer.parseInt(attr[1].substring(6)));
+					info = new attrInfo(attribute.attrName,new AttrType(AttrType.attrString),Integer.parseInt(attr[1].substring(6)),pk);
 				}
 				attributes.add(info);
 			}

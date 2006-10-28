@@ -145,7 +145,9 @@ public class SM_JoinTest
 			int numboats = 5;
 			int numboats_attrs = 3;
 			
-			String logpath = "/tmp/joinlog";
+			String logpath = "c:\\windows\\temp\\testlog";
+			String dbpath = "c:\\windows\\temp\\minibase.testdb";
+			/*String logpath = "/tmp/joinlog";
 			String dbpath = "/tmp/minibase.jointestdb";
 			
 			String remove_cmd = "/bin/rm -rf ";
@@ -161,7 +163,7 @@ public class SM_JoinTest
 			catch (IOException e) {
 				System.err.println (""+e);
 			}
-			
+			*/
 			
 			/*
 			 ExtendedSystemDefs extSysDef = 

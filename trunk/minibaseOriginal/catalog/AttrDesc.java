@@ -31,6 +31,14 @@ public class AttrDesc
 		return attrType;
 	}
 	
+	public boolean isPk(){
+		return pk;
+	}
+	
+	public void setPk(boolean pk){
+		this.pk = pk;
+	}
+	
 	String relName;                       // relation name
 	String attrName;                      // attribute name
 	int      attrOffset = 0;                  // attribute offset
@@ -40,6 +48,7 @@ public class AttrDesc
 	int      indexCnt = 0;                    // number of indexes
 	attrData minVal;                      // min max key values
 	attrData maxVal;
+	boolean pk = false;
 };
 
 

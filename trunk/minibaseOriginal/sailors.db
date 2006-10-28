@@ -1,4 +1,4 @@
-sid:Integer	sname:String30	rating:Integer	age:Real
+sid:Integer:pk	sname:String30:pk	rating:Integer:pk	age:Real
 53	Bob Holloway	9	53.6
 54	Susan Horowitz	1	34.2
 57	Yannis Ioannidis	8	40.2

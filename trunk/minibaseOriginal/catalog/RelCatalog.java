@@ -226,6 +226,7 @@ implements  GlobalConst, Catalogglobal
 			ad.attrType = new AttrType(attrList[i].attrType.attrType);
 			ad.indexCnt = 0;
 			ad.attrPos = i + 1;   // field position in the record
+			ad.setPk(attrList[i].pk);
 			
 			if(attrList[i].attrType.attrType == AttrType.attrString) {
 				ad.attrLen = attrList[i].attrLen;
