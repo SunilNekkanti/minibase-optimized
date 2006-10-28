@@ -1,4 +1,4 @@
-bid:Integer	bname:String30	color:String30
+bid:Integer:pk	bname:String30:pk	color:String30:pk
 1	Onion	white
 2	Buckey	red
 3	Enterprise	blue
