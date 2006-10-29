@@ -1,8 +1,7 @@
 package tests;
-import java.io.*;
-import java.util.*;
-import java.lang.*;
-import chainexception.*;
+import java.io.File;
+
+import chainexception.ChainException;
 
 //Major Changes:
 //1. Change the return type of test() functions from 'int' to 'boolean'
@@ -52,8 +51,8 @@ public class TestDriver {
 		//given a different number.  
 
 		//Para windows
-		//logpath = "c:\\windows\\temp\\testlog";
-		//logpath = "c:\\windows\\temp\\minibase.testdb";
+		//logpath = "c:\\windows\\temp\\" + nameRoot + ".minibase-log";
+		//dbpath = "c:\\windows\\temp\\" + nameRoot +".minibase-db";
 
 		//Para unix
 		logpath = "/tmp/" + nameRoot + ".minibase-log";

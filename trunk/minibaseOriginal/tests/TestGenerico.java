@@ -27,8 +27,8 @@ public class TestGenerico  implements GlobalConst {
 		//String logpath = "c:\\windows\\temp\\minibase.testdb";
 		
 		//Para unix
-		String logpath = "c:\\windows\\temp\\testlog";
-		String dbpath = "c:\\windows\\temp\\minibase.testdb";
+		String logpath = "/tmp/testlog";
+		String dbpath = "/tmp/minibase.testdb";
 		
 		File file = new File(logpath);
 		file.delete();
