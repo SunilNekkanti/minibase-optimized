@@ -67,9 +67,7 @@ public class FileScan extends  Iterator
 	 */
 	public  FileScan (String  file_name,
 			AttrType in1[],                
-			short s1_sizes[], 
-			short     len_in1,              
-			int n_out_flds,
+			short s1_sizes[],      
 			FldSpec[] proj_list,
 			CondExpr[]  outFilter        		    
 	)
@@ -77,22 +75,23 @@ public class FileScan extends  Iterator
 	FileScanException,
 	TupleUtilsException, 
 	InvalidRelation
-	{
+	{   
 		_in1 = in1; 
-		in1_len = len_in1;
+		in1_len = (short)in1.length;
 		s_sizes = s1_sizes;
+		nOutFlds = proj_list.length;
 		
 		Jtuple =  new Tuple();
-		AttrType[] Jtypes = new AttrType[n_out_flds];
-		TupleUtils.setup_op_tuple(Jtuple, Jtypes, in1, len_in1, s1_sizes, proj_list, n_out_flds);
+		AttrType[] Jtypes = new AttrType[nOutFlds];
+		TupleUtils.setup_op_tuple(Jtuple, Jtypes, in1, in1_len, s1_sizes, proj_list, nOutFlds);
 		
 		OutputFilter = outFilter;
 		perm_mat = proj_list;
-		nOutFlds = n_out_flds; 
+		 
 		tuple1 =  new Tuple();
 		
 		try {
-			tuple1.setHdr(in1_len, _in1, s1_sizes);
+			tuple1.setHdr( _in1, s1_sizes);
 		}catch (Exception e){
 			throw new FileScanException(e, "setHdr() failed");
 		}
@@ -155,7 +154,7 @@ public class FileScan extends  Iterator
 				return null;
 			}
 			
-			tuple1.setHdr(in1_len, _in1, s_sizes);
+			tuple1.setHdr( _in1, s_sizes);
 			
 			if (PredEval.Eval(OutputFilter, tuple1, null, _in1, null)){
 				Projection.Project(tuple1, _in1,  Jtuple, perm_mat, nOutFlds); 

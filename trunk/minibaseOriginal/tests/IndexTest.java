@@ -112,7 +112,7 @@ class IndexDriver extends TestDriver
     }
     
     System.out.println ("\n" + "..." + testName() + " tests ");
-    System.out.println (_pass==OK ? "completely successfully" : "failed");
+    System.out.println (_pass==true ? "completely successfully" : "failed");
     System.out.println (".\n\n");
     
     return _pass;
@@ -122,7 +122,7 @@ class IndexDriver extends TestDriver
   {
     System.out.println("------------------------ TEST 1 --------------------------");
     
-    boolean status = OK;
+    boolean status = true;
 
     AttrType[] attrType = new AttrType[2];
     attrType[0] = new AttrType(AttrType.attrString);
@@ -134,10 +134,10 @@ class IndexDriver extends TestDriver
     // create a tuple of appropriate size
     Tuple t = new Tuple();
     try {
-      t.setHdr((short) 2, attrType, attrSize);
+      t.setHdr( attrType, attrSize);
     }
     catch (Exception e) {
-      status = FAIL;
+      status = false;
       e.printStackTrace();
     }
 
@@ -150,16 +150,16 @@ class IndexDriver extends TestDriver
       f = new Heapfile("test1.in");
     }
     catch (Exception e) {
-      status = FAIL;
+      status = false;
       e.printStackTrace();
     }
     
     t = new Tuple(size);
     try {
-      t.setHdr((short) 2, attrType, attrSize);
+      t.setHdr(attrType, attrSize);
     }
     catch (Exception e) {
-      status = FAIL;
+      status = false;
       e.printStackTrace();
     }
     
@@ -168,7 +168,7 @@ class IndexDriver extends TestDriver
 	t.setStrFld(2, data1[i]);
       }
       catch (Exception e) {
-	status = FAIL;
+	status = false;
 	e.printStackTrace();
       }
       
@@ -176,7 +176,7 @@ class IndexDriver extends TestDriver
 	rid = f.insertRecord(t.returnTupleByteArray());
       }
       catch (Exception e) {
-	status = FAIL;
+	status = false;
 	e.printStackTrace();
       }
     }
@@ -188,7 +188,7 @@ class IndexDriver extends TestDriver
       scan = new Scan(f);
     }
     catch (Exception e) {
-      status = FAIL;
+      status = false;
       e.printStackTrace();
       Runtime.getRuntime().exit(1);
     }
@@ -199,7 +199,7 @@ class IndexDriver extends TestDriver
       btf = new BTreeFile("BTreeIndex", AttrType.attrString, REC_LEN1, 1/*delete*/); 
     }
     catch (Exception e) {
-      status = FAIL;
+      status = false;
       e.printStackTrace();
       Runtime.getRuntime().exit(1);
     }
@@ -214,7 +214,7 @@ class IndexDriver extends TestDriver
       temp = scan.getNext(rid);
     }
     catch (Exception e) {
-      status = FAIL;
+      status = false;
       e.printStackTrace();
     }
     while ( temp != null) {
@@ -224,7 +224,7 @@ class IndexDriver extends TestDriver
 	key = t.getStrFld(2);
       }
       catch (Exception e) {
-	status = FAIL;
+	status = false;
 	e.printStackTrace();
       }
       
@@ -232,7 +232,7 @@ class IndexDriver extends TestDriver
 	btf.insert(new StringKey(key), rid); 
       }
       catch (Exception e) {
-	status = FAIL;
+	status = false;
 	e.printStackTrace();
       }
 
@@ -240,7 +240,7 @@ class IndexDriver extends TestDriver
 	temp = scan.getNext(rid);
       }
       catch (Exception e) {
-	status = FAIL;
+	status = false;
 	e.printStackTrace();
       }
     }
@@ -261,7 +261,7 @@ class IndexDriver extends TestDriver
       iscan = new IndexScan(new IndexType(IndexType.B_Index), "test1.in", "BTreeIndex", attrType, attrSize, 2, 2, projlist, null, 2, true);
     }
     catch (Exception e) {
-      status = FAIL;
+      status = false;
       e.printStackTrace();
     }
     
@@ -274,7 +274,7 @@ class IndexDriver extends TestDriver
       t = iscan.get_next();
     }
     catch (Exception e) {
-      status = FAIL;
+      status = false;
       e.printStackTrace(); 
     }
 
@@ -283,7 +283,7 @@ class IndexDriver extends TestDriver
     while (t != null) {
       if (count >= NUM_RECORDS) {
 	System.err.println("Test1 -- OOPS! too many records");
-	status = FAIL;
+	status = false;
 	flag = false; 
 	break;
       }
@@ -292,7 +292,7 @@ class IndexDriver extends TestDriver
 	outval = t.getStrFld(1);
       }
       catch (Exception e) {
-	status = FAIL;
+	status = false;
 	e.printStackTrace();
       }
       
@@ -300,7 +300,7 @@ class IndexDriver extends TestDriver
 	System.err.println("outval = " + outval + "\tdata2[count] = " + data2[count]);
 	
 	System.err.println("Test1 -- OOPS! index scan not in sorted order");
-	status = FAIL;
+	status = false;
       }
       count++;
 
@@ -308,13 +308,13 @@ class IndexDriver extends TestDriver
 	t = iscan.get_next();
       }
       catch (Exception e) {
-	status = FAIL;
+	status = false;
 	e.printStackTrace();
       }
     }
     if (count < NUM_RECORDS) {
 	System.err.println("Test1 -- OOPS! too few records");
-	status = FAIL;
+	status = false;
     }
     else if (flag && status) {
       System.err.println("Test1 -- Index Scan OK");
@@ -325,7 +325,7 @@ class IndexDriver extends TestDriver
       iscan.close();
     }
     catch (Exception e) {
-      status = FAIL;
+      status = false;
       e.printStackTrace();
     }
     
@@ -339,7 +339,7 @@ class IndexDriver extends TestDriver
   {
     System.out.println("------------------------ TEST 2 --------------------------");
     
-    boolean status = OK;
+    boolean status = true;
 
     AttrType[] attrType = new AttrType[2];
     attrType[0] = new AttrType(AttrType.attrString);
@@ -351,10 +351,10 @@ class IndexDriver extends TestDriver
     // create a tuple of appropriate size
     Tuple t = new Tuple();
     try {
-      t.setHdr((short) 2, attrType, attrSize);
+      t.setHdr( attrType, attrSize);
     }
     catch (Exception e) {
-      status = FAIL;
+      status = false;
       e.printStackTrace();
     }
 
@@ -368,16 +368,16 @@ class IndexDriver extends TestDriver
       f = new Heapfile("test1.in");
     }
     catch (Exception e) {
-      status = FAIL;
+      status = false;
       e.printStackTrace();
     }
     
     t = new Tuple(size);
     try {
-      t.setHdr((short) 2, attrType, attrSize);
+      t.setHdr(attrType, attrSize);
     }
     catch (Exception e) {
-      status = FAIL;
+      status = false;
       e.printStackTrace();
     }
     
@@ -387,7 +387,7 @@ class IndexDriver extends TestDriver
       btf = new BTreeFile("BTreeIndex");
     }
     catch (Exception e) {
-      status = FAIL;
+      status = false;
       e.printStackTrace();
     }
     
@@ -420,7 +420,7 @@ class IndexDriver extends TestDriver
       iscan = new IndexScan(new IndexType(IndexType.B_Index), "test1.in", "BTreeIndex", attrType, attrSize, 2, 2, projlist, expr, 2, false);
     }
     catch (Exception e) {
-      status = FAIL;
+      status = false;
       e.printStackTrace();
     }
     
@@ -433,13 +433,13 @@ class IndexDriver extends TestDriver
       t = iscan.get_next();
     }
     catch (Exception e) {
-      status = FAIL;
+      status = false;
       e.printStackTrace(); 
     }
 
     if (t == null) {
       System.err.println("Test 2 -- no record retrieved from identity search.");
-      status = FAIL;
+      status = false;
       return status; 
     }
 
@@ -447,26 +447,26 @@ class IndexDriver extends TestDriver
       outval = t.getStrFld(2);
     }
     catch (Exception e) {
-      status = FAIL;
+      status = false;
       e.printStackTrace();
     }
     
     if (outval.compareTo("dsilva") != 0) {
       System.err.println("Test2 -- error in identity search.");
-      status = FAIL;
+      status = false;
     }
     
     try {
       t = iscan.get_next();
     }
     catch (Exception e) {
-      status = FAIL;
+      status = false;
       e.printStackTrace(); 
     }
     
     if (t != null) {
       System.err.println("Test2 -- OOPS! too many records");
-      status = FAIL;
+      status = false;
     }
     
     // clean up
@@ -474,7 +474,7 @@ class IndexDriver extends TestDriver
       iscan.close();
     }
     catch (Exception e) {
-      status = FAIL;
+      status = false;
       e.printStackTrace();
     }
     
@@ -502,7 +502,7 @@ class IndexDriver extends TestDriver
       iscan = new IndexScan(new IndexType(IndexType.B_Index), "test1.in", "BTreeIndex", attrType, attrSize, 2, 2, projlist, expr, 2, false);
     }
     catch (Exception e) {
-      status = FAIL;
+      status = false;
       e.printStackTrace();
     }
     
@@ -514,7 +514,7 @@ class IndexDriver extends TestDriver
       t = iscan.get_next();
     }
     catch (Exception e) {
-      status = FAIL;
+      status = false;
       e.printStackTrace(); 
     }
 
@@ -523,7 +523,7 @@ class IndexDriver extends TestDriver
     while (t != null) {
       if (count >= (NUM_RECORDS - 3)) {
 	System.err.println("Test2 -- OOPS! too many records");
-	status = FAIL;
+	status = false;
 	flag = false; 
 	break;
       }
@@ -532,7 +532,7 @@ class IndexDriver extends TestDriver
 	outval = t.getStrFld(2);
       }
       catch (Exception e) {
-	status = FAIL;
+	status = false;
 	e.printStackTrace();
       }
       
@@ -540,7 +540,7 @@ class IndexDriver extends TestDriver
 	System.err.println("outval = " + outval + "\tdata2[count] = " + data2[count]);
 	
 	System.err.println("Test2 -- OOPS! index scan not in sorted order");
-	status = FAIL;
+	status = false;
       }
       count++;
 
@@ -548,13 +548,13 @@ class IndexDriver extends TestDriver
 	t = iscan.get_next();
       }
       catch (Exception e) {
-	status = FAIL;
+	status = false;
 	e.printStackTrace();
       }
     }
     if (count < (NUM_RECORDS-3)) {
 	System.err.println("Test2 -- OOPS! too few records");
-	status = FAIL;
+	status = false;
     }
     else if (flag && status) {
       System.err.println("Test2 -- Index Scan OK");
@@ -565,7 +565,7 @@ class IndexDriver extends TestDriver
       iscan.close();
     }
     catch (Exception e) {
-      status = FAIL;
+      status = false;
       e.printStackTrace();
     }
     
@@ -579,7 +579,7 @@ class IndexDriver extends TestDriver
   { 
     System.out.println("------------------------ TEST 3 --------------------------");
     
-    boolean status = OK;
+    boolean status = true;
 
     Random random1 = new Random();
     Random random2 = new Random();
@@ -596,11 +596,11 @@ class IndexDriver extends TestDriver
     Tuple t = new Tuple();
 
     try {
-      t.setHdr((short) 4, attrType, attrSize);
+      t.setHdr(attrType, attrSize);
     }
     catch (Exception e) {
       System.err.println("*** error in Tuple.setHdr() ***");
-      status = FAIL;
+      status = false;
       e.printStackTrace();
     }
     int size = t.size();
@@ -612,16 +612,16 @@ class IndexDriver extends TestDriver
       f = new Heapfile("test3.in");
     }
     catch (Exception e) {
-      status = FAIL;
+      status = false;
       e.printStackTrace();
     }
     
     t = new Tuple(size);
     try {
-      t.setHdr((short) 4, attrType, attrSize);
+      t.setHdr( attrType, attrSize);
     }
     catch (Exception e) {
-      status = FAIL;
+      status = false;
       e.printStackTrace();
     }
 
@@ -639,7 +639,7 @@ class IndexDriver extends TestDriver
 	t.setFloFld(4, fnum);
       }
       catch (Exception e) {
-	status = FAIL;
+	status = false;
 	e.printStackTrace();
       }
 
@@ -647,7 +647,7 @@ class IndexDriver extends TestDriver
 	rid = f.insertRecord(t.returnTupleByteArray());
       }
       catch (Exception e) {
-	status = FAIL;
+	status = false;
 	e.printStackTrace();
       }
     }
@@ -659,7 +659,7 @@ class IndexDriver extends TestDriver
       scan = new Scan(f);
     }
     catch (Exception e) {
-      status = FAIL;
+      status = false;
       e.printStackTrace();
       Runtime.getRuntime().exit(1);
     }
@@ -670,7 +670,7 @@ class IndexDriver extends TestDriver
       btf = new BTreeFile("BTIndex", AttrType.attrInteger, 4, 1/*delete*/); 
     }
     catch (Exception e) {
-      status = FAIL;
+      status = false;
       e.printStackTrace();
       Runtime.getRuntime().exit(1);
     }
@@ -685,7 +685,7 @@ class IndexDriver extends TestDriver
       temp = scan.getNext(rid);
     }
     catch (Exception e) {
-      status = FAIL;
+      status = false;
       e.printStackTrace();
     }
     while ( temp != null) {
@@ -695,7 +695,7 @@ class IndexDriver extends TestDriver
 	key = t.getIntFld(3);
       }
       catch (Exception e) {
-	status = FAIL;
+	status = false;
 	e.printStackTrace();
       }
       
@@ -703,7 +703,7 @@ class IndexDriver extends TestDriver
 	btf.insert(new IntegerKey(key), rid); 
       }
       catch (Exception e) {
-	status = FAIL;
+	status = false;
 	e.printStackTrace();
       }
 
@@ -711,7 +711,7 @@ class IndexDriver extends TestDriver
 	temp = scan.getNext(rid);
       }
       catch (Exception e) {
-	status = FAIL;
+	status = false;
 	e.printStackTrace();
       }
     }
@@ -752,7 +752,7 @@ class IndexDriver extends TestDriver
       iscan = new IndexScan(new IndexType(IndexType.B_Index), "test3.in", "BTIndex", attrType, attrSize, 4, 4, projlist, expr, 3, false);
     }
     catch (Exception e) {
-      status = FAIL;
+      status = false;
       e.printStackTrace();
     }
     
@@ -765,7 +765,7 @@ class IndexDriver extends TestDriver
       t = iscan.get_next();
     }
     catch (Exception e) {
-      status = FAIL;
+      status = false;
       e.printStackTrace(); 
     }
 
@@ -774,7 +774,7 @@ class IndexDriver extends TestDriver
 	iout = t.getIntFld(3);
       }
       catch (Exception e) {
-	status = FAIL;
+	status = false;
 	e.printStackTrace();
       }
       
@@ -782,12 +782,12 @@ class IndexDriver extends TestDriver
 	System.err.println("count = " + count + " iout = " + iout + " ival = " + ival);
 	
 	System.err.println("Test3 -- OOPS! index scan not in sorted order");
-	status = FAIL;
+	status = false;
 	break; 
       }
       else if (iout > 900) {
 	System.err.println("Test 3 -- OOPS! index scan passed high key");
-	status = FAIL;
+	status = false;
 	break;
       }
       
@@ -797,7 +797,7 @@ class IndexDriver extends TestDriver
 	t = iscan.get_next();
       }
       catch (Exception e) {
-	status = FAIL;
+	status = false;
 	e.printStackTrace();
       }
     }
@@ -810,7 +810,7 @@ class IndexDriver extends TestDriver
       iscan.close();
     }
     catch (Exception e) {
-      status = FAIL;
+      status = false;
       e.printStackTrace();
     }
     

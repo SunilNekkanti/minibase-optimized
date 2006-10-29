@@ -108,7 +108,7 @@ public class QueryCheck {
  * @uml.property  name="types"
  * @uml.associationEnd  multiplicity="(0 -1)"
  */
-private AttrType [] types; 
+  private AttrType[] types;
   private short[] sizes;// sizes of attributes in answer tuple
   private short    columnum;     // number of attributes in answer tuple
   private int      curGroup;     // current group number
@@ -147,8 +147,7 @@ private Group [] mygroup;
   /** Constructor
    */
   public QueryCheck(int q_index) {
-
-    types = new AttrType[10];    
+   
     sizes = new short[10];// sizes of attributes in answer tuple
     mygroup = new Group[Max_group_num];
     gmark = new int[Max_group_num];    
@@ -213,6 +212,7 @@ private Group [] mygroup;
     switch(q_index) {
       
     case 1:
+      types = new AttrType[2];
       types[0] = new AttrType(AttrType.attrString);    // atrrtype array.
       types[1] = new AttrType(AttrType.attrString);
       sizes[0] = (short)25 ;                  // string length. 
@@ -227,7 +227,7 @@ private Group [] mygroup;
       for(int i=0; i<mygroup[0].len;i++)  {// set tuple value. 
 	try {
           mygroup[0].mytuple[i] = new Tuple();
-          mygroup[0].mytuple[i].setHdr(columnum, types, sizes); 
+          mygroup[0].mytuple[i].setHdr(types, sizes); 
           mygroup[0].mytuple[i].setStrFld(1,((S1)Q1result.elementAt(i)).sname);  
           mygroup[0].mytuple[i].setStrFld(2,((S1)Q1result.elementAt(i)).date);  
 	}
@@ -238,6 +238,7 @@ private Group [] mygroup;
       break;
       
     case 2:
+      types = new AttrType[1];
       types[0] = new AttrType(AttrType.attrString);
       sizes[0] = (short)25;
       columnum = (short)1;
@@ -250,7 +251,7 @@ private Group [] mygroup;
       for(int i=0; i<mygroup[0].len;i++)  {// set tuple value.
         try {
           mygroup[0].mytuple[i] = new Tuple();
-          mygroup[0].mytuple[i].setHdr(columnum, types, sizes);
+          mygroup[0].mytuple[i].setHdr( types, sizes);
           mygroup[0].mytuple[i].setStrFld(1,((S2)Q2result.elementAt(i)).sname);
 	}
 	catch (Exception e) {
@@ -260,7 +261,8 @@ private Group [] mygroup;
       break;
       
     case 3:
-      types[0] = new AttrType(AttrType.attrString);
+    	types = new AttrType[1];
+        types[0] = new AttrType(AttrType.attrString);
         sizes[0] = (short)25;
         columnum = (short)1;
         groupnum = 1;
@@ -272,7 +274,7 @@ private Group [] mygroup;
         for(int i=0; i<mygroup[0].len;i++) {
 	  try {
 	    mygroup[0].mytuple[i] = new Tuple();
-	    mygroup[0].mytuple[i].setHdr(columnum, types, sizes);
+	    mygroup[0].mytuple[i].setHdr(types, sizes);
 	    mygroup[0].mytuple[i].setStrFld(1,((S2)Q3result.elementAt(i)).sname);
 	  }
 	  catch (Exception e) {
@@ -282,6 +284,7 @@ private Group [] mygroup;
         break;
 
     case 4:
+    	types = new AttrType[1];
         types[0] = new AttrType(AttrType.attrString);
         sizes[0] = (short)25;
         columnum = (short)1;
@@ -294,7 +297,7 @@ private Group [] mygroup;
         for(int i=0; i<mygroup[0].len;i++)  {// set tuple value.
 	  try {
 	    mygroup[0].mytuple[i] = new Tuple();
-	    mygroup[0].mytuple[i].setHdr(columnum, types, sizes);
+	    mygroup[0].mytuple[i].setHdr(types, sizes);
 	    mygroup[0].mytuple[i].setStrFld(1,((S2)Q4result.elementAt(i)).sname);
 	  }
 	  catch (Exception e) {
@@ -304,6 +307,7 @@ private Group [] mygroup;
         break;
 
     case 5:
+    	types = new AttrType[3];
         types[0] = new AttrType(AttrType.attrString);
         types[1] = new AttrType(AttrType.attrInteger);
         types[2] = new AttrType(AttrType.attrReal);
@@ -318,7 +322,7 @@ private Group [] mygroup;
         for(int i=0; i<mygroup[0].len;i++)  {// set tuple value.
 	  try {
 	    mygroup[0].mytuple[i] = new Tuple();
-	    mygroup[0].mytuple[i].setHdr(columnum, types, sizes);
+	    mygroup[0].mytuple[i].setHdr(types, sizes);
 	    mygroup[0].mytuple[i].setStrFld(1,((S5)Q5result.elementAt(i)).sname);
 	    mygroup[0].mytuple[i].setIntFld(2,((S5)Q5result.elementAt(i)).rating);
 	    mygroup[0].mytuple[i].setFloFld(3,((S5)Q5result.elementAt(i)).age);
@@ -330,6 +334,7 @@ private Group [] mygroup;
         break;
 
     case 6:
+    	types = new AttrType[1];
         types[0] = new AttrType(AttrType.attrString);
         sizes[0] = (short)25;
         columnum = (short)1;
@@ -342,7 +347,7 @@ private Group [] mygroup;
         for(int i=0; i<mygroup[0].len;i++) { // set tuple value.
 	  try {
             mygroup[0].mytuple[i] = new Tuple();
-            mygroup[0].mytuple[i].setHdr(columnum, types, sizes);
+            mygroup[0].mytuple[i].setHdr( types, sizes);
             mygroup[0].mytuple[i].setStrFld(1,((S2)Q6result.elementAt(i)).sname);
 	  }
 	  catch (Exception e) {
@@ -384,7 +389,7 @@ private Group [] mygroup;
     TupleList cur = new TupleList();
     cur.tuple = new Tuple();
     try {
-      cur.tuple.setHdr(columnum, types, sizes);
+      cur.tuple.setHdr(types, sizes);
     }
     catch (Exception e) {
       System.err.println ("**** Error setting up the tuples");

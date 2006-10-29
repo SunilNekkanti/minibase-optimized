@@ -68,7 +68,7 @@ implements  GlobalConst, Catalogglobal
 		str_sizes[0] = (short)MAXNAME;
 		
 		try {
-			tuple.setHdr((short)5, attrs, str_sizes);
+			tuple.setHdr( attrs, str_sizes);
 		}
 		catch (Exception e) {
 			System.err.println ("tuple.setHdr"+e);
@@ -84,21 +84,21 @@ implements  GlobalConst, Catalogglobal
 
 		Tuple tuple = null;
 		while((tuple = scan.getNext(new RID())) != null){
-			tuple.setHdr((short)5, attrs, str_sizes);
+			tuple.setHdr( attrs, str_sizes);
 			names.add(tuple.getStrFld(1));
 		}
 		
 		return names;
 	}
 	// GET RELATION DESCRIPTION FOR A RELATION
-	public void getInfo(String relation, RelDesc record)
+	public RelDesc getInfo(String relation)
 	throws Catalogmissparam, 
 	Catalogioerror, 
 	Cataloghferror,
 	RelCatalogException, 
 	IOException, 
 	Catalogrelnotfound
-	{		
+	{
 		if (relation == null){
 			throw new Catalogmissparam(null, "MISSING_PARAM");
 		}
@@ -130,7 +130,7 @@ implements  GlobalConst, Catalogglobal
 			}
 			
 			try {
-				tuple.setHdr((short)5, attrs, str_sizes);
+				tuple.setHdr(attrs, str_sizes);
 			} catch (InvalidTypeException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -141,10 +141,10 @@ implements  GlobalConst, Catalogglobal
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			read_tuple(tuple, record);
+			RelDesc record = read_tuple(tuple);
 			
 			if (record.relName.equalsIgnoreCase(relation)){
-				return;
+				return record;
 			}
 		}
 	};
@@ -167,9 +167,9 @@ implements  GlobalConst, Catalogglobal
 		}
 		
 		boolean status = true;
-		RelDesc rd = new RelDesc();
+		RelDesc rd = null;
 		try {
-			getInfo(relation, rd);
+			rd = getInfo(relation);
 		}
 		catch (Catalogioerror e) {
 			System.err.println ("Catalog I/O Error!"+e);
@@ -292,7 +292,7 @@ implements  GlobalConst, Catalogglobal
 		
 		// GET RELATION DATA
 		try {
-			getInfo(relation, rd);
+			rd= getInfo(relation);
 		}
 		catch (Catalogioerror e) {
 			System.err.println ("Catalog I/O Error!"+e);
@@ -363,14 +363,11 @@ implements  GlobalConst, Catalogglobal
 	IOException, 
 	Catalogmissparam,
 	Catalogattrnotfound
-	{
-		RID rid = null;
-		Scan pscan = null;
-		RelDesc record = null;
-		
+	{		
 		if (relation == null)
 			throw new Catalogmissparam(null, "MISSING_PARAM");
 		
+		Scan pscan = null;
 		try {
 			pscan = new Scan(this);
 		}
@@ -379,13 +376,18 @@ implements  GlobalConst, Catalogglobal
 			throw new RelCatalogException(e1, "scan failed");
 		}
 		
+		
+		
 		while(true) {
+			RID rid = new RID();
+			RelDesc record = null;
 			try {
-				tuple = pscan.getNext(rid);
+				Tuple tuple = pscan.getNext(rid);
 				if (tuple == null) 
 					throw new Catalogattrnotfound(null,
 					"Catalog Attribute not Found!");
-				read_tuple(tuple, record);
+				tuple.setHdr( attrs, str_sizes);
+				record = read_tuple(tuple);
 			}
 			catch (Exception e4) {
 				System.err.println ("read_tuple"+e4);
@@ -424,10 +426,11 @@ implements  GlobalConst, Catalogglobal
 		
 	};
 	
-	public void read_tuple(Tuple tuple, RelDesc record)
+	public  RelDesc  read_tuple(Tuple tuple)
 	throws IOException, 
 	RelCatalogException
 	{
+		RelDesc record = new RelDesc();
 		try {
 			record.relName = tuple.getStrFld(1);
 			record.attrCnt = tuple.getIntFld(2);
@@ -439,6 +442,8 @@ implements  GlobalConst, Catalogglobal
 			System.err.println ("getFld"+e1);
 			throw new RelCatalogException(e1, "getFld failed");
 		}
+		
+		return record;
 		
 	};
 	

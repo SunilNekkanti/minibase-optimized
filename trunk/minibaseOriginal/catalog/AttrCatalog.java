@@ -84,7 +84,7 @@ implements GlobalConst, Catalogglobal
 		str_sizes[3] = max;
 		
 		try {
-			tuple.setHdr((short)attrs.length, attrs, str_sizes);
+			tuple.setHdr( attrs, str_sizes);
 		}
 		catch (Exception e) {
 			throw new AttrCatalogException(e, "setHdr() failed");
@@ -92,24 +92,21 @@ implements GlobalConst, Catalogglobal
 	};
 	
 	// GET ATTRIBUTE DESCRIPTION
-	public void getInfo(String relation, String attrName, AttrDesc record)
+	public AttrDesc getInfo(String relation, String attrName)
 	throws Catalogmissparam, 
 	Catalogioerror, 
 	Cataloghferror,
 	AttrCatalogException, 
 	IOException, 
 	Catalogattrnotfound
-	{
-		int recSize;
-		RID rid = null;
-		Scan pscan = null; 
-		
-		
-		if ((relation == null)||(attrName == null))
+	{		
+		if ((relation == null)||(attrName == null)){
 			throw new Catalogmissparam(null, "MISSING_PARAM");
+		}
 		
 		// OPEN SCAN
-		
+	
+		Scan pscan = null; 
 		try {
 			pscan = new Scan(this);
 		}
@@ -119,15 +116,16 @@ implements GlobalConst, Catalogglobal
 		
 		// SCAN FILE FOR ATTRIBUTE
 		// NOTE MUST RETURN ATTRNOTFOUND IF NOT FOUND!!!
-		
+	
 		while (true){
+			AttrDesc record = null;
 			try {
-				tuple = pscan.getNext(rid);
+				Tuple tuple = pscan.getNext(new RID());
 				if (tuple == null)
 					throw new Catalogattrnotfound(null,"Catalog: Attribute not Found!");
 				
-				tuple.setHdr((short)attrs.length, attrs, str_sizes);
-				read_tuple(tuple, record);
+				tuple.setHdr( attrs, str_sizes);
+				record= read_tuple(tuple);
 				
 			}
 			catch (Exception e4) {
@@ -136,7 +134,7 @@ implements GlobalConst, Catalogglobal
 			
 			if ( record.relName.equalsIgnoreCase(relation)
 					&& record.attrName.equalsIgnoreCase(attrName) )
-				return;
+				return record;
 		}
 	};
 	
@@ -155,9 +153,9 @@ implements GlobalConst, Catalogglobal
 	{		
 		if (relation == null)
 			throw new Catalogmissparam(null, "MISSING_PARAM");
-		RelDesc record = new RelDesc();
+		RelDesc record = null;
 		try {
-			ExtendedSystemDefs.MINIBASE_RELCAT.getInfo(relation, record);
+			record = ExtendedSystemDefs.MINIBASE_RELCAT.getInfo(relation);
 		}
 		catch (Catalogioerror e) {
 			System.err.println ("Catalog I/O Error!"+e);
@@ -206,16 +204,16 @@ implements GlobalConst, Catalogglobal
 		int count = 0;
 		while(true) 
 		{
-			AttrDesc attrRec = new AttrDesc();
-			Tuple tuple = null;
+			AttrDesc  attrRec= null;
+			
 			try {
 				RID rid = new RID();
-				tuple = pscan.getNext(rid);
+				Tuple tuple = pscan.getNext(rid);
 				if (tuple == null) 
 					throw new Catalogindexnotfound(null,
 					"Catalog: Index not Found!");
-				tuple.setHdr((short)attrs.length, attrs, str_sizes);
-				read_tuple(tuple, attrRec);
+				tuple.setHdr( attrs, str_sizes);
+				attrRec = read_tuple(tuple);
 			}
 			catch (Exception e4) {
 				throw new AttrCatalogException(e4, "read_tuple failed");
@@ -233,6 +231,41 @@ implements GlobalConst, Catalogglobal
 		return Attrs;    
 	};
 	
+	public AttrType[] getAttrType(String relation) throws Catalogmissparam, Catalogioerror, Cataloghferror, AttrCatalogException, Catalognomem, Catalogattrnotfound, Catalogindexnotfound, Catalogrelnotfound, IOException{
+		AttrDesc[] attr = this.getRelInfo(relation);
+		
+		
+		AttrType[] types = new AttrType[attr.length];
+		
+		for(int i=0;i<attr.length;i++){
+			types[i] = attr[i].getType();
+		}
+		
+		return types;
+	}
+	
+	public short[] getStringsSizeType(String relation) throws Catalogmissparam, Catalogioerror, Cataloghferror, AttrCatalogException, Catalognomem, Catalogattrnotfound, Catalogindexnotfound, Catalogrelnotfound, IOException{
+		AttrDesc[] attr = this.getRelInfo(relation);
+		
+		int size = 0;
+		for(int i=0;i<attr.length;i++){
+			if(attr[i].getType().attrType == AttrType.attrString){
+				size++;
+			}
+		}
+		
+		short[] stypes = new short[size];
+		
+		for(int i=0,j=0;i<attr.length;i++){
+			if(attr[i].getType().attrType == AttrType.attrString){
+				stypes[j] = (short)attr[i].getLength();
+				j++;
+			}
+		}
+		
+		
+		return stypes;
+	}
 	// RETURNS ATTRTYPE AND STRINGSIZE ARRAYS FOR CONSTRUCTING TUPLES
 	public void getTupleStructure(String relation, Tuple tuple)
 	throws Catalogmissparam, 
@@ -310,7 +343,7 @@ implements GlobalConst, Catalogglobal
 			}
 		}
 		
-		tuple.setHdr((short)attrCnt, typeArray, sizeArray); 
+		tuple.setHdr( typeArray, sizeArray); 
 	};
 	
 	
@@ -344,15 +377,11 @@ implements GlobalConst, Catalogglobal
 	Catalogattrnotfound
 	
 	{
-		int recSize;
-		RID rid = null;
-		Scan pscan = null;
-		AttrDesc record = null;
-		
 		
 		if ((relation == null)||(attrName == null))
 			throw new Catalogmissparam(null, "MISSING_PARAM");
 		
+		Scan pscan = null;
 		// OPEN SCAN
 		try {
 			pscan = new Scan(this);
@@ -360,16 +389,20 @@ implements GlobalConst, Catalogglobal
 		catch (Exception e1) {
 			throw new AttrCatalogException(e1, "scan failed");
 		}
-		
+		AttrDesc record = null;
 		
 		// SCAN FILE
 		while (true) {
+			RID rid = new RID();
 			try {
-				tuple = pscan.getNext(rid);
+				Tuple tuple = pscan.getNext(rid);
+				
 				if (tuple == null) 
 					throw new Catalogattrnotfound(null,
 					"Catalog: Attribute not Found!");
-				read_tuple(tuple, record);
+				
+				tuple.setHdr( attrs, str_sizes);
+				record = read_tuple(tuple);
 			}
 			catch (Exception e4) {
 				throw new AttrCatalogException(e4, "read_tuple failed");
@@ -434,10 +467,11 @@ implements GlobalConst, Catalogglobal
 	// READ_TUPLE
 	//--------------------------------------------------
 	
-	public void read_tuple(Tuple tuple, AttrDesc record)
+	public AttrDesc read_tuple(Tuple tuple)
 	throws IOException, 
 	AttrCatalogException
 	{
+		AttrDesc record = new AttrDesc();
 		try {
 			record.relName = tuple.getStrFld(1);
 			record.attrName = tuple.getStrFld(2);
@@ -468,7 +502,7 @@ implements GlobalConst, Catalogglobal
 					}
 					else
 					{
-						return;
+						return record;
 					}
 			
 			record.attrLen = tuple.getIntFld(6);
@@ -477,6 +511,8 @@ implements GlobalConst, Catalogglobal
 		catch (Exception e1) {
 			throw new AttrCatalogException(e1, "read_tuple failed");
 		}
+		
+		return record;
 		
 	}
 	

@@ -4,18 +4,18 @@ import java.util.*;
 import java.lang.*;
 import chainexception.*;
 
-//    Major Changes:
-//    1. Change the return type of test() functions from 'int' to 'boolean'
-//       to avoid defining static int TRUE/FALSE, which makes it easier for
-//       derived functions to return the right type.
-//    2. Function runTest is not implemented to avoid dealing with function
-//       pointers.  Instead, it's flattened in runAllTests() function.
-//    3. Change
-//          Status TestDriver::runTests()
-//     	    Status TestDriver::runAllTests()
-//       to
-//          public boolean runTests();
-//          protected boolean runAllTests();
+//Major Changes:
+//1. Change the return type of test() functions from 'int' to 'boolean'
+//to avoid defining static int TRUE/FALSE, which makes it easier for
+//derived functions to return the right type.
+//2. Function runTest is not implemented to avoid dealing with function
+//pointers.  Instead, it's flattened in runAllTests() function.
+//3. Change
+//Status TestDriver::runTests()
+//Status TestDriver::runAllTests()
+//to
+//public boolean runTests();
+//protected boolean runAllTests();
 
 /** 
  * TestDriver class is a base class for various test driver
@@ -29,200 +29,168 @@ import chainexception.*;
 
 public class TestDriver {
 
-  public final static boolean OK   = true; 
-  public final static boolean FAIL = false; 
+	public final static boolean OK   = true; 
+	public final static boolean FAIL = false; 
 
-  protected String dbpath;  
-  protected String logpath;
-  
+	protected String dbpath;  
+	protected String logpath;
 
-  /** 
-   * TestDriver Constructor 
-   *
-   * @param nameRoot The name of the test being run
-   */
 
-  protected TestDriver (String nameRoot) {
+	/** 
+	 * TestDriver Constructor 
+	 *
+	 * @param nameRoot The name of the test being run
+	 */
 
-  //  sprintf( dbpath, MINIBASE_DB, nameRoot, getpid() );
-  //  sprintf( logpath, MINIBASE_LOG, nameRoot, getpid() );
+	protected TestDriver (String nameRoot) {
 
-    //NOTE: Assign random numbers to the dbpath doesn't work because
-    //we can never open the same database again if everytime we are
-    //given a different number.  
+		//  sprintf( dbpath, MINIBASE_DB, nameRoot, getpid() );
+		//  sprintf( logpath, MINIBASE_LOG, nameRoot, getpid() );
 
-    //To port it to a different platform, get "user.name" should
-    //still work well because this feature is not meant to be UNIX
-    //dependent. 
-    dbpath = "/tmp/"+nameRoot+System.getProperty("user.name")+".minibase-db"; 
-    logpath = "/tmp/"+nameRoot +System.getProperty("user.name")+".minibase-log"; 
-  }
+		//NOTE: Assign random numbers to the dbpath doesn't work because
+		//we can never open the same database again if everytime we are
+		//given a different number.  
 
-  /**
-   * Another Constructor
-   */
+		//Para windows
+		//logpath = "c:\\windows\\temp\\testlog";
+		//logpath = "c:\\windows\\temp\\minibase.testdb";
 
-  protected TestDriver () {}
+		//Para unix
+		logpath = "/tmp/" + nameRoot + ".minibase-log";
+		dbpath = "/tmp/" + nameRoot +".minibase-db";
+	}
 
-  /** 
-   * @return whether the test has completely successfully 
-   */
-  protected boolean test1 () { return true; }
-  
-  /** 
-   * @return whether the test has completely successfully 
-   */
-  protected boolean test2 () { return true; }
+	/**
+	 * Another Constructor
+	 */
 
-  /** 
-   * @return whether the test has completely successfully 
-   */
-  protected boolean test3 () { return true; }
+	protected TestDriver () {}
 
-  /** 
-   * @return whether the test has completely successfully 
-   */
-  protected boolean test4 () { return true; }
+	/** 
+	 * @return whether the test has completely successfully 
+	 */
+	protected boolean test1 () { return true; }
 
-  /** 
-   * @return whether the test has completely successfully 
-   */
-  protected boolean test5 () { return true; }
+	/** 
+	 * @return whether the test has completely successfully 
+	 */
+	protected boolean test2 () { return true; }
 
-  /** 
-   * @return whether the test has completely successfully 
-   */
-  protected boolean test6 () { return true; }
+	/** 
+	 * @return whether the test has completely successfully 
+	 */
+	protected boolean test3 () { return true; }
 
-  /** 
-   * @return <code>String</code> object which contains the name of the test
-   */
-  protected String testName() { 
+	/** 
+	 * @return whether the test has completely successfully 
+	 */
+	protected boolean test4 () { return true; }
 
-    //A little reminder to subclassers 
-    return "*** unknown ***"; 
+	/** 
+	 * @return whether the test has completely successfully 
+	 */
+	protected boolean test5 () { return true; }
 
-  }
+	/** 
+	 * @return whether the test has completely successfully 
+	 */
+	protected boolean test6 () { return true; }
 
-  /**
-   * This function does the preparation/cleaning work for the
-   * running tests.
-   *
-   * @return a boolean value indicates whether ALL the tests have passed
-   */
-  public boolean runTests ()  {
-    
-    System.out.println ("\n" + "Running " + testName() + " tests...." + "\n");
-    
-    // Kill anything that might be hanging around
-    String newdbpath;
-    String newlogpath;
-    String remove_logcmd;
-    String remove_dbcmd;
-    String remove_cmd = "cmd /k del ";
+	/** 
+	 * @return <code>String</code> object which contains the name of the test
+	 */
+	protected String testName() { 
 
-    newdbpath = dbpath;
-    newlogpath = logpath;
+		//A little reminder to subclassers 
+		return "*** unknown ***"; 
 
-    remove_logcmd = remove_cmd + logpath;
-    remove_dbcmd = remove_cmd + dbpath;
+	}
 
-    // Commands here is very machine dependent.  We assume
-    // user are on UNIX system here
-    try {
-      Runtime.getRuntime().exec(remove_logcmd);
-      Runtime.getRuntime().exec(remove_dbcmd);
-    } 
-    catch (IOException e) {
-      System.err.println (""+e);
-    }
-    
-    remove_logcmd = remove_cmd + newlogpath;
-    remove_dbcmd = remove_cmd + newdbpath;
+	/**
+	 * This function does the preparation/cleaning work for the
+	 * running tests.
+	 *
+	 * @return a boolean value indicates whether ALL the tests have passed
+	 */
+	public boolean runTests ()  {
 
-    //This step seems redundant for me.  But it's in the original
-    //C++ code.  So I am keeping it as of now, just in case I
-    //I missed something
-    try {
-      Runtime.getRuntime().exec(remove_logcmd);
-      Runtime.getRuntime().exec(remove_dbcmd);
-    } 
-    catch (IOException e) {
-      System.err.println (""+e);
-    }
+	    System.out.println ("\n" + "Running " + testName() + " tests...." + "\n");
+	    
+	    // Kill anything that might be hanging around
+	    
+		File file = new File(logpath);
+		file.delete();
+		file = new File(dbpath);
+		file.delete();
+		
+	    //Run the tests. Return type different from C++
+	    boolean _pass = runAllTests();
 
-    //Run the tests. Return type different from C++
-    boolean _pass = runAllTests();
+	    file = new File(logpath);
+		file.delete();
+		file = new File(dbpath);
+		file.delete();
+	    
+	    System.out.println ("\n" + "..." + testName() + " tests ");
+	    System.out.print (_pass ? "completely successfully" : "failed");
+	    System.out.println (".\n\n");
+	    
+	    return _pass;
+	}
 
-    //Clean up again
-    try {
-      Runtime.getRuntime().exec(remove_logcmd);
-      Runtime.getRuntime().exec(remove_dbcmd);
-    } 
-    catch (IOException e) {
-      System.err.println (""+e);
-    }
-    
-    System.out.println ("\n" + "..." + testName() + " tests ");
-    System.out.print (_pass==OK ? "completely successfully" : "failed");
-    System.out.println (".\n\n");
-    
-    return _pass;
-  }
+	protected boolean runAllTests() {
 
-  protected boolean runAllTests() {
+		boolean _passAll = OK;
 
-    boolean _passAll = OK;
+		//The following code checks whether appropriate erros have been logged,
+		//which, if implemented, should be done for each test case.  
 
-    //The following code checks whether appropriate erros have been logged,
-    //which, if implemented, should be done for each test case.  
+		//minibase_errors.clear_errors();
+		//int result = test();
+		//if ( !result || minibase_errors.error() ) {
+		//  status = FAIL;
+		//  if ( minibase_errors.error() )
+		//    cerr << (result? "*** Unexpected error(s) logged, test failed:\n"
+		//    : "Errors logged:\n");
+		//    minibase_errors.show_errors(cerr);
+		//}
 
-    //minibase_errors.clear_errors();
-    //int result = test();
-    //if ( !result || minibase_errors.error() ) {
-    //  status = FAIL;
-    //  if ( minibase_errors.error() )
-    //    cerr << (result? "*** Unexpected error(s) logged, test failed:\n"
-    //    : "Errors logged:\n");
-    //    minibase_errors.show_errors(cerr);
-    //}
-    
-    //The following runs all the test functions without checking
-    //the logged error types. 
+		//The following runs all the test functions without checking
+		//the logged error types. 
 
-    //Running test1() to test6()
-    if (!test1()) { _passAll = FAIL; }
-    if (!test2()) { _passAll = FAIL; }
-    if (!test3()) { _passAll = FAIL; }
-    if (!test4()) { _passAll = FAIL; }
-    if (!test5()) { _passAll = FAIL; }
-    if (!test6()) { _passAll = FAIL; }
+		//Running test1() to test6()
+		if (!test1()) { _passAll = FAIL; }
+		if (!test2()) { _passAll = FAIL; }
+		if (!test3()) { _passAll = FAIL; }
+		if (!test4()) { _passAll = FAIL; }
+		if (!test5()) { _passAll = FAIL; }
+		if (!test6()) { _passAll = FAIL; }
 
-    return _passAll;
-  }
+		return _passAll;
+	}
 
-  /**
-   * Used to verify whether the exception thrown from
-   * the bottom layer is the one expected.
-   */
-  public boolean checkException (ChainException e, 
-				 String expectedException) {
+	/**
+	 * Used to verify whether the exception thrown from
+	 * the bottom layer is the one expected.
+	 */
+	public boolean checkException (ChainException e, 
+			String expectedException) {
 
-    boolean notCaught = true;
-    while (true) {
-      
-      String exception = e.getClass().getName();
-      
-      if (exception.equals(expectedException)) {
-	return (!notCaught);
-      }
-      
-      if ( e.prev==null ) {
-	return notCaught;
-      }
-      e = (ChainException)e.prev;
-    }
-    
-  } // end of checkException
-  
+		boolean notCaught = true;
+		while (true) {
+
+			String exception = e.getClass().getName();
+
+			if (exception.equals(expectedException)) {
+				return (!notCaught);
+			}
+
+			if ( e.prev==null ) {
+				return notCaught;
+			}
+			e = (ChainException)e.prev;
+		}
+
+	} // end of checkException
+
 } // end of TestDriver  

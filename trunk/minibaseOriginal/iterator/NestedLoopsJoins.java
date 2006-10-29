@@ -224,7 +224,7 @@ public class NestedLoopsJoins  extends Iterator
 			RID rid = new RID();
 			while ((inner_tuple = inner.getNext(rid)) != null)
 			{
-				inner_tuple.setHdr((short)in2_len, _in2,t2_str_sizescopy);
+				inner_tuple.setHdr( _in2,t2_str_sizescopy);
 				if (PredEval.Eval(RightFilter, inner_tuple, null, _in2, null))
 				{
 					if (PredEval.Eval(OutputFilter, outer_tuple, inner_tuple, _in1, _in2))

@@ -1,6 +1,7 @@
 package tests;
 
 import global.Convert;
+import global.ExtendedSystemDefs;
 import global.GlobalConst;
 import global.PageId;
 import global.SystemDefs;
@@ -29,99 +30,11 @@ class BMDriver extends TestDriver implements GlobalConst {
 		super("buftest");
 	}
 	
-	/**
-	 * calls the runTests function in TestDriver
-	 */
-	public boolean runTests () {
-		
-		
-		System.out.print ("\n" + "Running " + testName() + " tests...." + "\n");
-		
-		try {
-			new SystemDefs( dbpath, NUMBUF+20, NUMBUF, "Clock" );
-		}
-		
-		catch (Exception e) {
-			Runtime.getRuntime().exit(1);
-		}
-		
-		// Kill anything that might be hanging around
-		String newdbpath;
-		String newlogpath;
-		String remove_logcmd;
-		String remove_dbcmd;
-		String remove_cmd = "cmd /k del ";
-		
-		newdbpath = dbpath;
-		newlogpath = logpath;
-		
-		remove_logcmd = remove_cmd + logpath;
-		remove_dbcmd = remove_cmd + dbpath;
-		
-		// Commands here is very machine dependent.  We assume
-		// user are on UNIX system here.  If we need to port this
-		// program to other platform, the remove_cmd have to be
-		// modified accordingly.
-		try {
-			Runtime.getRuntime().exec(remove_logcmd);
-			Runtime.getRuntime().exec(remove_dbcmd);
-		}
-		catch (IOException e) {
-			System.err.println (""+e);
-		}
-		
-		remove_logcmd = remove_cmd + newlogpath;
-		remove_dbcmd = remove_cmd + newdbpath;
-		
-		//This step seems redundant for me.  But it's in the original
-		//C++ code.  So I am keeping it as of now, just in case
-		//I missed something
-		try {
-			Runtime.getRuntime().exec(remove_logcmd);
-			Runtime.getRuntime().exec(remove_dbcmd);
-		}
-		catch (IOException e) {
-			System.err.println (""+e);
-		}
-		
-		//Run the tests. Return type different from C++
-		boolean _pass = runAllTests();
-		
-		//Clean up again
-		try {
-			Runtime.getRuntime().exec(remove_logcmd);
-			Runtime.getRuntime().exec(remove_dbcmd);
-			
-		}
-		catch (IOException e) {
-			System.err.println (""+e);
-		}
-		
-		System.out.print ("\n" + "..." + testName() + " tests ");
-		System.out.print (_pass==OK ? "completely successfully" : "failed");
-		System.out.print (".\n\n");
-		
-		return _pass;
+	protected boolean runAllTests() {
+		new ExtendedSystemDefs( dbpath, logpath, NUMBUF+20,500, NUMBUF,"Clock");
+		return super.runAllTests();
 	}
-	
-	protected boolean runAllTests (){
-		
-		boolean _passAll = OK;
-		
-		//The following runs all the test functions 
-		
-		//Running test1() to test6()
-		if (!test1()) { _passAll = FAIL; }    
-		if (!test2()) { _passAll = FAIL; }
-		if (!test3()) { _passAll = FAIL; }
-		if (!test4()) { _passAll = FAIL; }
-		if (!test5()) { _passAll = FAIL; }
-		if (!test6()) { _passAll = FAIL; }
-		
-		return _passAll;
-	}
-	
-	
+
 	/**
 	 * overrides the test1 function in TestDriver.  It tests some
 	 * simple normal buffer manager operations.
@@ -349,7 +262,7 @@ class BMDriver extends TestDriver implements GlobalConst {
 				SystemDefs.JavabaseBM.pinPage( lastPid, pg, /*emptyPage:*/ true );
 			}
 			catch (ChainException e) { 
-				status = checkException (e, "bufmgr.BufferPoolExceededException");
+				status = checkException (e, "bufmgr.exceptions.BufferPoolExceededException");
 				if (status == FAIL) {
 					System.err.print("*** Pinning too many pages\n");
 					System.out.println ("  --> Failed as expected \n");
@@ -383,7 +296,7 @@ class BMDriver extends TestDriver implements GlobalConst {
 				}
 				
 				catch (ChainException e) {
-					status = checkException (e, "bufmgr.PagePinnedException");
+					status = checkException (e, "bufmgr.exceptions.PagePinnedException");
 					
 					if (status == FAIL) {
 						System.err.print("*** Freeing a pinned page\n");
@@ -421,7 +334,7 @@ class BMDriver extends TestDriver implements GlobalConst {
 				SystemDefs.JavabaseBM.unpinPage( lastPid, false );
 			}
 			catch (ChainException e) { 
-				status = checkException (e, "bufmgr.HashEntryNotFoundException");
+				status = checkException (e, "bufmgr.exceptions.HashEntryNotFoundException");
 				
 				if (status == FAIL) {
 					System.err.print("*** Unpinning a page not in the buffer pool\n"); 

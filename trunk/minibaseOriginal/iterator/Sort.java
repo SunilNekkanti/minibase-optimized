@@ -111,7 +111,7 @@ public class Sort extends Iterator implements GlobalConst
 			Tuple temp_tuple = new Tuple(tuple_size);
 			
 			try {
-				temp_tuple.setHdr(n_cols, _in, str_lens);
+				temp_tuple.setHdr( _in, str_lens);
 			}
 			catch (Exception e) {
 				throw new SortException(e, "Sort.java: Tuple.setHdr() failed");
@@ -167,7 +167,7 @@ public class Sort extends Iterator implements GlobalConst
 		pnodeSplayPQ pother_Q = Q2; 
 		Tuple lastElem = new Tuple(tuple_size);  // need tuple.java
 		try {
-			lastElem.setHdr(n_cols, _in, str_lens);
+			lastElem.setHdr( _in, str_lens);
 		}
 		catch (Exception e) {
 			throw new SortException(e, "Sort.java: setHdr() failed");
@@ -446,7 +446,7 @@ public class Sort extends Iterator implements GlobalConst
 			new_tuple = new Tuple(tuple_size); // need tuple.java??
 			
 			try {
-				new_tuple.setHdr(n_cols, _in, str_lens);
+				new_tuple.setHdr( _in, str_lens);
 			}
 			catch (Exception e) {
 				throw new SortException(e, "Sort.java: setHdr() failed");
@@ -608,7 +608,7 @@ public class Sort extends Iterator implements GlobalConst
 		
 		Tuple t = new Tuple(); // need Tuple.java
 		try {
-			t.setHdr(len_in, _in, str_sizes);
+			t.setHdr( _in, str_sizes);
 		}
 		catch (Exception e) {
 			throw new SortException(e, "Sort.java: t.setHdr() failed");
@@ -665,7 +665,7 @@ public class Sort extends Iterator implements GlobalConst
 		
 		op_buf = new Tuple(tuple_size);   // need Tuple.java
 		try {
-			op_buf.setHdr(n_cols, _in, str_lens);
+			op_buf.setHdr( _in, str_lens);
 		}
 		catch (Exception e) {
 			throw new SortException(e, "Sort.java: op_buf.setHdr() failed");

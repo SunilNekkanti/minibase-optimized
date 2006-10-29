@@ -103,8 +103,7 @@ public class Utility implements Catalogglobal{
 		int attrCnt = attrList.length;
 		
 		// GET RELATION
-		RelDesc  relRec = new RelDesc();
-		ExtendedSystemDefs.MINIBASE_RELCAT.getInfo(relation, relRec);
+		RelDesc  relRec  = ExtendedSystemDefs.MINIBASE_RELCAT.getInfo(relation);
 		
 		// CHECK FOR VALID NO OF RECORDS		
 		if (relRec.attrCnt != attrCnt){

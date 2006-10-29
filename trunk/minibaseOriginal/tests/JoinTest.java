@@ -5,6 +5,7 @@ import global.AttrOperator;
 import global.AttrType;
 import global.ExtendedSystemDefs;
 import global.GlobalConst;
+import global.SystemDefs;
 import global.IndexType;
 import global.RID;
 import global.TupleOrder;
@@ -21,11 +22,20 @@ import iterator.RelSpec;
 import iterator.Sort;
 import iterator.SortMerge;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.Vector;
 
 import btree.BTreeFile;
 import btree.IntegerKey;
+import catalog.Utility;
+import catalog.exceptions.AttrCatalogException;
+import catalog.exceptions.Catalogattrnotfound;
+import catalog.exceptions.Cataloghferror;
+import catalog.exceptions.Catalogindexnotfound;
+import catalog.exceptions.Catalogioerror;
+import catalog.exceptions.Catalogmissparam;
+import catalog.exceptions.Catalognomem;
+import catalog.exceptions.Catalogrelnotfound;
 
 /**
    Here is the implementation for the tests. There are N tests performed.
@@ -35,346 +45,43 @@ import btree.IntegerKey;
    We also allow the user to hardwire trees together.
 */
 
-//Define the Sailor schema
-class Sailor {
-  public int    sid;
-  public String sname;
-  public int    rating;
-  public double age;
-  
-  public Sailor (int _sid, String _sname, int _rating,double _age) {
-    sid    = _sid;
-    sname  = _sname;
-    rating = _rating;
-    age    = _age;
-  }
-}
-
-//Define the Boat schema
-class Boats {
-  public int    bid;
-  public String bname;
-  public String color;
-  
-  public Boats (int _bid, String _bname, String _color) {
-    bid   = _bid;
-    bname = _bname;
-    color = _color;
-  }
-}
-
-//Define the Reserves schema
-class Reserves {
-  public int    sid;
-  public int    bid;
-  public String date;
-  
-  public Reserves (int _sid, int _bid, String _date) {
-    sid  = _sid;
-    bid  = _bid;
-    date = _date;
-  }
-}
 
 class JoinsDriver implements GlobalConst {
   
   private boolean OK = true;
   private boolean FAIL = false;
-  private Vector sailors;
-  private Vector boats;
-  private Vector reserves;
+  
   /** Constructor
    */
   public JoinsDriver() {
     
-    //build Sailor, Boats, Reserves table
-    sailors  = new Vector();
-    boats    = new Vector();
-    reserves = new Vector();
-    
-    sailors.addElement(new Sailor(53, "Bob Holloway",       9, 53.6));
-    sailors.addElement(new Sailor(54, "Susan Horowitz",     1, 34.2));
-    sailors.addElement(new Sailor(57, "Yannis Ioannidis",   8, 40.2));
-    sailors.addElement(new Sailor(59, "Deborah Joseph",    10, 39.8));
-    sailors.addElement(new Sailor(61, "Landwebber",         8, 56.7));
-    sailors.addElement(new Sailor(63, "James Larus",        9, 30.3));
-    sailors.addElement(new Sailor(64, "Barton Miller",      5, 43.7));
-    sailors.addElement(new Sailor(67, "David Parter",       1, 99.9));   
-    sailors.addElement(new Sailor(69, "Raghu Ramakrishnan", 9, 37.1));
-    sailors.addElement(new Sailor(71, "Guri Sohi",         10, 42.1));
-    sailors.addElement(new Sailor(73, "Prasoon Tiwari",     8, 39.2));
-    sailors.addElement(new Sailor(39, "Anne Condon",        3, 30.3));
-    sailors.addElement(new Sailor(47, "Charles Fischer",    6, 46.3));
-    sailors.addElement(new Sailor(49, "James Goodman",      4, 50.3));
-    sailors.addElement(new Sailor(50, "Mark Hill",          5, 35.2));
-    sailors.addElement(new Sailor(75, "Mary Vernon",        7, 43.1));
-    sailors.addElement(new Sailor(79, "David Wood",         3, 39.2));
-    sailors.addElement(new Sailor(84, "Mark Smucker",       9, 25.3));
-    sailors.addElement(new Sailor(87, "Martin Reames",     10, 24.1));
-    sailors.addElement(new Sailor(10, "Mike Carey",         9, 40.3));
-    sailors.addElement(new Sailor(21, "David Dewitt",      10, 47.2));
-    sailors.addElement(new Sailor(29, "Tom Reps",           7, 39.1));
-    sailors.addElement(new Sailor(31, "Jeff Naughton",      5, 35.0));
-    sailors.addElement(new Sailor(35, "Miron Livny",        7, 37.6));
-    sailors.addElement(new Sailor(37, "Marv Solomon",      10, 48.9));
+//		Para windows
+		//String logpath = "c:\\windows\\temp\\testlog";
+		//String logpath = "c:\\windows\\temp\\minibase.testdb";
 
-    boats.addElement(new Boats(1, "Onion",      "white"));
-    boats.addElement(new Boats(2, "Buckey",     "red"  ));
-    boats.addElement(new Boats(3, "Enterprise", "blue" ));
-    boats.addElement(new Boats(4, "Voyager",    "green"));
-    boats.addElement(new Boats(5, "Wisconsin",  "red"  ));
- 
-    reserves.addElement(new Reserves(10, 1, "05/10/95"));
-    reserves.addElement(new Reserves(21, 1, "05/11/95"));
-    reserves.addElement(new Reserves(10, 2, "05/11/95"));
-    reserves.addElement(new Reserves(31, 1, "05/12/95"));
-    reserves.addElement(new Reserves(10, 3, "05/13/95"));
-    reserves.addElement(new Reserves(69, 4, "05/12/95"));
-    reserves.addElement(new Reserves(69, 5, "05/14/95"));
-    reserves.addElement(new Reserves(21, 5, "05/16/95"));
-    reserves.addElement(new Reserves(57, 2, "05/10/95"));
-    reserves.addElement(new Reserves(35, 3, "05/15/95"));
+		//Para unix
+		String logpath = "/tmp/jointest.minibase-log";
+		String dbpath = "/tmp/jointest.minibase-db";
+		
+		File file = new File(logpath);
+		file.delete();
+		file = new File(dbpath);
+		file.delete();
 
-    boolean status = OK;
-    int numsailors = 25;
-    int numreserves = 10;
-    int numboats = 5;
-    
-    String logpath = "/tmp/joinlog";
-    String dbpath = "/tmp/minibase.jointestdb";
-    
-    String remove_cmd = "cmd /k del ";
-    String remove_logcmd = remove_cmd + logpath;
-    String remove_dbcmd = remove_cmd + dbpath;
-    String remove_joincmd = remove_cmd + "/tmp/minibase.jointestdb";
+		//Con catalogo
+		//ExtendedSystemDefs extSysDef = 
+		new ExtendedSystemDefs( dbpath, logpath, 1000,500,200,"Clock");
+		//Sin catalogo
+		//SystemDefs sysdef = new SystemDefs( dbpath, 1000, NUMBUF, "Clock" );
 
-    try {
-      Runtime.getRuntime().exec(remove_logcmd);
-      Runtime.getRuntime().exec(remove_dbcmd);
-      Runtime.getRuntime().exec(remove_joincmd);
-    }
-    catch (IOException e) {
-      System.err.println (""+e);
-    }
-
-   
-   
-   new ExtendedSystemDefs( dbpath, logpath,     1000,500,200,"Clock");
-
-    //SystemDefs sysdef = new SystemDefs( dbpath, 1000, NUMBUF, "Clock" );
-    
-    // creating the sailors relation
-    AttrType [] Stypes = new AttrType[4];
-    Stypes[0] = new AttrType (AttrType.attrInteger);
-    Stypes[1] = new AttrType (AttrType.attrString);
-    Stypes[2] = new AttrType (AttrType.attrInteger);
-    Stypes[3] = new AttrType (AttrType.attrReal);
-
-    //SOS
-    short [] Ssizes = new short [1];
-    Ssizes[0] = 30; //first elt. is 30
-    
-    Tuple t = new Tuple();
-    try {
-      t.setHdr((short) 4,Stypes, Ssizes);
-    }
-    catch (Exception e) {
-      System.err.println("*** error in Tuple.setHdr() ***");
-      status = FAIL;
-      e.printStackTrace();
-    }
-    
-    int size = t.size();
-    
-    Heapfile        f = null;
-    try {
-      f = new Heapfile("sailors.in");
-    }
-    catch (Exception e) {
-      System.err.println("*** error in Heapfile constructor ***");
-      status = FAIL;
-      e.printStackTrace();
-    }
-    
-    t = new Tuple(size);
-    try {
-      t.setHdr((short) 4, Stypes, Ssizes);
-    }
-    catch (Exception e) {
-      System.err.println("*** error in Tuple.setHdr() ***");
-      status = FAIL;
-      e.printStackTrace();
-    }
-    
-    for (int i=0; i<numsailors; i++) {
-      try {
-	t.setIntFld(1, ((Sailor)sailors.elementAt(i)).sid);
-	t.setStrFld(2, ((Sailor)sailors.elementAt(i)).sname);
-	t.setIntFld(3, ((Sailor)sailors.elementAt(i)).rating);
-	t.setFloFld(4, (float)((Sailor)sailors.elementAt(i)).age);
-      }
-      catch (Exception e) {
-	System.err.println("*** Heapfile error in Tuple.setStrFld() ***");
-	status = FAIL;
-	e.printStackTrace();
-      }
-      
-      try {
-	f.insertRecord(t.returnTupleByteArray());
-      }
-      catch (Exception e) {
-	System.err.println("*** error in Heapfile.insertRecord() ***");
-	status = FAIL;
-	e.printStackTrace();
-      }      
-    }
-    if (status != OK) {
-      //bail out
-      System.err.println ("*** Error creating relation for sailors");
-      Runtime.getRuntime().exit(1);
-    }
-    
-    //creating the boats relation
-    AttrType [] Btypes = {
-      new AttrType(AttrType.attrInteger), 
-      new AttrType(AttrType.attrString), 
-      new AttrType(AttrType.attrString), 
-    };
-    
-    short  []  Bsizes = new short[2];
-    Bsizes[0] = 30;
-    Bsizes[1] = 20;
-    t = new Tuple();
-    try {
-      t.setHdr((short) 3,Btypes, Bsizes);
-    }
-    catch (Exception e) {
-      System.err.println("*** error in Tuple.setHdr() ***");
-      status = FAIL;
-      e.printStackTrace();
-    }
-    
-    size = t.size();
-    
-    // inserting the tuple into file "boats"
-    //RID             rid;
-    f = null;
-    try {
-      f = new Heapfile("boats.in");
-    }
-    catch (Exception e) {
-      System.err.println("*** error in Heapfile constructor ***");
-      status = FAIL;
-      e.printStackTrace();
-    }
-    
-    t = new Tuple(size);
-    try {
-      t.setHdr((short) 3, Btypes, Bsizes);
-    }
-    catch (Exception e) {
-      System.err.println("*** error in Tuple.setHdr() ***");
-      status = FAIL;
-      e.printStackTrace();
-    }
-    
-    for (int i=0; i<numboats; i++) {
-      try {
-	t.setIntFld(1, ((Boats)boats.elementAt(i)).bid);
-	t.setStrFld(2, ((Boats)boats.elementAt(i)).bname);
-	t.setStrFld(3, ((Boats)boats.elementAt(i)).color);
-      }
-      catch (Exception e) {
-	System.err.println("*** error in Tuple.setStrFld() ***");
-	status = FAIL;
-	e.printStackTrace();
-      }
-      
-      try {
-	f.insertRecord(t.returnTupleByteArray());
-      }
-      catch (Exception e) {
-	System.err.println("*** error in Heapfile.insertRecord() ***");
-	status = FAIL;
-	e.printStackTrace();
-      }      
-    }
-    if (status != OK) {
-      //bail out
-      System.err.println ("*** Error creating relation for boats");
-      Runtime.getRuntime().exit(1);
-    }
-    
-    //creating the boats relation
-    AttrType [] Rtypes = new AttrType[3];
-    Rtypes[0] = new AttrType (AttrType.attrInteger);
-    Rtypes[1] = new AttrType (AttrType.attrInteger);
-    Rtypes[2] = new AttrType (AttrType.attrString);
-
-    short [] Rsizes = new short [1];
-    Rsizes[0] = 15; 
-    t = new Tuple();
-    try {
-      t.setHdr((short) 3,Rtypes, Rsizes);
-    }
-    catch (Exception e) {
-      System.err.println("*** error in Tuple.setHdr() ***");
-      status = FAIL;
-      e.printStackTrace();
-    }
-    
-    size = t.size();
-    
-    // inserting the tuple into file "boats"
-    //RID             rid;
-    f = null;
-    try {
-      f = new Heapfile("reserves.in");
-    }
-    catch (Exception e) {
-      System.err.println("*** error in Heapfile constructor ***");
-      status = FAIL;
-      e.printStackTrace();
-    }
-    
-    t = new Tuple(size);
-    try {
-      t.setHdr((short) 3, Rtypes, Rsizes);
-    }
-    catch (Exception e) {
-      System.err.println("*** error in Tuple.setHdr() ***");
-      status = FAIL;
-      e.printStackTrace();
-    }
-    
-    for (int i=0; i<numreserves; i++) {
-      try {
-	t.setIntFld(1, ((Reserves)reserves.elementAt(i)).sid);
-	t.setIntFld(2, ((Reserves)reserves.elementAt(i)).bid);
-	t.setStrFld(3, ((Reserves)reserves.elementAt(i)).date);
-
-      }
-      catch (Exception e) {
-	System.err.println("*** error in Tuple.setStrFld() ***");
-	status = FAIL;
-	e.printStackTrace();
-      }      
-      
-      try {
-	 f.insertRecord(t.returnTupleByteArray());
-      }
-      catch (Exception e) {
-	System.err.println("*** error in Heapfile.insertRecord() ***");
-	status = FAIL;
-	e.printStackTrace();
-      }      
-    }
-    if (status != OK) {
-      //bail out
-      System.err.println ("*** Error creating relation for reserves");
-      Runtime.getRuntime().exit(1);
-    }
-    
+		try {
+			Utility.loadRecordsUT("sailors.in","sailors.db");
+			Utility.loadRecordsUT("boats.in","boats.db"); 
+			Utility.loadRecordsUT("reserves.in","reserves.db"); 
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}    
   }
   
   public boolean runTests() {
@@ -554,90 +261,58 @@ class JoinsDriver implements GlobalConst {
  
     Query1_CondExpr(outFilter);
  
-    Tuple t = new Tuple();
-    
-    AttrType [] Stypes = new AttrType[4];
-    Stypes[0] = new AttrType (AttrType.attrInteger);
-    Stypes[1] = new AttrType (AttrType.attrString);
-    Stypes[2] = new AttrType (AttrType.attrInteger);
-    Stypes[3] = new AttrType (AttrType.attrReal);
-
-    //SOS
-    short [] Ssizes = new short[1];
-    Ssizes[0] = 30; //first elt. is 30
-    
     FldSpec [] Sprojection = new FldSpec[4];
     Sprojection[0] = new FldSpec(new RelSpec(RelSpec.outer), 1);
     Sprojection[1] = new FldSpec(new RelSpec(RelSpec.outer), 2);
     Sprojection[2] = new FldSpec(new RelSpec(RelSpec.outer), 3);
     Sprojection[3] = new FldSpec(new RelSpec(RelSpec.outer), 4);
 
+    AttrType[] Stypes = null;
+    short [] Ssizes = null;
     FileScan am = null;
     try {
-      am  = new FileScan("sailors.in", Stypes, Ssizes, 
-				  (short)4, (short)4,
-				  Sprojection, null);
-    }
-    catch (Exception e) {
-      status = FAIL;
-      System.err.println (""+e);
-    }
-
-    if (status != OK) {
-      //bail out
-      System.err.println ("*** Error setting up scan for sailors");
-      Runtime.getRuntime().exit(1);
+    	Stypes = SystemDefs.JavabaseCatalog.getAttrCat().getAttrType("sailors.in");
+    	Ssizes = SystemDefs.JavabaseCatalog.getAttrCat().getStringsSizeType("sailors.in");
+    	am  = new FileScan("sailors.in", Stypes, Ssizes, Sprojection, null);
+    } catch (Exception e) {
+    	//	bail out
+        System.err.println ("*** Error setting up scan for sailors");
+        Runtime.getRuntime().exit(1);
     }
     
-    AttrType [] Rtypes = new AttrType[3];
-    Rtypes[0] = new AttrType (AttrType.attrInteger);
-    Rtypes[1] = new AttrType (AttrType.attrInteger);
-    Rtypes[2] = new AttrType (AttrType.attrString);
-
-    short [] Rsizes = new short[1];
-    Rsizes[0] = 15; 
     FldSpec [] Rprojection = new FldSpec[3];
     Rprojection[0] = new FldSpec(new RelSpec(RelSpec.outer), 1);
     Rprojection[1] = new FldSpec(new RelSpec(RelSpec.outer), 2);
     Rprojection[2] = new FldSpec(new RelSpec(RelSpec.outer), 3);
- 
+    
+    AttrType[] Rtypes = null;
+    short [] Rsizes = null;
     FileScan am2 = null;
     try {
-      am2 = new FileScan("reserves.in", Rtypes, Rsizes, 
-				  (short)3, (short) 3,
-				  Rprojection, null);
-    }
-    catch (Exception e) {
-      status = FAIL;
-      System.err.println (""+e);
-    }
-
-    if (status != OK) {
-      //bail out
-      System.err.println ("*** Error setting up scan for reserves");
-      Runtime.getRuntime().exit(1);
-    }
-   
+    	Rtypes = SystemDefs.JavabaseCatalog.getAttrCat().getAttrType("reserves.in");
+    	Rsizes = SystemDefs.JavabaseCatalog.getAttrCat().getStringsSizeType("reserves.in");
+    	am2  = new FileScan("reserves.in", Rtypes, Rsizes, Rprojection, null);
+    } catch (Exception e) {
+    	//	bail out
+    	System.err.println ("*** Error setting up scan for reserves");
+        Runtime.getRuntime().exit(1);
+    }   
     
     FldSpec [] proj_list = new FldSpec[2];
     proj_list[0] = new FldSpec(new RelSpec(RelSpec.outer), 2);
     proj_list[1] = new FldSpec(new RelSpec(RelSpec.innerRel), 3);
-
-    AttrType [] jtype = new AttrType[2];
-    jtype[0] = new AttrType (AttrType.attrString);
-    jtype[1] = new AttrType (AttrType.attrString);
  
     TupleOrder ascending = new TupleOrder(TupleOrder.Ascending);
     SortMerge sm = null;
     try {
-      sm = new SortMerge(Stypes, 4, Ssizes,
-			 Rtypes, 3, Rsizes,
+      sm = new SortMerge(Stypes, Ssizes,
+			 Rtypes, Rsizes,
 			 1, 4, 
 			 1, 4, 
 			 10,
 			 am, am2, 
 			 false, false, ascending,
-			 outFilter, proj_list, 2);
+			 outFilter, proj_list);
     }
     catch (Exception e) {
       System.err.println("*** join error in SortMerge constructor ***"); 
@@ -656,9 +331,13 @@ class JoinsDriver implements GlobalConst {
  
     QueryCheck qcheck1 = new QueryCheck(1);
  
-   
+    Tuple t = new Tuple();
     t = null;
  
+    AttrType [] jtype = new AttrType[2];
+    jtype[0] = new AttrType (AttrType.attrString);
+    jtype[1] = new AttrType (AttrType.attrString);
+    
     try {
       while ((t = sm.get_next()) != null) {
         t.print(jtype);
@@ -715,14 +394,14 @@ class JoinsDriver implements GlobalConst {
     // Build Index first
     IndexType b_index = new IndexType (IndexType.B_Index);
 
-   
-    //ExtendedSystemDefs.MINIBASE_CATALOGPTR.addIndex("sailors.in", "sid", b_index, 1);
-    // }
-    //catch (Exception e) {
-    // e.printStackTrace();
-    // System.err.print ("Failure to add index.\n");
-      //  Runtime.getRuntime().exit(1);
-    // }
+   try{
+	   SystemDefs.JavabaseCatalog.addIndex("sailors.in", "sid", b_index, 1);
+    }
+    catch (Exception e) {
+     e.printStackTrace();
+     System.err.print ("Failure to add index.\n");
+      Runtime.getRuntime().exit(1);
+    }
     
     
 
@@ -814,7 +493,7 @@ class JoinsDriver implements GlobalConst {
     // create a tuple of appropriate size
         Tuple tt = new Tuple();
     try {
-      tt.setHdr((short) 4, Stypes, Ssizes);
+      tt.setHdr( Stypes, Ssizes);
     }
     catch (Exception e) {
       status = FAIL;
@@ -824,7 +503,7 @@ class JoinsDriver implements GlobalConst {
     int sizett = tt.size();
     tt = new Tuple(sizett);
     try {
-      tt.setHdr((short) 4, Stypes, Ssizes);
+      tt.setHdr( Stypes, Ssizes);
     }
     catch (Exception e) {
       status = FAIL;
@@ -1048,7 +727,6 @@ class JoinsDriver implements GlobalConst {
     iterator.Iterator am = null;
     try {
       am  = (iterator.Iterator)new FileScan("sailors.in", Stypes, Ssizes,
-				  (short)4, (short) 4,
 				  Sprojection, null);
     }
     catch (Exception e) {
@@ -1070,8 +748,7 @@ class JoinsDriver implements GlobalConst {
  
     iterator.Iterator am2 = null;
     try {
-      am2 = (iterator.Iterator)new FileScan("reserves.in", Rtypes, Rsizes, 
-				  (short)3, (short)3,
+      am2 = (iterator.Iterator)new FileScan("reserves.in", Rtypes, Rsizes,
 				  Rprojection, null);
     }
     catch (Exception e) {
@@ -1094,14 +771,14 @@ class JoinsDriver implements GlobalConst {
     TupleOrder ascending = new TupleOrder(TupleOrder.Ascending);
     SortMerge sm = null;
     try {
-      sm = new SortMerge(Stypes, 4, Ssizes,
-			 Rtypes, 3, Rsizes,
+      sm = new SortMerge(Stypes,Ssizes,
+			 Rtypes, Rsizes,
 			 1, 4,
 			 1, 4,
 			 10,
 			 am, am2,
 			 false, false, ascending,
-			 outFilter, proj_list, 1);
+			 outFilter, proj_list);
     }
     catch (Exception e) {
       status = FAIL;
@@ -1201,7 +878,6 @@ class JoinsDriver implements GlobalConst {
     iterator.Iterator am = null;
     try {
       am  = new FileScan("sailors.in", Stypes, Ssizes,
-				  (short)4, (short) 4,
 				  Sprojection, null);
     }
     catch (Exception e) {
@@ -1224,7 +900,6 @@ class JoinsDriver implements GlobalConst {
     iterator.Iterator am2 = null;
     try {
       am2 = new FileScan("reserves.in", Rtypes, Rsizes, 
-				  (short)3, (short)3,
 				  Rprojection, null);
     }
     catch (Exception e) {
@@ -1249,14 +924,14 @@ class JoinsDriver implements GlobalConst {
     short  []  jsizes    = new short[1];
     jsizes[0] = 30;
     try {
-      sm = new SortMerge(Stypes, 4, Ssizes,
-			 Rtypes, 3, Rsizes,
+      sm = new SortMerge(Stypes, Ssizes,
+			 Rtypes, Rsizes,
 			 1, 4,
 			 1, 4,
 			 10,
 			 am, am2,
 			 false, false, ascending,
-			 outFilter, proj_list, 1);
+			 outFilter, proj_list);
     }
     catch (Exception e) {
       status = FAIL;
@@ -1385,7 +1060,6 @@ class JoinsDriver implements GlobalConst {
     iterator.Iterator am = null;
     try {
       am  = new FileScan("sailors.in", Stypes, Ssizes, 
-				  (short)4, (short)4,
 				  Sprojection, null);
     }
     catch (Exception e) {
@@ -1402,7 +1076,6 @@ class JoinsDriver implements GlobalConst {
     iterator.Iterator am2 = null;
     try {
       am2 = new FileScan("reserves.in", Rtypes, Rsizes, 
-			 (short)3, (short)3,
 			 Rprojection, null);
     }
     catch (Exception e) {
@@ -1419,14 +1092,14 @@ class JoinsDriver implements GlobalConst {
     TupleOrder ascending = new TupleOrder(TupleOrder.Ascending);
     SortMerge sm = null;
     try {
-      sm = new SortMerge(Stypes, 4, Ssizes,
-			 Rtypes, 3, Rsizes,
+      sm = new SortMerge(Stypes, Ssizes,
+			 Rtypes, Rsizes,
 			 1, 4,
 			 1, 4,
 			 10,
 			 am, am2,
 			 false, false, ascending,
-			 outFilter, proj_list, 3);
+			 outFilter, proj_list);
     }
     catch (Exception e) {
       status = FAIL;
@@ -1570,7 +1243,6 @@ class JoinsDriver implements GlobalConst {
       FileScan am = null;
       try {
 	am  = new FileScan("sailors.in", Stypes, Ssizes, 
-			   (short)4, (short)4,
 			   Sprojection, null);
       }
       catch (Exception e) {
