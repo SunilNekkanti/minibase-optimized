@@ -7,9 +7,6 @@ import global.SystemDefs;
 import heap.Heapfile;
 import heap.Scan;
 import heap.Tuple;
-
-import java.io.File;
-
 import chainexception.ChainException;
 
 /** Note that in JAVA, methods can't be overridden to be more private.
