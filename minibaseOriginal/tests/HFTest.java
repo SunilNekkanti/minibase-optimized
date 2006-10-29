@@ -689,7 +689,7 @@ public boolean runTests () {
 	  status = f.updateRecord( rid, newTuple );
 	}
 	catch (ChainException e) { 
-	  status = checkException (e, "heap.InvalidUpdateException");
+	  status = checkException (e, "heap.exceptions.InvalidUpdateException");
 	  if (status == FAIL) {
 	    System.err.println( "**** Shortening a record" );
 	    System.out.println ("  --> Failed as expected \n");
@@ -730,7 +730,7 @@ public boolean runTests () {
 	  status = f.updateRecord( rid, newTuple );
 	}
 	catch (ChainException e) {
-	  status = checkException(e, "heap.InvalidUpdateException");
+	  status = checkException(e, "heap.exceptions.InvalidUpdateException");
 	  if (status == FAIL) {
 	    System.err.println( "**** Lengthening a record" );
 	    System.out.println ("  --> Failed as expected \n");
@@ -759,7 +759,7 @@ public boolean runTests () {
 	rid = f.insertRecord( record );
       }
       catch (ChainException e) {
-	status = checkException (e, "heap.SpaceNotAvailableException");
+	status = checkException (e, "heap.exceptions.SpaceNotAvailableException");
 	if (status == FAIL) {
 	  System.err.println( "**** Inserting a too-long record" );
 	  System.out.println ("  --> Failed as expected \n");

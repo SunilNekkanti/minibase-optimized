@@ -78,7 +78,7 @@ public class Catalog
 	   Catalogbadtype,
 	   RelCatalogException
     {
-      relCat.getInfo(relation, record);
+	  record = relCat.getInfo(relation);
     };
   
   // create a new relation
@@ -138,8 +138,7 @@ public class Catalog
     };
   
   // get a catalog entry for an attribute
-    public  void getAttributeInfo(String relation, String attrName,
-			AttrDesc record)
+    public  AttrDesc getAttributeInfo(String relation, String attrName)
     throws Catalogmissparam, 
 	   Catalogrelexists, 
 	   Catalogdupattrs, 
@@ -156,7 +155,7 @@ public class Catalog
 	   Catalogbadtype,
 	   AttrCatalogException
     {
-      attrCat.getInfo(relation, attrName, record); 
+      return attrCat.getInfo(relation, attrName); 
     };
   
   // get catalog entries for all attributes of a relation
@@ -235,8 +234,8 @@ public class Catalog
     };
   
   // get catalog entry on an index
-    public void getIndexInfo(String relation, String attrName,
-		    IndexType accessType, IndexDesc record)
+    public IndexDesc getIndexInfo(String relation, String attrName,
+		    IndexType accessType)
     throws Catalogmissparam, 
 	   Catalogrelexists, 
 	   Catalogdupattrs, 
@@ -253,7 +252,7 @@ public class Catalog
 	   Catalogbadtype, 
 	   Exception
     {
-      indCat.getInfo(relation, attrName, accessType, record); 
+      return indCat.getInfo(relation, attrName, accessType); 
     };
   
   // dump catalogs to a disk file for optimizer

@@ -186,7 +186,7 @@ public class SM_JoinTest
 			
 			Tuple t = new Tuple();
 			try {
-				t.setHdr((short) 4,Stypes, Ssizes);
+				t.setHdr(Stypes, Ssizes);
 			}
 			catch (Exception e) {
 				System.err.println("*** error in Tuple.setHdr() ***");
@@ -210,7 +210,7 @@ public class SM_JoinTest
 			
 			t = new Tuple(size);
 			try {
-				t.setHdr((short) 4, Stypes, Ssizes);
+				t.setHdr( Stypes, Ssizes);
 			}
 			catch (Exception e) {
 				System.err.println("*** error in Tuple.setHdr() ***");
@@ -258,7 +258,7 @@ public class SM_JoinTest
 			Bsizes[1] = 20;
 			t = new Tuple();
 			try {
-				t.setHdr((short) 3,Btypes, Bsizes);
+				t.setHdr(Btypes, Bsizes);
 			}
 			catch (Exception e) {
 				System.err.println("*** error in Tuple.setHdr() ***");
@@ -282,7 +282,7 @@ public class SM_JoinTest
 			
 			t = new Tuple(size);
 			try {
-				t.setHdr((short) 3, Btypes, Bsizes);
+				t.setHdr( Btypes, Bsizes);
 			}
 			catch (Exception e) {
 				System.err.println("*** error in Tuple.setHdr() ***");
@@ -327,7 +327,7 @@ public class SM_JoinTest
 			Rsizes[0] = 15; 
 			t = new Tuple();
 			try {
-				t.setHdr((short) 3,Rtypes, Rsizes);
+				t.setHdr(Rtypes, Rsizes);
 			}
 			catch (Exception e) {
 				System.err.println("*** error in Tuple.setHdr() ***");
@@ -351,7 +351,7 @@ public class SM_JoinTest
 			
 			t = new Tuple(size);
 			try {
-				t.setHdr((short) 3, Rtypes, Rsizes);
+				t.setHdr( Rtypes, Rsizes);
 			}
 			catch (Exception e) {
 				System.err.println("*** error in Tuple.setHdr() ***");
@@ -591,7 +591,6 @@ public class SM_JoinTest
 			FileScan am = null;
 			try {
 				am  = new FileScan("sailors.in", Stypes, Ssizes, 
-						(short)4, (short)4,
 						Sprojection, null);
 			}
 			catch (Exception e) {
@@ -620,7 +619,6 @@ public class SM_JoinTest
 			FileScan am2 = null;
 			try {
 				am2 = new FileScan("reserves.in", Rtypes, Rsizes, 
-						(short)3, (short) 3,
 						Rprojection, null);
 			}
 			catch (Exception e) {
@@ -646,14 +644,14 @@ public class SM_JoinTest
 			TupleOrder ascending = new TupleOrder(TupleOrder.Ascending);
 			SortMerge sm = null;
 			try {
-				sm = new SortMerge(Stypes, 4, Ssizes,
-						Rtypes, 3, Rsizes,
+				sm = new SortMerge(Stypes, Ssizes,
+						Rtypes, Rsizes,
 						1, 4, 
 						1, 4, 
 						10,
 						am, am2, 
 						false, false, ascending,
-						outFilter, proj_list, 2);
+						outFilter, proj_list);
 			}
 			catch (Exception e) {
 				System.err.println("*** join error in SortMerge constructor ***"); 
@@ -764,7 +762,6 @@ public class SM_JoinTest
 			iterator.Iterator am = null;
 			try {
 				am  = new FileScan("sailors.in", Stypes, Ssizes,
-						(short)4, (short) 4,
 						Sprojection, null);
 			}
 			catch (Exception e) {
@@ -787,7 +784,6 @@ public class SM_JoinTest
 			iterator.Iterator am2 = null;
 			try {
 				am2 = new FileScan("reserves.in", Rtypes, Rsizes, 
-						(short)3, (short)3,
 						Rprojection, null);
 			}
 			catch (Exception e) {
@@ -812,10 +808,10 @@ public class SM_JoinTest
 			try {
 				sm =  new 
 				SortMerge(Stypes,
-						4,
+						
 						Ssizes,
 						Rtypes,
-						3,
+						
 						Rsizes,
 						1,
 						4,
@@ -828,8 +824,7 @@ public class SM_JoinTest
 						false,
 						ascending,
 						outFilter,
-						proj_list,
-						1) ;
+						proj_list) ;
 //				SortMerge(Stypes,
 //				4,
 //				Ssizes,
@@ -951,7 +946,6 @@ public class SM_JoinTest
 			iterator.Iterator am = null;
 			try {
 				am  =  new FileScan("sailors.in", Stypes, Ssizes,
-						(short)4, (short) 4,
 						Sprojection, null);
 			}
 			catch (Exception e) {
@@ -974,7 +968,6 @@ public class SM_JoinTest
 			iterator.Iterator am2 = null;
 			try {
 				am2 =  new FileScan("reserves.in", Rtypes, Rsizes, 
-						(short)3, (short)3,
 						Rprojection, null);
 			}
 			catch (Exception e) {
@@ -999,14 +992,14 @@ public class SM_JoinTest
 			short  []  jsizes    = new short[1];
 			jsizes[0] = 30;
 			try {
-				sm = new SortMerge(Stypes, 4, Ssizes,
-						Rtypes, 3, Rsizes,
+				sm = new SortMerge(Stypes, Ssizes,
+						Rtypes, Rsizes,
 						1, 4,
 						1, 4,
 						10,
 						am, am2,
 						false, false, ascending,
-						outFilter, proj_list, 1);
+						outFilter, proj_list);
 			}
 			catch (Exception e) {
 				status = FAIL;
@@ -1134,7 +1127,6 @@ public class SM_JoinTest
 			iterator.Iterator am = null;
 			try {
 				am  = new FileScan("sailors.in", Stypes, Ssizes, 
-						(short)4, (short)4,
 						Sprojection, null);
 			}
 			catch (Exception e) {
@@ -1151,7 +1143,6 @@ public class SM_JoinTest
 			iterator.Iterator am2 = null;
 			try {
 				am2 =  new FileScan("reserves.in", Rtypes, Rsizes, 
-						(short)3, (short)3,
 						Rprojection, null);
 			}
 			catch (Exception e) {
@@ -1168,14 +1159,14 @@ public class SM_JoinTest
 			TupleOrder ascending = new TupleOrder(TupleOrder.Ascending);
 			SortMerge sm = null;
 			try {
-				sm = new SortMerge(Stypes, 4, Ssizes,
-						Rtypes, 3, Rsizes,
+				sm = new SortMerge(Stypes, Ssizes,
+						Rtypes,  Rsizes,
 						1, 4,
 						1, 4,
 						10,
 						am, am2,
 						false, false, ascending,
-						outFilter, proj_list, 3);
+						outFilter, proj_list);
 			}
 			catch (Exception e) {
 				status = FAIL;

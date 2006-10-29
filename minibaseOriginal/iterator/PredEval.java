@@ -66,20 +66,20 @@ public class PredEval
 				switch (temp_ptr.type1.attrType)
 				{
 				case AttrType.attrInteger:
-					value.setHdr((short)1, val_type, null);
+					value.setHdr( val_type, null);
 					value.setIntFld(1, temp_ptr.operand1.integer);
 					tuple1 = value;
 					comparison_type.attrType = AttrType.attrInteger;
 					break;
 				case AttrType.attrReal:
-					value.setHdr((short)1, val_type, null);
+					value.setHdr( val_type, null);
 					value.setFloFld(1, temp_ptr.operand1.real);
 					tuple1 = value;
 					comparison_type.attrType =AttrType.attrReal; 
 					break;
 				case AttrType.attrString:
 					str_size[0] = (short)(temp_ptr.operand1.string.length()+1 );
-					value.setHdr((short)1, val_type, str_size);
+					value.setHdr( val_type, str_size);
 					value.setStrFld(1, temp_ptr.operand1.string);
 					tuple1 = value;
 					comparison_type.attrType = AttrType.attrString;
@@ -107,18 +107,18 @@ public class PredEval
 				switch (temp_ptr.type2.attrType)
 				{
 				case AttrType.attrInteger:
-					value.setHdr((short)1, val_type, null);
+					value.setHdr( val_type, null);
 					value.setIntFld(1, temp_ptr.operand2.integer);
 					tuple2 = value;
 					break;
 				case AttrType.attrReal:
-					value.setHdr((short)1, val_type, null);
+					value.setHdr( val_type, null);
 					value.setFloFld(1, temp_ptr.operand2.real);
 					tuple2 = value;
 					break;
 				case AttrType.attrString:
 					str_size[0] = (short)(temp_ptr.operand2.string.length()+1 );
-					value.setHdr((short)1, val_type, str_size);
+					value.setHdr( val_type, str_size);
 					value.setStrFld(1, temp_ptr.operand2.string);
 					tuple2 = value;
 					break;

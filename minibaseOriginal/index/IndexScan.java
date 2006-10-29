@@ -83,7 +83,7 @@ public class IndexScan extends Iterator {
     _noOutFlds = noOutFlds;
     tuple1 = new Tuple();    
     try {
-      tuple1.setHdr((short) noInFlds, types, str_sizes);
+      tuple1.setHdr( types, str_sizes);
     }
     catch (Exception e) {
       throw new IndexException(e, "IndexScan.java: Heapfile error");
@@ -164,7 +164,7 @@ public class IndexScan extends Iterator {
 	if (_types[_fldNum -1].attrType == AttrType.attrInteger) {
 	  attrType[0] = new AttrType(AttrType.attrInteger);
 	  try {
-	    Jtuple.setHdr((short) 1, attrType, s_sizes);
+	    Jtuple.setHdr( attrType, s_sizes);
 	  }
 	  catch (Exception e) {
 	    throw new IndexException(e, "IndexScan.java: Heapfile error");
@@ -189,7 +189,7 @@ public class IndexScan extends Iterator {
 	  s_sizes[0] = _s_sizes[count-1];
 	  
 	  try {
-	    Jtuple.setHdr((short) 1, attrType, s_sizes);
+	    Jtuple.setHdr(attrType, s_sizes);
 	  }
 	  catch (Exception e) {
 	    throw new IndexException(e, "IndexScan.java: Heapfile error");
@@ -219,7 +219,7 @@ public class IndexScan extends Iterator {
       }
       
       try {
-	tuple1.setHdr((short) _noInFlds, _types, _s_sizes);
+	tuple1.setHdr( _types, _s_sizes);
       }
       catch (Exception e) {
 	throw new IndexException(e, "IndexScan.java: Heapfile error");

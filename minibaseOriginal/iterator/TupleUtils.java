@@ -274,7 +274,7 @@ public class TupleUtils
 				res_str_sizes[count++] = sizesT2[proj_list[i].offset-1];
 		}
 		try {
-			Jtuple.setHdr((short)nOutFlds, res_attrs, res_str_sizes);
+			Jtuple.setHdr( res_attrs, res_str_sizes);
 		}catch (Exception e){
 			throw new TupleUtilsException(e,"setHdr() failed");
 		}
@@ -337,7 +337,7 @@ public class TupleUtils
 		}
 		
 		try {
-			Jtuple.setHdr((short)nOutFlds, res_attrs, res_str_sizes);
+			Jtuple.setHdr( res_attrs, res_str_sizes);
 		}catch (Exception e){
 			throw new TupleUtilsException(e,"setHdr() failed");
 		} 

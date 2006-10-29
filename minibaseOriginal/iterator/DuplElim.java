@@ -65,7 +65,7 @@ public class DuplElim extends Iterator
 		
 		Jtuple =  new Tuple();
 		try {
-			Jtuple.setHdr(len_in, _in, s_sizes);
+			Jtuple.setHdr( _in, s_sizes);
 		}catch (Exception e){
 			throw new DuplElimException(e, "setHdr() failed");
 		}
@@ -104,8 +104,8 @@ public class DuplElim extends Iterator
 		TempTuple1 =  new Tuple();
 		TempTuple2 = new Tuple();
 		try{
-			TempTuple1.setHdr(in_len, _in, s_sizes);
-			TempTuple2.setHdr(in_len, _in, s_sizes);
+			TempTuple1.setHdr( _in, s_sizes);
+			TempTuple2.setHdr( _in, s_sizes);
 		}catch (Exception e){
 			throw new DuplElimException(e, "setHdr() failed");
 		}

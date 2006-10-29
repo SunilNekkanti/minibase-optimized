@@ -49,32 +49,24 @@ public class TestGenerico  implements GlobalConst {
 		while(it.hasNext()){
 			String name = (String)it.next();
 			System.out.println(name);
+			
 			AttrDesc[] attr = SystemDefs.JavabaseCatalog.getAttrCat().getRelInfo(name);
-			
-			
-			AttrType[] types = new AttrType[attr.length];
-			short[] stypes = new short[attr.length];
 			
 			String header = "";
 			
-			for(int i=0,j=0;i<attr.length;i++){
+			for(int i=0;i<attr.length;i++){
 				header += attr[i].getName() + " ";
-				types[i] = attr[i].getType();
-				if(types[i].attrType == AttrType.attrString){
-					stypes[j] = (short)attr[i].getLength();
-					j++;
-				}
 			}
+			
 			System.out.println(header);
 			
 			Heapfile heap = new Heapfile(name);
-			
 			Scan scan = heap.openScan();
 			
+			AttrType[] types = SystemDefs.JavabaseCatalog.getAttrCat().getAttrType(name);
 			Tuple tuple = null;
-			
 			while((tuple = scan.getNext(new RID()))!= null){
-				tuple.setHdr((short)types.length,types,stypes);
+				SystemDefs.JavabaseCatalog.getAttrCat().getTupleStructure(name, tuple);
 				tuple.print(types);
 			}
 		}

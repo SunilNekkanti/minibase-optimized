@@ -105,11 +105,9 @@ public class SortMerge extends Iterator implements GlobalConst
 	 *@exception TupleUtilsException exception from using tuple utils
 	 *@exception IOException some I/O fault
 	 */
-	public SortMerge(AttrType    in1[],               
-			int     len_in1,                        
+	public SortMerge(AttrType    in1[],                               
 			short   s1_sizes[],
-			AttrType    in2[],                
-			int     len_in2,                        
+			AttrType    in2[],                                 
 			short   s2_sizes[],
 			
 			int     join_col_in1,                
@@ -126,8 +124,8 @@ public class SortMerge extends Iterator implements GlobalConst
 			TupleOrder order,
 			
 			CondExpr  outFilter[],                
-			FldSpec   proj_list[],
-			int       n_out_flds
+			FldSpec   proj_list[]
+			
 	)
 	throws JoinNewFailed ,
 	JoinLowMemory,
@@ -136,6 +134,10 @@ public class SortMerge extends Iterator implements GlobalConst
 	IOException
 	
 	{
+		int     len_in1 = in1.length;
+		int     len_in2 = in2.length;
+		int       n_out_flds = proj_list.length;
+		
 		_in1 = new AttrType[in1.length];
 		_in2 = new AttrType[in2.length];
 		System.arraycopy(in1,0,_in1,0,in1.length);
@@ -210,10 +212,10 @@ public class SortMerge extends Iterator implements GlobalConst
 			throw new JoinLowMemory ("SortMerge.java: memory not enough");  
 		
 		try {
-			TempTuple1.setHdr((short)in1_len, _in1, s1_sizes);
-			tuple1.setHdr((short)in1_len, _in1, s1_sizes);
-			TempTuple2.setHdr((short)in2_len, _in2, s2_sizes);
-			tuple2.setHdr((short)in2_len, _in2, s2_sizes);
+			TempTuple1.setHdr( _in1, s1_sizes);
+			tuple1.setHdr( _in1, s1_sizes);
+			TempTuple2.setHdr( _in2, s2_sizes);
+			tuple2.setHdr( _in2, s2_sizes);
 		}catch (Exception e){
 			throw new SortException (e,"Set header failed");
 		}

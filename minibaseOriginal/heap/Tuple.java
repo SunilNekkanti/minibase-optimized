@@ -359,9 +359,10 @@ public class Tuple implements GlobalConst{
 	 *
 	 */
 	
-	public void setHdr (short numFlds,  AttrType types[], short strSizes[])
+	public void setHdr (AttrType types[], short strSizes[])
 	throws IOException, InvalidTypeException, InvalidTupleSizeException		
 	{
+		short numFlds = (short)types.length;
 		if((numFlds +2)*2 > max_size)
 			throw new InvalidTupleSizeException (null, "TUPLE: TUPLE_TOOBIG_ERROR");
 		
