@@ -1,6 +1,6 @@
 //------------------------------------
 //AttrCatalog.java
-//
+
 //Ning Wang, April,24,  1998
 //-------------------------------------
 
@@ -48,12 +48,12 @@ implements GlobalConst, Catalogglobal
 	AttrCatalogException
 	{
 		super(filename);
-		
+
 		int sizeOfInt = 4;
 		int sizeOfFloat = 4;
 		tuple = new Tuple(Tuple.max_size);
 		attrs = new AttrType[10];
-		
+
 		attrs[0] = new AttrType(AttrType.attrString);
 		attrs[1] = new AttrType(AttrType.attrString);
 		attrs[2] = new AttrType(AttrType.attrInteger);
@@ -66,8 +66,8 @@ implements GlobalConst, Catalogglobal
 		attrs[7] = new AttrType(AttrType.attrString);   // ?????  BK ?????
 		attrs[8] = new AttrType(AttrType.attrString);   // ?????  BK ?????
 		attrs[9] = new AttrType(AttrType.attrInteger);
-		
-		
+
+
 		// Find the largest possible tuple for values attrs[7] & attrs[8]
 		//   str_sizes[2] & str_sizes[3]
 		max = 10;   // comes from attrData char strVal[10]
@@ -75,14 +75,14 @@ implements GlobalConst, Catalogglobal
 			max = (short) sizeOfInt;
 		if (sizeOfFloat > max)
 			max = (short) sizeOfFloat;
-		
-		
+
+
 		str_sizes = new short[4];
 		str_sizes[0] = (short) MAXNAME;
 		str_sizes[1] = (short) MAXNAME;
 		str_sizes[2] = max;
 		str_sizes[3] = max;
-		
+
 		try {
 			tuple.setHdr( attrs, str_sizes);
 		}
@@ -90,7 +90,7 @@ implements GlobalConst, Catalogglobal
 			throw new AttrCatalogException(e, "setHdr() failed");
 		}
 	};
-	
+
 	// GET ATTRIBUTE DESCRIPTION
 	public AttrDesc getInfo(String relation, String attrName)
 	throws Catalogmissparam, 
@@ -103,9 +103,9 @@ implements GlobalConst, Catalogglobal
 		if ((relation == null)||(attrName == null)){
 			throw new Catalogmissparam(null, "MISSING_PARAM");
 		}
-		
+
 		// OPEN SCAN
-	
+
 		Scan pscan = null; 
 		try {
 			pscan = new Scan(this);
@@ -113,31 +113,40 @@ implements GlobalConst, Catalogglobal
 		catch (Exception e1) {
 			throw new AttrCatalogException(e1, "scan failed");
 		}
-		
+
 		// SCAN FILE FOR ATTRIBUTE
 		// NOTE MUST RETURN ATTRNOTFOUND IF NOT FOUND!!!
-	
+
 		while (true){
 			AttrDesc record = null;
+
+			Tuple tuple = null;
 			try {
-				Tuple tuple = pscan.getNext(new RID());
-				if (tuple == null)
-					throw new Catalogattrnotfound(null,"Catalog: Attribute not Found!");
-				
+				tuple = pscan.getNext(new RID());
+			} catch (InvalidTupleSizeException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+
+			if (tuple == null)
+				throw new Catalogattrnotfound(null,"Catalog: Attribute not Found!");
+
+			try {		
 				tuple.setHdr( attrs, str_sizes);
 				record= read_tuple(tuple);
-				
+
 			}
 			catch (Exception e4) {
 				throw new AttrCatalogException(e4, "read_tuple failed");
 			}
-			
+
 			if ( record.relName.equalsIgnoreCase(relation)
 					&& record.attrName.equalsIgnoreCase(attrName) )
 				return record;
 		}
 	};
-	
+
 	// GET ALL ATTRIBUTES OF A RELATION/
 	// Return attrCnt
 	public AttrDesc [] getRelInfo(String relation)
@@ -177,13 +186,13 @@ implements GlobalConst, Catalogglobal
 			e4.printStackTrace();
 			throw new AttrCatalogException (e4, "getInfo() failed");
 		}
-		
+
 		// SET ATTRIBUTE COUNT BY REFERENCE
 		int attrCnt = record.attrCnt;
 		if (attrCnt == 0)
 			return new AttrDesc[0];
-		
-		
+
+
 		// OPEN SCAN
 
 		Scan pscan = null;		
@@ -197,73 +206,80 @@ implements GlobalConst, Catalogglobal
 		AttrDesc [] Attrs = new AttrDesc[attrCnt];
 		if (Attrs == null)
 			throw new Catalognomem(null, "Catalog: No Enough Memory!");
-		
+
 		// SCAN FILE
-		
-		
+
+
 		int count = 0;
 		while(true) 
 		{
 			AttrDesc  attrRec= null;
-			
+
+
+			RID rid = new RID();
+			Tuple tuple = null;
 			try {
-				RID rid = new RID();
-				Tuple tuple = pscan.getNext(rid);
-				if (tuple == null) 
-					throw new Catalogindexnotfound(null,
-					"Catalog: Index not Found!");
+				tuple = pscan.getNext(rid);
+			} catch (InvalidTupleSizeException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (tuple == null) 
+				throw new Catalogindexnotfound(null,
+						"Catalog: Index not Found!");
+			try {
 				tuple.setHdr( attrs, str_sizes);
 				attrRec = read_tuple(tuple);
 			}
 			catch (Exception e4) {
 				throw new AttrCatalogException(e4, "read_tuple failed");
 			}
-			
+
 			if(attrRec.relName.equalsIgnoreCase(relation)) 
 			{
 				Attrs[attrRec.attrPos - 1] = attrRec;  
 				count++;
 			}
-			
+
 			if(count == attrCnt)  // if all atts found
 				break; 
 		}
 		return Attrs;    
 	};
-	
+
 	public AttrType[] getAttrType(String relation) throws Catalogmissparam, Catalogioerror, Cataloghferror, AttrCatalogException, Catalognomem, Catalogattrnotfound, Catalogindexnotfound, Catalogrelnotfound, IOException{
 		AttrDesc[] attr = this.getRelInfo(relation);
-		
-		
+
+
 		AttrType[] types = new AttrType[attr.length];
-		
+
 		for(int i=0;i<attr.length;i++){
 			types[i] = attr[i].getType();
 		}
-		
+
 		return types;
 	}
-	
+
 	public short[] getStringsSizeType(String relation) throws Catalogmissparam, Catalogioerror, Cataloghferror, AttrCatalogException, Catalognomem, Catalogattrnotfound, Catalogindexnotfound, Catalogrelnotfound, IOException{
 		AttrDesc[] attr = this.getRelInfo(relation);
-		
+
 		int size = 0;
 		for(int i=0;i<attr.length;i++){
 			if(attr[i].getType().attrType == AttrType.attrString){
 				size++;
 			}
 		}
-		
+
 		short[] stypes = new short[size];
-		
+
 		for(int i=0,j=0;i<attr.length;i++){
 			if(attr[i].getType().attrType == AttrType.attrString){
 				stypes[j] = (short)attr[i].getLength();
 				j++;
 			}
 		}
-		
-		
+
+
 		return stypes;
 	}
 	// RETURNS ATTRTYPE AND STRINGSIZE ARRAYS FOR CONSTRUCTING TUPLES
@@ -307,13 +323,13 @@ implements GlobalConst, Catalogglobal
 			System.err.println ("Catalog: Relation not Found!"+e5);
 			throw new Catalogrelnotfound(null, "");
 		}
-		
+
 		// ALLOCATE TYPEARRAY
 		int attrCnt = attrs.length;
 		AttrType [] typeArray = new AttrType[attrCnt];
 		if (typeArray == null)
 			throw new Catalognomem(null, "Catalog, No Enough Memory!");
-		
+
 		// LOCATE STRINGS
 		int stringcount = 0;
 		for(int i = 0; i < attrCnt; i++)
@@ -321,7 +337,7 @@ implements GlobalConst, Catalogglobal
 			if(attrs[i].attrType.attrType == AttrType.attrString)
 				stringcount++;
 		}
-		
+
 		// ALLOCATE STRING SIZE ARRAY
 		short[] sizeArray = null;
 		if(stringcount > 0) 
@@ -330,9 +346,9 @@ implements GlobalConst, Catalogglobal
 			if (sizeArray == null)
 				throw new Catalognomem(null, "Catalog, No Enough Memory!");
 		}
-		
+
 		// FILL ARRAYS WITH TYPE AND SIZE DATA
-		
+
 		for(int j = 0, i = 0; i < attrCnt; i++)
 		{
 			typeArray[i] = new AttrType(attrs[i].attrType.attrType);
@@ -342,11 +358,11 @@ implements GlobalConst, Catalogglobal
 				j++;
 			}
 		}
-		
+
 		tuple.setHdr( typeArray, sizeArray); 
 	};
-	
-	
+
+
 	// ADD ATTRIBUTE ENTRY TO CATALOG
 	public void addInfo(AttrDesc record)
 	throws AttrCatalogException, 
@@ -358,7 +374,7 @@ implements GlobalConst, Catalogglobal
 		catch (Exception e4) {
 			throw new AttrCatalogException(e4, "make_tuple failed");
 		}
-		
+
 		try {
 			insertRecord(tuple.getTupleByteArray());
 		}
@@ -366,8 +382,8 @@ implements GlobalConst, Catalogglobal
 			throw new AttrCatalogException(e2, "insertRecord failed");
 		}
 	};
-	
-	
+
+
 	// REMOVE AN ATTRIBUTE ENTRY FROM CATALOG
 	// return true if success, false if not found.
 	public void removeInfo(String relation, String attrName)
@@ -375,12 +391,12 @@ implements GlobalConst, Catalogglobal
 	IOException, 
 	Catalogmissparam, 
 	Catalogattrnotfound
-	
+
 	{
-		
+
 		if ((relation == null)||(attrName == null))
 			throw new Catalogmissparam(null, "MISSING_PARAM");
-		
+
 		Scan pscan = null;
 		// OPEN SCAN
 		try {
@@ -390,24 +406,30 @@ implements GlobalConst, Catalogglobal
 			throw new AttrCatalogException(e1, "scan failed");
 		}
 		AttrDesc record = null;
-		
+
 		// SCAN FILE
 		while (true) {
 			RID rid = new RID();
+
+			Tuple tuple = null;
 			try {
-				Tuple tuple = pscan.getNext(rid);
-				
-				if (tuple == null) 
-					throw new Catalogattrnotfound(null,
-					"Catalog: Attribute not Found!");
-				
+				tuple = pscan.getNext(rid);
+			} catch (InvalidTupleSizeException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			if (tuple == null) 
+				throw new Catalogattrnotfound(null,
+						"Catalog: Attribute not Found!");
+			try {
 				tuple.setHdr( attrs, str_sizes);
 				record = read_tuple(tuple);
 			}
 			catch (Exception e4) {
 				throw new AttrCatalogException(e4, "read_tuple failed");
 			}
-			
+
 			if ( record.relName.equalsIgnoreCase(relation)==true 
 					&& record.attrName.equalsIgnoreCase(attrName)==true )
 			{
@@ -421,8 +443,8 @@ implements GlobalConst, Catalogglobal
 			}
 		}
 	};
-	
-	
+
+
 	//--------------------------------------------------
 	// MAKE_TUPLE
 	//--------------------------------------------------
@@ -452,7 +474,7 @@ implements GlobalConst, Catalogglobal
 				tuple.setIntFld(8,record.minVal.intVal);
 				tuple.setIntFld(9,record.maxVal.intVal);
 			}	
-			
+
 			tuple.setIntFld(10, record.isPk()?1:0);
 			tuple.setIntFld(6, record.attrLen);
 			tuple.setIntFld(7, record.indexCnt);
@@ -461,12 +483,12 @@ implements GlobalConst, Catalogglobal
 			throw new AttrCatalogException(e1, "make_tuple failed");
 		}
 	};
-	
-	
+
+
 	//--------------------------------------------------
 	// READ_TUPLE
 	//--------------------------------------------------
-	
+
 	public AttrDesc read_tuple(Tuple tuple)
 	throws IOException, 
 	AttrCatalogException
@@ -504,26 +526,26 @@ implements GlobalConst, Catalogglobal
 					{
 						return record;
 					}
-			
+
 			record.attrLen = tuple.getIntFld(6);
 			record.indexCnt = tuple.getIntFld(7);
 		}
 		catch (Exception e1) {
 			throw new AttrCatalogException(e1, "read_tuple failed");
 		}
-		
+
 		return record;
-		
+
 	}
-	
+
 	// REMOVE ALL ATTRIBUTE ENTRIES FOR A RELATION
 	public void dropRelation(String relation){};
-	
+
 	// ADD AN INDEX TO A RELATION
 	public void addIndex(String relation, String attrname,
 			IndexType accessType){};
-			
-			
+
+
 			Tuple tuple;
 			short [] str_sizes;
 			/**
