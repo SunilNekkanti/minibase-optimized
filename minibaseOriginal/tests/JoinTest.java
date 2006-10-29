@@ -20,18 +20,9 @@ import iterator.Sort;
 import iterator.SortMerge;
 
 import java.io.File;
-import java.io.IOException;
 
 import catalog.IndexDesc;
 import catalog.Utility;
-import catalog.exceptions.AttrCatalogException;
-import catalog.exceptions.Catalogattrnotfound;
-import catalog.exceptions.Cataloghferror;
-import catalog.exceptions.Catalogindexnotfound;
-import catalog.exceptions.Catalogioerror;
-import catalog.exceptions.Catalogmissparam;
-import catalog.exceptions.Catalognomem;
-import catalog.exceptions.Catalogrelnotfound;
 
 /**
    Here is the implementation for the tests. There are N tests performed.
@@ -1275,8 +1266,6 @@ public class JoinTest
 	public static void main(String argv[])
 	{
 		boolean sortstatus;
-		//SystemDefs global = new SystemDefs("bingjiedb", 100, 70, null);
-		//JavabaseDB.openDB("/tmp/nwangdb", 5000);
 
 		JoinsDriver jjoin = new JoinsDriver();
 
