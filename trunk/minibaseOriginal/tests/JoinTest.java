@@ -6,11 +6,8 @@ import global.AttrType;
 import global.ExtendedSystemDefs;
 import global.GlobalConst;
 import global.IndexType;
-import global.RID;
 import global.SystemDefs;
 import global.TupleOrder;
-import heap.Heapfile;
-import heap.Scan;
 import heap.Tuple;
 import index.IndexScan;
 import iterator.CondExpr;
@@ -25,22 +22,15 @@ import iterator.SortMerge;
 import java.io.File;
 import java.io.IOException;
 
-import btree.BTreeFile;
-import btree.IntegerKey;
 import catalog.IndexDesc;
 import catalog.Utility;
-import catalog.exceptions.CatalogException;
-import catalog.exceptions.Catalogattrexists;
+import catalog.exceptions.AttrCatalogException;
 import catalog.exceptions.Catalogattrnotfound;
-import catalog.exceptions.Catalogbadattrcount;
-import catalog.exceptions.Catalogbadtype;
-import catalog.exceptions.Catalogdupattrs;
 import catalog.exceptions.Cataloghferror;
 import catalog.exceptions.Catalogindexnotfound;
 import catalog.exceptions.Catalogioerror;
 import catalog.exceptions.Catalogmissparam;
 import catalog.exceptions.Catalognomem;
-import catalog.exceptions.Catalogrelexists;
 import catalog.exceptions.Catalogrelnotfound;
 
 /**
@@ -420,66 +410,7 @@ class JoinsDriver implements GlobalConst {
 
 		Query2_CondExpr(outFilter, outFilter2);
 		
-		AttrType [] Stypes = {
-				new AttrType(AttrType.attrInteger), 
-				new AttrType(AttrType.attrString), 
-				new AttrType(AttrType.attrInteger), 
-				new AttrType(AttrType.attrReal)
-		};
-
-		AttrType [] Stypes2 = {
-				new AttrType(AttrType.attrInteger), 
-				new AttrType(AttrType.attrString), 
-		};
-
-		short []   Ssizes = new short[1];
-		Ssizes[0] = 30;
-		AttrType [] Rtypes = {
-				new AttrType(AttrType.attrInteger), 
-				new AttrType(AttrType.attrInteger), 
-				new AttrType(AttrType.attrString), 
-		};
-
-		short  []  Rsizes = new short[1] ;
-		Rsizes[0] = 15;
-		AttrType [] Btypes = {
-				new AttrType(AttrType.attrInteger), 
-				new AttrType(AttrType.attrString), 
-				new AttrType(AttrType.attrString), 
-		};
-
-		short  []  Bsizes = new short[2];
-		Bsizes[0] =30;
-		Bsizes[1] =20;
-		AttrType [] Jtypes = {
-				new AttrType(AttrType.attrString), 
-				new AttrType(AttrType.attrInteger), 
-		};
-
-		short  []  Jsizes = new short[1];
-		Jsizes[0] = 30;
-		AttrType [] JJtype = {
-				new AttrType(AttrType.attrString), 
-		};
-
-		short [] JJsize = new short[1];
-		JJsize[0] = 30;
-		FldSpec []  proj1 = {
-				new FldSpec(new RelSpec(RelSpec.outer), 2),
-				new FldSpec(new RelSpec(RelSpec.innerRel), 2)
-		}; // S.sname, R.bid
-
-		FldSpec [] proj2  = {
-				new FldSpec(new RelSpec(RelSpec.outer), 1)
-		};
-
-		FldSpec [] Sprojection = {
-				new FldSpec(new RelSpec(RelSpec.outer), 1),
-				new FldSpec(new RelSpec(RelSpec.outer), 2),
-				// new FldSpec(new RelSpec(RelSpec.outer), 3),
-				// new FldSpec(new RelSpec(RelSpec.outer), 4)
-		};
-
+		
 		CondExpr [] selects = new CondExpr[1];
 		selects[0] = null;
 
@@ -496,6 +427,23 @@ class JoinsDriver implements GlobalConst {
 		//*******************close an scan on the heapfile**************
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+		FldSpec [] Sprojection = {
+				new FldSpec(new RelSpec(RelSpec.outer), 1),
+				new FldSpec(new RelSpec(RelSpec.outer), 2),
+				// new FldSpec(new RelSpec(RelSpec.outer), 3),
+				// new FldSpec(new RelSpec(RelSpec.outer), 4)
+		};
+		
+		AttrType [] Stypes = null;
+		short []   Ssizes = null;
+		try {
+			Stypes = SystemDefs.JavabaseCatalog.getAttrCat().getAttrType("sailors.in");
+			Ssizes = SystemDefs.JavabaseCatalog.getAttrCat().getStringsSizeType("sailors.in");
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		iterator.Iterator am = null;
 		System.out.print ("After Building btree index on sailors.sid.\n\n");
 		try {
@@ -508,6 +456,28 @@ class JoinsDriver implements GlobalConst {
 			System.err.println (""+e);
 			Runtime.getRuntime().exit(1);
 		}
+
+
+		AttrType [] Stypes2 = {
+				new AttrType(AttrType.attrInteger), 
+				new AttrType(AttrType.attrString), 
+		};
+
+		AttrType [] Rtypes = null;
+		short []   Rsizes = null;
+		try {
+			Rtypes = SystemDefs.JavabaseCatalog.getAttrCat().getAttrType("reserves.in");
+			Rsizes = SystemDefs.JavabaseCatalog.getAttrCat().getStringsSizeType("reserves.in");
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+
+		FldSpec []  proj1 = {
+				new FldSpec(new RelSpec(RelSpec.outer), 2),
+				new FldSpec(new RelSpec(RelSpec.innerRel), 2)
+		}; // S.sname, R.bid
 
 
 		NestedLoopsJoins nlj = null;
@@ -525,6 +495,28 @@ class JoinsDriver implements GlobalConst {
 			Runtime.getRuntime().exit(1);
 		}
 
+		AttrType [] Btypes = null;
+		short []   Bsizes = null;
+		try {
+			Btypes = SystemDefs.JavabaseCatalog.getAttrCat().getAttrType("boats.in");
+			Bsizes = SystemDefs.JavabaseCatalog.getAttrCat().getStringsSizeType("boats.in");
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		AttrType [] Jtypes = {
+				new AttrType(AttrType.attrString), 
+				new AttrType(AttrType.attrInteger), 
+		};
+
+		short  []  Jsizes = new short[1];
+		Jsizes[0] = 30;
+		
+		FldSpec [] proj2  = {
+				new FldSpec(new RelSpec(RelSpec.outer), 1)
+		};
+		
 		NestedLoopsJoins nlj2 = null ; 
 		try {
 			nlj2 = new NestedLoopsJoins (Jtypes, 2, Jsizes,
@@ -538,6 +530,13 @@ class JoinsDriver implements GlobalConst {
 			System.err.println (""+e);
 			Runtime.getRuntime().exit(1);
 		}
+		
+		AttrType [] JJtype = {
+				new AttrType(AttrType.attrString), 
+		};
+		
+		short [] JJsize = new short[1];
+		JJsize[0] = 30;
 
 		TupleOrder ascending = new TupleOrder(TupleOrder.Ascending);
 		Sort sort_names = null;
@@ -609,22 +608,25 @@ class JoinsDriver implements GlobalConst {
 		Tuple t = new Tuple();
 		t = null;
 
-		AttrType Stypes[] = {
-				new AttrType(AttrType.attrInteger),
-				new AttrType(AttrType.attrString),
-				new AttrType(AttrType.attrInteger),
-				new AttrType(AttrType.attrReal)
-		};
-		short []   Ssizes = new short[1];
-		Ssizes[0] = 30;
+		AttrType [] Stypes = null;
+		short []   Ssizes = null;
+		try {
+			Stypes = SystemDefs.JavabaseCatalog.getAttrCat().getAttrType("sailors.in");
+			Ssizes = SystemDefs.JavabaseCatalog.getAttrCat().getStringsSizeType("sailors.in");
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
-		AttrType [] Rtypes = {
-				new AttrType(AttrType.attrInteger),
-				new AttrType(AttrType.attrInteger),
-				new AttrType(AttrType.attrString),
-		};
-		short  []  Rsizes = new short[1];
-		Rsizes[0] =15;
+		AttrType [] Rtypes = null;
+		short []   Rsizes = null;
+		try {
+			Rtypes = SystemDefs.JavabaseCatalog.getAttrCat().getAttrType("reserves.in");
+			Rsizes = SystemDefs.JavabaseCatalog.getAttrCat().getStringsSizeType("reserves.in");
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		FldSpec [] Sprojection = {
 				new FldSpec(new RelSpec(RelSpec.outer), 1),
@@ -760,22 +762,25 @@ class JoinsDriver implements GlobalConst {
 		Tuple t = new Tuple();
 		t = null;
 
-		AttrType Stypes[] = {
-				new AttrType(AttrType.attrInteger),
-				new AttrType(AttrType.attrString),
-				new AttrType(AttrType.attrInteger),
-				new AttrType(AttrType.attrReal)
-		};
-		short []   Ssizes = new short[1];
-		Ssizes[0] = 30;
+		AttrType [] Stypes = null;
+		short []   Ssizes = null;
+		try {
+			Stypes = SystemDefs.JavabaseCatalog.getAttrCat().getAttrType("sailors.in");
+			Ssizes = SystemDefs.JavabaseCatalog.getAttrCat().getStringsSizeType("sailors.in");
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
-		AttrType [] Rtypes = {
-				new AttrType(AttrType.attrInteger),
-				new AttrType(AttrType.attrInteger),
-				new AttrType(AttrType.attrString),
-		};
-		short  []  Rsizes = new short[1];
-		Rsizes[0] =15;
+		AttrType [] Rtypes = null;
+		short []   Rsizes = null;
+		try {
+			Rtypes = SystemDefs.JavabaseCatalog.getAttrCat().getAttrType("reserves.in");
+			Rsizes = SystemDefs.JavabaseCatalog.getAttrCat().getStringsSizeType("reserves.in");
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		FldSpec [] Sprojection = {
 				new FldSpec(new RelSpec(RelSpec.outer), 1),
@@ -920,22 +925,25 @@ class JoinsDriver implements GlobalConst {
 		Tuple t = new Tuple();
 		t = null;
 
-		AttrType Stypes[] = {
-				new AttrType(AttrType.attrInteger),
-				new AttrType(AttrType.attrString),
-				new AttrType(AttrType.attrInteger),
-				new AttrType(AttrType.attrReal)
-		};
-		short []   Ssizes = new short[1];
-		Ssizes[0] = 30;
+		AttrType [] Stypes = null;
+		short []   Ssizes = null;
+		try {
+			Stypes = SystemDefs.JavabaseCatalog.getAttrCat().getAttrType("sailors.in");
+			Ssizes = SystemDefs.JavabaseCatalog.getAttrCat().getStringsSizeType("sailors.in");
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
-		AttrType [] Rtypes = {
-				new AttrType(AttrType.attrInteger),
-				new AttrType(AttrType.attrInteger),
-				new AttrType(AttrType.attrString),
-		};
-		short  []  Rsizes = new short[1];
-		Rsizes[0] = 15;
+		AttrType [] Rtypes = null;
+		short []   Rsizes = null;
+		try {
+			Rtypes = SystemDefs.JavabaseCatalog.getAttrCat().getAttrType("reserves.in");
+			Rsizes = SystemDefs.JavabaseCatalog.getAttrCat().getStringsSizeType("reserves.in");
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		FldSpec [] Sprojection = {
 				new FldSpec(new RelSpec(RelSpec.outer), 1),
@@ -1083,34 +1091,35 @@ class JoinsDriver implements GlobalConst {
 		Tuple t = new Tuple();
 		t = null;
 
-		AttrType [] Stypes = {
-				new AttrType(AttrType.attrInteger), 
-				new AttrType(AttrType.attrString), 
-				new AttrType(AttrType.attrInteger), 
-				new AttrType(AttrType.attrReal)
-		};
-
-
-
-		short []   Ssizes = new short[1];
-		Ssizes[0] = 30;
-		AttrType [] Rtypes = {
-				new AttrType(AttrType.attrInteger), 
-				new AttrType(AttrType.attrInteger), 
-				new AttrType(AttrType.attrString), 
-		};
-
-		short  []  Rsizes = new short[1] ;
-		Rsizes[0] = 15;
-		AttrType [] Btypes = {
-				new AttrType(AttrType.attrInteger), 
-				new AttrType(AttrType.attrString), 
-				new AttrType(AttrType.attrString), 
-		};
-
-		short  []  Bsizes = new short[2];
-		Bsizes[0] =30;
-		Bsizes[1] =20;
+		AttrType [] Stypes = null;
+		short []   Ssizes = null;
+		try {
+			Stypes = SystemDefs.JavabaseCatalog.getAttrCat().getAttrType("sailors.in");
+			Ssizes = SystemDefs.JavabaseCatalog.getAttrCat().getStringsSizeType("sailors.in");
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		AttrType [] Rtypes = null;
+		short []   Rsizes = null;
+		try {
+			Rtypes = SystemDefs.JavabaseCatalog.getAttrCat().getAttrType("reserves.in");
+			Rsizes = SystemDefs.JavabaseCatalog.getAttrCat().getStringsSizeType("reserves.in");
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		AttrType [] Btypes = null;
+		short []   Bsizes = null;
+		try {
+			Btypes = SystemDefs.JavabaseCatalog.getAttrCat().getAttrType("boats.in");
+			Bsizes = SystemDefs.JavabaseCatalog.getAttrCat().getStringsSizeType("boats.in");
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 
 		AttrType [] Jtypes = {
