@@ -1,6 +1,6 @@
 //------------------------------------
 //RelCatalog.java
-//
+
 //Ning Wang, April,24  1998
 //-------------------------------------
 
@@ -45,7 +45,7 @@ implements  GlobalConst, Catalogglobal
 {
 	// Helps runStats
 	//Status genStats(RelDesc &relRec, AttrDesc *&attrRecs);
-	
+
 	// CONSTRUCTOR
 	RelCatalog(String filename)
 	throws IOException, 
@@ -54,19 +54,19 @@ implements  GlobalConst, Catalogglobal
 	Exception
 	{
 		super(filename);
-		
+
 		tuple = new Tuple(Tuple.max_size);
-		
+
 		attrs = new AttrType[5];
 		attrs[0] = new AttrType(AttrType.attrString);
 		attrs[1] = new AttrType(AttrType.attrInteger);
 		attrs[2] = new AttrType(AttrType.attrInteger);
 		attrs[3] = new AttrType(AttrType.attrInteger);
 		attrs[4] = new AttrType(AttrType.attrInteger);
-		
+
 		str_sizes = new short[5];
 		str_sizes[0] = (short)MAXNAME;
-		
+
 		try {
 			tuple.setHdr( attrs, str_sizes);
 		}
@@ -75,11 +75,11 @@ implements  GlobalConst, Catalogglobal
 			throw new RelCatalogException(e, "setHdr() failed");
 		}
 	};
-	
+
 	public List<String> getRelationNames () throws InvalidTupleSizeException, IOException, FieldNumberOutOfBoundException, InvalidTypeException{
 		List<String> names = new ArrayList<String> ();
 		Scan scan = null;
-		
+
 		scan = openScan();
 
 		Tuple tuple = null;
@@ -87,7 +87,7 @@ implements  GlobalConst, Catalogglobal
 			tuple.setHdr( attrs, str_sizes);
 			names.add(tuple.getStrFld(1));
 		}
-		
+
 		return names;
 	}
 	// GET RELATION DESCRIPTION FOR A RELATION
@@ -102,7 +102,7 @@ implements  GlobalConst, Catalogglobal
 		if (relation == null){
 			throw new Catalogmissparam(null, "MISSING_PARAM");
 		}
-		
+
 		Scan pscan = null;
 		try {
 			pscan = this.openScan();
@@ -111,7 +111,7 @@ implements  GlobalConst, Catalogglobal
 			System.err.println ("Scan"+e1);
 			throw new RelCatalogException(e1, "scan failed");
 		}
-		
+
 		while (true) {
 			Tuple tuple = null;
 			try {
@@ -124,11 +124,11 @@ implements  GlobalConst, Catalogglobal
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			if (tuple == null){
 				throw new Catalogrelnotfound(null, "Catalog: Relation not Found!");
 			}
-			
+
 			try {
 				tuple.setHdr(attrs, str_sizes);
 			} catch (InvalidTypeException e) {
@@ -142,13 +142,13 @@ implements  GlobalConst, Catalogglobal
 				e.printStackTrace();
 			}
 			RelDesc record = read_tuple(tuple);
-			
+
 			if (record.relName.equalsIgnoreCase(relation)){
 				return record;
 			}
 		}
 	};
-	
+
 	// CREATE A NEW RELATION
 	public void createRel(String relation,  attrInfo [] attrList)
 	throws Catalogmissparam, 
@@ -161,11 +161,11 @@ implements  GlobalConst, Catalogglobal
 	Cataloghferror
 	{
 		int attrCnt = attrList.length;
-		
+
 		if (relation== null  || attrCnt < 1){
 			throw new Catalogmissparam(null, "MISSING_PARAM");
 		}
-		
+
 		boolean status = true;
 		RelDesc rd = null;
 		try {
@@ -186,11 +186,11 @@ implements  GlobalConst, Catalogglobal
 		catch (Catalogrelnotfound e3) {
 			status = false;
 		}
-		
+
 		if (status){
 			throw new Catalogrelexists(null, "Relation Exists!");
 		}
-		
+
 		// MAKE SURE THERE ARE NO DUPLICATE ATTRIBUTE NAMES		
 		for(int i = 0; i < attrCnt; i++) {
 			/* Duplicate attributes.*/
@@ -200,14 +200,14 @@ implements  GlobalConst, Catalogglobal
 				}
 			}
 		}
-		
+
 		rd = new RelDesc();
 		rd.relName = new String(relation);
 		rd.attrCnt = attrCnt;
 		rd.indexCnt = 0;
 		rd.numTuples = NUMTUPLESFILE;
 		rd.numPages = NUMPAGESFILE;
-		
+
 		try {
 			addInfo(rd);
 		}
@@ -215,11 +215,11 @@ implements  GlobalConst, Catalogglobal
 			System.err.println ("addInfo"+e2);
 			throw new RelCatalogException(e2, "addInfo failed");
 		}
-		
+
 		int offset = 0;
 		AttrDesc ad = new AttrDesc();
 		ad.relName = new String(relation);
-		
+
 		for (int i=0; i< attrCnt; i++) {
 			ad.attrName = new String(attrList[i].attrName);
 			ad.attrOffset = offset;
@@ -227,7 +227,7 @@ implements  GlobalConst, Catalogglobal
 			ad.indexCnt = 0;
 			ad.attrPos = i + 1;   // field position in the record
 			ad.setPk(attrList[i].pk);
-			
+
 			if(attrList[i].attrType.attrType == AttrType.attrString) {
 				ad.attrLen = attrList[i].attrLen;
 				ad.maxVal.strVal = new String("Z");
@@ -243,7 +243,7 @@ implements  GlobalConst, Catalogglobal
 				ad.minVal.floatVal = MINNUMVAL;
 				ad.maxVal.floatVal = MAXNUMVAL;
 			}
-			
+
 			try {
 				ExtendedSystemDefs.MINIBASE_ATTRCAT.addInfo(ad);
 			}
@@ -251,12 +251,12 @@ implements  GlobalConst, Catalogglobal
 				System.err.println ("addInfo"+e2);
 				throw new RelCatalogException(e2, "addInfo() failed");
 			}
-			
+
 			offset += ad.attrLen;
 		}
-		
+
 		// NOW CREATE HEAPFILE
-		
+
 		try {
 			Heapfile rel = new Heapfile(relation);
 			if (rel == null)
@@ -266,9 +266,9 @@ implements  GlobalConst, Catalogglobal
 			System.err.println ("Heapfile"+e2);
 			throw new RelCatalogException(e2, "create heapfile failed");
 		}
-		
+
 	};
-	
+
 	// ADD AN INDEX TO A RELATION
 	public void addIndex(String relation, String attrName,
 			IndexType accessType, int buckets)
@@ -283,13 +283,13 @@ implements  GlobalConst, Catalogglobal
 	Catalogbadtype, 
 	Catalogattrnotfound,
 	Exception
-	
+
 	{
 		RelDesc rd = null;
-		
+
 		if ((relation == null)||(attrName == null))
 			throw new Catalogmissparam(null, "MISSING_PARAM");
-		
+
 		// GET RELATION DATA
 		try {
 			rd= getInfo(relation);
@@ -306,8 +306,8 @@ implements  GlobalConst, Catalogglobal
 			System.err.println ("Catalog Missing Param Error!"+e2);
 			throw new Catalogmissparam(null, "");
 		}
-		
-		
+
+
 		// CREATE INDEX FILE
 		try {
 			ExtendedSystemDefs.MINIBASE_INDCAT.addIndex(relation, attrName,accessType, 0);
@@ -316,10 +316,10 @@ implements  GlobalConst, Catalogglobal
 			System.err.println ("addIndex"+e2);
 			throw new RelCatalogException(e2, "addIndex failed");
 		}
-		
+
 		// MODIFY INDEXCNT IN RELCAT
 		rd.indexCnt++;
-		
+
 		try {
 			removeInfo(relation);
 			addInfo(rd);
@@ -330,11 +330,11 @@ implements  GlobalConst, Catalogglobal
 		catch (Exception e2) {
 			throw new RelCatalogException(e2, "add/remove info failed");
 		}
-		
+
 	};
-	
-	
-	
+
+
+
 	// ADD INFORMATION ON A RELATION TO  CATALOG
 	public void addInfo(RelDesc record)
 	throws RelCatalogException, 
@@ -347,7 +347,7 @@ implements  GlobalConst, Catalogglobal
 			System.err.println ("make_tuple"+e4);
 			throw new RelCatalogException(e4, "make_tuple failed");
 		}
-		
+
 		try {
 			insertRecord(tuple.getTupleByteArray());
 		}
@@ -356,7 +356,7 @@ implements  GlobalConst, Catalogglobal
 			throw new RelCatalogException(e2, "insertRecord failed");
 		}
 	};
-	
+
 	// REMOVE INFORMATION ON A RELATION FROM CATALOG
 	public void removeInfo(String relation)
 	throws RelCatalogException, 
@@ -366,7 +366,7 @@ implements  GlobalConst, Catalogglobal
 	{		
 		if (relation == null)
 			throw new Catalogmissparam(null, "MISSING_PARAM");
-		
+
 		Scan pscan = null;
 		try {
 			pscan = new Scan(this);
@@ -375,17 +375,24 @@ implements  GlobalConst, Catalogglobal
 			System.err.println ("Scan"+e1);
 			throw new RelCatalogException(e1, "scan failed");
 		}
-		
-		
-		
+
+
+
 		while(true) {
 			RID rid = new RID();
 			RelDesc record = null;
+
+			Tuple tuple = null;
 			try {
-				Tuple tuple = pscan.getNext(rid);
-				if (tuple == null) 
-					throw new Catalogattrnotfound(null,
-					"Catalog Attribute not Found!");
+				tuple = pscan.getNext(rid);
+			} catch (InvalidTupleSizeException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (tuple == null) 
+				throw new Catalogattrnotfound(null,
+						"Catalog Attribute not Found!");
+			try {
 				tuple.setHdr( attrs, str_sizes);
 				record = read_tuple(tuple);
 			}
@@ -393,7 +400,7 @@ implements  GlobalConst, Catalogglobal
 				System.err.println ("read_tuple"+e4);
 				throw new RelCatalogException(e4, "read_tuple failed");
 			}
-			
+
 			if (record.relName.equalsIgnoreCase(relation)==true) {
 				try {
 					deleteRecord(rid);
@@ -406,7 +413,7 @@ implements  GlobalConst, Catalogglobal
 			}
 		}
 	};
-	
+
 	// Converts AttrDesc to tuple.
 	public void make_tuple(Tuple tuple, RelDesc record)
 	throws IOException, 
@@ -423,9 +430,9 @@ implements  GlobalConst, Catalogglobal
 			System.err.println ("setFld"+e1);
 			throw new RelCatalogException(e1, "setFld failed");
 		}
-		
+
 	};
-	
+
 	public  RelDesc  read_tuple(Tuple tuple)
 	throws IOException, 
 	RelCatalogException
@@ -442,41 +449,41 @@ implements  GlobalConst, Catalogglobal
 			System.err.println ("getFld"+e1);
 			throw new RelCatalogException(e1, "getFld failed");
 		}
-		
+
 		return record;
-		
+
 	};
-	
+
 	// Methods have not been implemented.
-	
+
 	// DESTROY A RELATION
 	void destroyRel(String relation){};
-	
+
 	// DROP AN INDEX FROM A RELATION
 	void dropIndex(String relation, String attrname, IndexType accessType){};
-	
+
 	// DUMPS A CATALOG TO A DISK FILE (FOR OPTIMIZER)
 	void dumpCatalog(String filename){};
-	
+
 	// Collects stats from all the tables of the database.
 	void runStats(String filename){};
-	
+
 	// OUTPUTS A RELATION TO DISK FOR OPTIMIZER
 	// void dumpRelation(fstream outFile, RelDesc relRec, int tupleSize){}; 
-	
+
 	// OUTPUTS ATTRIBUTES TO DISK FOR OPTIMIZER (used by runstats)
 	// void rsdumpRelAttributes (fstream outFile,AttrDesc [] attrRecs,
 	//        int attrCnt, String relName){};
-	
+
 	// OUTPUTS ATTRIBUTES TO DISK FOR OPTIMIZER
 	// void dumpRelAttributes (fstream outFile, AttrDesc [] attrRecs,
 	//        int attrCnt){};
-	
+
 	// OUTPUTS ACCESS METHODS TO DISK FOR OPTIMIZER
 	// void dumpRelIndex(fstream outFile,IndexDesc [] indexRecs,
 	//                    int indexCnt, int attrsize){};
-	
-	
+
+
 	Tuple tuple;
 	short [] str_sizes;
 	/**
@@ -484,6 +491,6 @@ implements  GlobalConst, Catalogglobal
 	 * @uml.associationEnd  multiplicity="(0 -1)"
 	 */
 	AttrType [] attrs;
-	
+
 };
 
