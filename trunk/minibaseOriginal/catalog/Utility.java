@@ -15,14 +15,6 @@ import global.SystemDefs;
 import heap.Heapfile;
 import heap.Scan;
 import heap.Tuple;
-import heap.exceptions.FieldNumberOutOfBoundException;
-import heap.exceptions.HFBufMgrException;
-import heap.exceptions.HFDiskMgrException;
-import heap.exceptions.HFException;
-import heap.exceptions.InvalidSlotNumberException;
-import heap.exceptions.InvalidTupleSizeException;
-import heap.exceptions.InvalidTypeException;
-import heap.exceptions.SpaceNotAvailableException;
 
 import java.io.DataInputStream;
 import java.io.FileInputStream;
@@ -30,7 +22,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import catalog.exceptions.AttrCatalogException;
+import btree.BTreeFile;
+import btree.IntegerKey;
+import btree.KeyClass;
+import btree.StringKey;
 import catalog.exceptions.CatalogPKException;
 import catalog.exceptions.Catalogattrexists;
 import catalog.exceptions.Catalogattrnotfound;
@@ -44,13 +39,6 @@ import catalog.exceptions.Catalogmissparam;
 import catalog.exceptions.Catalognomem;
 import catalog.exceptions.Catalogrelexists;
 import catalog.exceptions.Catalogrelnotfound;
-import catalog.exceptions.IndexCatalogException;
-import catalog.exceptions.RelCatalogException;
-
-import btree.BTreeFile;
-import btree.IntegerKey;
-import btree.KeyClass;
-import btree.StringKey;
 
 public class Utility implements Catalogglobal{
 	
