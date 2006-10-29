@@ -6,17 +6,25 @@
 
 package catalog;
 
-import btree.*;
-import bufmgr.*;
-import bufmgr.exceptions.BufMgrException;
-import diskmgr.*;
-import diskmgr.exceptions.DiskMgrException;
-import global.*;
-import heap.*;
+import global.AttrType;
+import global.Catalogglobal;
+import global.ExtendedSystemDefs;
+import global.GlobalConst;
+import global.IndexType;
+import global.RID;
+import global.TupleOrder;
+import heap.Heapfile;
+import heap.Scan;
+import heap.Tuple;
 import heap.exceptions.InvalidTupleSizeException;
 
-import java.io.*;
+import java.io.IOException;
 
+import btree.BTreeFile;
+import btree.IntegerKey;
+import btree.KeyClass;
+import btree.StringKey;
+import bufmgr.exceptions.BufMgrException;
 import catalog.exceptions.Catalogattrnotfound;
 import catalog.exceptions.Catalogbadtype;
 import catalog.exceptions.Cataloghferror;
@@ -25,10 +33,10 @@ import catalog.exceptions.Catalogindexnotfound;
 import catalog.exceptions.Catalogioerror;
 import catalog.exceptions.Catalogmissparam;
 import catalog.exceptions.Catalognomem;
-import catalog.exceptions.Catalogrelexists;
 import catalog.exceptions.Catalogrelnotfound;
 import catalog.exceptions.IndexCatalogException;
 import catalog.exceptions.RelCatalogException;
+import diskmgr.exceptions.DiskMgrException;
 
 /**
  * @author  Fernando
@@ -47,7 +55,7 @@ implements GlobalConst, Catalogglobal
 		super(filename);
 
 		tuple = new Tuple(Tuple.max_size);
-		attrs = new AttrType[7];
+		attrs = new AttrType[8];
 
 		attrs[0] = new AttrType(AttrType.attrString);
 		attrs[1] = new AttrType(AttrType.attrString);
@@ -62,11 +70,13 @@ implements GlobalConst, Catalogglobal
 		// 2 = Random
 		attrs[5] = new AttrType(AttrType.attrInteger);
 		attrs[6] = new AttrType(AttrType.attrInteger);
+		attrs[7] = new AttrType(AttrType.attrString);
 
 
-		str_sizes = new short[2];
+		str_sizes = new short[3];
 		str_sizes[0] = (short)MAXNAME;
 		str_sizes[1] = (short)MAXNAME;
+		str_sizes[2] = (short)MAXNAME;
 
 		try {
 			tuple.setHdr(attrs, str_sizes);
@@ -90,12 +100,6 @@ implements GlobalConst, Catalogglobal
 	RelCatalogException,
 	Catalogrelnotfound
 	{
-
-		int status;
-		int recSize;
-		RID rid = null;
-		Scan pscan = null;
-		int count = 0;
 
 		if (relation == null)
 			throw new Catalogmissparam(null, "MISSING_PARAM");
@@ -130,6 +134,8 @@ implements GlobalConst, Catalogglobal
 
 		// OPEN SCAN
 
+		Scan pscan = null;
+
 		try {
 			pscan = this.openScan();
 		}
@@ -145,11 +151,12 @@ implements GlobalConst, Catalogglobal
 
 		// SCAN THE FILE
 
+		int count = 0;
 		while(true) 
 		{
 
 			try {
-				tuple = pscan.getNext(rid);
+				tuple = pscan.getNext(new RID());
 			} catch (InvalidTupleSizeException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -207,17 +214,17 @@ implements GlobalConst, Catalogglobal
 				throw new IndexCatalogException(e4, "read_tuple failed");
 			}
 
-			if(record.relName.equalsIgnoreCase(relation)==true 
-					&& record.attrName.equalsIgnoreCase(attrName)==true 
-					&& (accessType == record.accessType))
+			if(record.relName.equalsIgnoreCase(relation) 
+					&& record.attrName.equalsIgnoreCase(attrName) 
+					&& (accessType.indexType == record.accessType.indexType))
 				break;  // FOUND
 		}
 		return record;
 			};
 
 			// GET ALL INDEXES INLUDING A SPECIFIED ATTRIBUTE
-			public int getAttrIndexes(String relation,
-					String attrName, int indexCnt, IndexDesc [] indexes)
+			public IndexDesc [] getAttrIndexes(String relation,
+					String attrName)
 			throws Catalogmissparam, 
 			Catalogioerror, 
 			Cataloghferror,
@@ -227,13 +234,6 @@ implements GlobalConst, Catalogglobal
 			Catalogattrnotfound,
 			IndexCatalogException
 			{
-
-				int status;
-				int recSize;
-				RID rid = null;
-				Scan pscan = null;
-				int count = 0;
-
 				if (relation == null)
 					throw new Catalogmissparam(null, "MISSING_PARAM");
 
@@ -259,12 +259,12 @@ implements GlobalConst, Catalogglobal
 
 				// ASSIGN INDEX COUNT
 
-				indexCnt = record.indexCnt;
+				int indexCnt = record.indexCnt;
 				if(indexCnt == 0)
-					return 0;
+					return null;
 
 				// OPEN SCAN
-
+				Scan pscan = null;
 				try {
 					pscan = new Scan(this);
 				}
@@ -274,17 +274,18 @@ implements GlobalConst, Catalogglobal
 
 				// ALLOCATE INDEX ARRAY
 
-				indexes = new IndexDesc[indexCnt];
+				IndexDesc[] indexes = new IndexDesc[indexCnt];
 				if (indexes == null)
 					throw new Catalognomem(null, "Catalog: No Enough Memory!");
 
 				// SCAN FILE
 
+				int count = 0;
 				while(true) 
 				{
 					Tuple tuple = null;
 					try {
-						tuple = pscan.getNext(rid);
+						tuple = pscan.getNext(new RID());
 					} catch (InvalidTupleSizeException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -309,7 +310,7 @@ implements GlobalConst, Catalogglobal
 						break; 
 				}
 
-				return indexCnt;    
+				return indexes;    
 			};
 
 			// CREATES A FILE NAME FOR AN INDEX 
@@ -317,8 +318,6 @@ implements GlobalConst, Catalogglobal
 					IndexType accessType)
 			{
 				String accessName = null;
-				int sizeName;
-				int sizeOfByte = 1;
 				String indexName = null;
 
 				// DETERMINE INDEX TYPE
@@ -328,14 +327,14 @@ implements GlobalConst, Catalogglobal
 				else if(accessType.indexType == IndexType.Hash)
 					accessName = new String("Hash");
 
+				/*
 				// CHECK FOR LEGIT NAME SIZE
-
-				sizeName = relation.length() + accessName.length() +
+				int sizeName = relation.length() + accessName.length() +
 				attrName.length() + (3 * sizeOfByte);
 
-				//if(sizeName > MAXNAME)
-				//    return MINIBASE_FIRST_ERROR( CATALOG, Catalog::INDEX_NAME_TOO_LONG );
-
+				if(sizeName > MAXNAME)
+				    return MINIBASE_FIRST_ERROR( CATALOG, Catalog::INDEX_NAME_TOO_LONG );
+				 */
 				// CREATE NAME
 
 				indexName = new String(relation);
@@ -352,8 +351,6 @@ implements GlobalConst, Catalogglobal
 			throws IOException,
 			IndexCatalogException
 			{
-				RID rid;
-
 				try {
 					make_tuple(tuple, record);
 				}
@@ -377,14 +374,10 @@ implements GlobalConst, Catalogglobal
 			Catalogattrnotfound,
 			IndexCatalogException
 			{
-				int recSize;
-				RID rid = null;
-				Scan pscan = null;
-				IndexDesc record = null;
-
 				if ((relation == null)||(attrName == null))
 					throw new Catalogmissparam(null, "MISSING_PARAM");
 
+				Scan pscan = null;				
 				// OPEN SCAN
 				try {
 					pscan = new Scan(this);
@@ -397,7 +390,8 @@ implements GlobalConst, Catalogglobal
 
 				while (true)
 				{
-
+					RID rid = new RID();
+					IndexDesc record = null;
 					try {
 						tuple = pscan.getNext(rid);
 					} catch (InvalidTupleSizeException e1) {
@@ -406,7 +400,7 @@ implements GlobalConst, Catalogglobal
 					}
 					if (tuple == null) 
 						throw new Catalogattrnotfound(null,
-								"Catalog: Attribute not Found!");
+						"Catalog: Attribute not Found!");
 					try {
 						tuple.setHdr(attrs,str_sizes);
 						record = read_tuple(tuple);
@@ -515,6 +509,7 @@ implements GlobalConst, Catalogglobal
 
 
 				indexRec = new IndexDesc();
+				indexRec.indexName = new String(indexName);
 				indexRec.relName = new String(relation);
 				indexRec.attrName = new String(attrName);
 				indexRec.accessType = accessType;
@@ -655,6 +650,7 @@ implements GlobalConst, Catalogglobal
 							tuple.setIntFld(5, record.clustered);
 							tuple.setIntFld(6, record.distinctKeys);
 							tuple.setIntFld(7, record.indexPages);
+							tuple.setStrFld(8,record.indexName);
 						}        
 						catch (Exception e) {
 							throw new IndexCatalogException(e,"make_tuple failed");
@@ -700,6 +696,7 @@ implements GlobalConst, Catalogglobal
 							record.clustered = tuple.getIntFld(5);
 							record.distinctKeys = tuple.getIntFld(6);
 							record.indexPages = tuple.getIntFld(7);
+							record.indexName = tuple.getStrFld(8);
 						}        
 						catch (Exception e) {
 							throw new IndexCatalogException(e,"read_tuple failed");

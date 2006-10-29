@@ -1,13 +1,23 @@
 package tests;
 
-import btree.*;
-import bufmgr.*;
-import diskmgr.*;
-import global.*;
-import heap.*;
-import java.io.*;
-import java.lang.*;
-import java.util.*;
+import global.AttrType;
+import global.GlobalConst;
+import global.PageId;
+import global.RID;
+import global.SystemDefs;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Random;
+
+import btree.BT;
+import btree.BTFileScan;
+import btree.BTreeFile;
+import btree.IntegerKey;
+import btree.KeyClass;
+import btree.KeyDataEntry;
+import btree.StringKey;
 
 /**
  * Note that in JAVA, methods can't be overridden to be more private. Therefore, the declaration of all private functions are now declared protected as opposed to the private type in C++.
@@ -33,7 +43,7 @@ class BTDriver  implements GlobalConst
     logpath = "BTREE" + random.nextInt() + ".minibase-log"; 
     
     
-    SystemDefs sysdef = new SystemDefs( dbpath, 5000 ,5000,"Clock");  
+    new SystemDefs( dbpath, 5000 ,5000,"Clock");  
     System.out.println ("\n" + "Running " + " tests...." + "\n");
     
     keyType=AttrType.attrInteger;
@@ -330,7 +340,7 @@ class BTDriver  implements GlobalConst
       try {
 	System.out.println(" ***************** The file name is: "+ "AAA"+postfix +"  **********");  
 	file=new BTreeFile("AAA"+postfix, keyType, 4, deleteFashion); 
-	file.traceFilename("TRACE");
+	BTreeFile.traceFilename("TRACE");
 	
 	KeyClass key;
 	RID rid=new RID();
@@ -361,7 +371,7 @@ class BTDriver  implements GlobalConst
 
        System.out.println(" ***************** The file name is: "+ "AAA"+postfix +"  **********");  
        file=new BTreeFile("AAA"+postfix, keyType, 4, deleteFashion); 
-       file.traceFilename("TRACE");
+       BTreeFile.traceFilename("TRACE");
 
        KeyClass key;
        RID rid=new RID();
@@ -389,7 +399,7 @@ class BTDriver  implements GlobalConst
     try {
        System.out.println(" ***************** The file name is: "+ "AAA"+postfix +"  **********"); 
        file=new BTreeFile("AAA"+postfix, keyType, 4, deleteFashion); 
-       file.traceFilename("TRACE");
+       BTreeFile.traceFilename("TRACE");
 
        int[] k=new int[n];
        for(int i=0;i<n;i++) {
@@ -441,7 +451,7 @@ class BTDriver  implements GlobalConst
     try {
        System.out.println(" ***************** The file name is: "+ "AAA"+postfix +"  **********"); 
        file=new BTreeFile("AAA"+postfix, keyType, 4, deleteFashion); 
-       file.traceFilename("TRACE");
+       BTreeFile.traceFilename("TRACE");
 
        int[] k=new int[n];
        for(int i=0;i<n;i++) {
@@ -523,7 +533,7 @@ class BTDriver  implements GlobalConst
 
        System.out.println(" ***************** The file name is: "+ "AAA"+postfix +"  **********"); 
        file=new BTreeFile("AAA"+postfix, keyType, 20, deleteFashion); 
-       file.traceFilename("TRACE");
+       BTreeFile.traceFilename("TRACE");
 
        int[] k=new int[n];
        for(int i=0;i<n;i++) {
@@ -632,7 +642,7 @@ class GetStuff {
     BufferedReader in = new BufferedReader (new InputStreamReader(System.in));
 	
     try {
-      String ret = in.readLine();
+      in.readLine();
     }
     catch (IOException e) {}
   } 

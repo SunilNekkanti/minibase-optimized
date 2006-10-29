@@ -209,8 +209,7 @@ public class Catalog
     };
   
   // get catalog entries for all indexes for an attribute 
-    public  int getAttrIndexes(String relation, String attrName,
-		     int indexCnt, IndexDesc [] indexes)
+    public  IndexDesc [] getAttrIndexes(String relation, String attrName)
     throws Catalogmissparam, 
 	   Catalogrelexists, 
 	   Catalogdupattrs, 
@@ -226,11 +225,8 @@ public class Catalog
 	   Catalogattrexists,
 	   Catalogbadtype,
 	   IndexCatalogException
-    {
-      int count;	
-      count = indCat.getAttrIndexes(relation, attrName, indexCnt, indexes);
-      
-      return count;
+    {	
+     return indCat.getAttrIndexes(relation, attrName);
     };
   
   // get catalog entry on an index
