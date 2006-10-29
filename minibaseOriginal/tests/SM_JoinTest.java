@@ -16,7 +16,6 @@ import iterator.FldSpec;
 import iterator.RelSpec;
 import iterator.SortMerge;
 
-import java.io.IOException;
 import java.util.Vector;
 
 /**
@@ -139,12 +138,8 @@ public class SM_JoinTest
 			
 			boolean status = OK;
 			int numsailors = 25;
-			int numsailors_attrs = 4;
 			int numreserves = 10;
-			int numreserves_attrs = 3;
 			int numboats = 5;
-			int numboats_attrs = 3;
-			
 			String logpath = "c:\\windows\\temp\\testlog";
 			String dbpath = "c:\\windows\\temp\\minibase.testdb";
 			/*String logpath = "/tmp/joinlog";
@@ -428,34 +423,6 @@ public class SM_JoinTest
 			expr[2] = null;
 		}
 		
-		private void Query2_CondExpr(CondExpr[] expr, CondExpr[] expr2) {
-			
-			expr[0].next  = null;
-			expr[0].op    = new AttrOperator(AttrOperator.aopEQ);
-			expr[0].type1 = new AttrType(AttrType.attrSymbol);
-			expr[0].type2 = new AttrType(AttrType.attrSymbol);
-			expr[0].operand1.symbol = new FldSpec (new RelSpec(RelSpec.outer),1);
-			expr[0].operand2.symbol = new FldSpec (new RelSpec(RelSpec.innerRel),1);
-			
-			expr[1] = null;
-			
-			expr2[0].next  = null;
-			expr2[0].op    = new AttrOperator(AttrOperator.aopEQ); 
-			expr2[0].type1 = new AttrType(AttrType.attrSymbol);
-			expr2[0].type2 = new AttrType(AttrType.attrSymbol);   
-			expr2[0].operand1.symbol = new FldSpec (new RelSpec(RelSpec.outer),2);
-			expr2[0].operand2.symbol = new FldSpec (new RelSpec(RelSpec.innerRel),1);
-			
-			expr2[1].op   = new AttrOperator(AttrOperator.aopEQ);
-			expr2[1].next = null;
-			expr2[1].type1 = new AttrType(AttrType.attrSymbol);
-			expr2[1].type2 = new AttrType(AttrType.attrString);
-			expr2[1].operand1.symbol = new FldSpec (new RelSpec(RelSpec.innerRel),3);
-			expr2[1].operand2.string = "red";
-			
-			expr2[2] = null;
-		}
-		
 		private void Query3_CondExpr(CondExpr[] expr) {
 			
 			expr[0].next  = null;
@@ -503,47 +470,6 @@ public class SM_JoinTest
 			return expr2;
 		}
 		
-		private void Query6_CondExpr(CondExpr[] expr, CondExpr[] expr2) {
-			
-			expr[0].next  = null;
-			expr[0].op    = new AttrOperator(AttrOperator.aopEQ);
-			expr[0].type1 = new AttrType(AttrType.attrSymbol);
-			
-			expr[0].operand1.symbol = new FldSpec (new RelSpec(RelSpec.outer),1);
-			expr[0].type2 = new AttrType(AttrType.attrSymbol);
-			
-			expr[0].operand2.symbol = new FldSpec (new RelSpec(RelSpec.innerRel),1);
-			
-			expr[1].next  = null;
-			expr[1].op    = new AttrOperator(AttrOperator.aopGT);
-			expr[1].type1 = new AttrType(AttrType.attrSymbol);
-			
-			expr[1].operand1.symbol = new FldSpec (new RelSpec(RelSpec.outer),3);
-			expr[1].type2 = new AttrType(AttrType.attrInteger);
-			expr[1].operand2.integer = 7;
-			
-			expr[2] = null;
-			
-			expr2[0].next  = null;
-			expr2[0].op    = new AttrOperator(AttrOperator.aopEQ);
-			expr2[0].type1 = new AttrType(AttrType.attrSymbol);
-			
-			expr2[0].operand1.symbol = new FldSpec (new RelSpec(RelSpec.outer),2);
-			expr2[0].type2 = new AttrType(AttrType.attrSymbol);
-			
-			expr2[0].operand2.symbol = new FldSpec (new RelSpec(RelSpec.innerRel),1);
-			
-			expr2[1].next = null;
-			expr2[1].op   = new AttrOperator(AttrOperator.aopEQ);
-			expr2[1].type1 = new AttrType(AttrType.attrSymbol);
-			
-			expr2[1].operand1.symbol = new FldSpec (new RelSpec(RelSpec.innerRel),3);
-			expr2[1].type2 = new AttrType(AttrType.attrString);
-			expr2[1].operand2.string = "red";
-			
-			expr2[2] = null;
-		}
-		
 		public void Query1() {
 			
 			System.out.print("**********************Query1 strating *********************\n");
@@ -583,10 +509,6 @@ public class SM_JoinTest
 			Sprojection[1] = new FldSpec(new RelSpec(RelSpec.outer), 2);
 			Sprojection[2] = new FldSpec(new RelSpec(RelSpec.outer), 3);
 			Sprojection[3] = new FldSpec(new RelSpec(RelSpec.outer), 4);
-			
-			CondExpr [] selects = new CondExpr [1];
-			selects = null;
-			
 			
 			FileScan am = null;
 			try {
@@ -755,9 +677,6 @@ public class SM_JoinTest
 					new FldSpec(new RelSpec(RelSpec.outer), 3),
 					new FldSpec(new RelSpec(RelSpec.outer), 4)
 			};
-			
-			CondExpr[] selects = new CondExpr [1];
-			selects = null;
 			
 			iterator.Iterator am = null;
 			try {
@@ -939,9 +858,6 @@ public class SM_JoinTest
 					new FldSpec(new RelSpec(RelSpec.outer), 3),
 					new FldSpec(new RelSpec(RelSpec.outer), 4)
 			};
-			
-			CondExpr[] selects = new CondExpr [1];
-			selects = null;
 			
 			iterator.Iterator am = null;
 			try {

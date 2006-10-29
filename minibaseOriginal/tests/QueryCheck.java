@@ -1,11 +1,11 @@
 package tests;
 
-import global.*;
-import heap.*;
-import iterator.*;
-import java.io.*;
-import java.lang.*;
-import java.util.*;
+import global.AttrType;
+import heap.Tuple;
+import iterator.TupleUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 //Set set the structures needed
 //enum Order{UNSORT,SORT};
@@ -134,13 +134,13 @@ private Group [] mygroup;
   private TupleList extra;
 
   //set up answers for each query
-  Vector Q1result = new Vector();
-  Vector Q2result = new Vector();
-  Vector Q3result = new Vector();
-  Vector Q4result = new Vector();
-  Vector Q5result = new Vector();
-  Vector Q6result = new Vector();
-  Vector Q7result = new Vector();
+  List<S1> Q1result = new ArrayList<S1>();
+  List<S2> Q2result = new ArrayList<S2>();
+  List<S2> Q3result = new ArrayList<S2>();
+  List<S2> Q4result = new ArrayList<S2>();
+  List<S5> Q5result = new ArrayList<S5>();
+  List<S2> Q6result = new ArrayList<S2>();
+  List Q7result = new ArrayList();
 
 
 
@@ -155,49 +155,49 @@ private Group [] mygroup;
     missing = new TupleList();
     extra = new TupleList();
     
-    Q1result.addElement (new S1("Mike Carey", "05/10/95"));
-    Q1result.addElement (new S1("David Dewitt", "05/11/95"));
-    Q1result.addElement (new S1("Jeff Naughton", "05/12/95"));
+    Q1result.add(new S1("Mike Carey", "05/10/95"));
+    Q1result.add(new S1("David Dewitt", "05/11/95"));
+    Q1result.add (new S1("Jeff Naughton", "05/12/95"));
     
    
-    Q2result.addElement (new S2("David Dewitt"));
-    Q2result.addElement (new S2("Mike Carey"));
-    Q2result.addElement (new S2("Raghu Ramakrishnan"));
-    Q2result.addElement (new S2("Yannis Ioannidis"));
+    Q2result.add (new S2("David Dewitt"));
+    Q2result.add (new S2("Mike Carey"));
+    Q2result.add (new S2("Raghu Ramakrishnan"));
+    Q2result.add (new S2("Yannis Ioannidis"));
 
    
-    Q3result.addElement (new S2("Mike Carey"));
-    Q3result.addElement (new S2("Mike Carey"));
-    Q3result.addElement (new S2("Mike Carey"));    
-    Q3result.addElement (new S2("David Dewitt"));
-    Q3result.addElement (new S2("David Dewitt"));
-    Q3result.addElement (new S2("Jeff Naughton"));
-    Q3result.addElement (new S2("Miron Livny"));
-    Q3result.addElement (new S2("Yannis Ioannidis"));
-    Q3result.addElement (new S2("Raghu Ramakrishnan"));
-    Q3result.addElement (new S2("Raghu Ramakrishnan"));
+    Q3result.add (new S2("Mike Carey"));
+    Q3result.add (new S2("Mike Carey"));
+    Q3result.add (new S2("Mike Carey"));    
+    Q3result.add (new S2("David Dewitt"));
+    Q3result.add (new S2("David Dewitt"));
+    Q3result.add (new S2("Jeff Naughton"));
+    Q3result.add (new S2("Miron Livny"));
+    Q3result.add (new S2("Yannis Ioannidis"));
+    Q3result.add (new S2("Raghu Ramakrishnan"));
+    Q3result.add (new S2("Raghu Ramakrishnan"));
 
   
-    Q4result.addElement (new S2("David Dewitt"));
-    Q4result.addElement (new S2("Jeff Naughton"));
-    Q4result.addElement (new S2("Mike Carey"));
-    Q4result.addElement (new S2("Miron Livny"));
-    Q4result.addElement (new S2("Raghu Ramakrishnan"));
-    Q4result.addElement (new S2("Yannis Ioannidis"));
+    Q4result.add (new S2("David Dewitt"));
+    Q4result.add (new S2("Jeff Naughton"));
+    Q4result.add (new S2("Mike Carey"));
+    Q4result.add (new S2("Miron Livny"));
+    Q4result.add (new S2("Raghu Ramakrishnan"));
+    Q4result.add (new S2("Yannis Ioannidis"));
 
    
-    Q5result.addElement (new S5("Mike Carey", 9, (float)40.3));
-    Q5result.addElement (new S5("Mike Carey", 9, (float)40.3));
-    Q5result.addElement (new S5("Mike Carey", 9, (float)40.3));
-    Q5result.addElement (new S5("David Dewitt",10, (float)47.2));
-    Q5result.addElement (new S5("David Dewitt",10, (float)47.2));
-    Q5result.addElement (new S5("Jeff Naughton", 5,(float) 35.0));
-    Q5result.addElement (new S5("Yannis Ioannidis", 8, (float)40.2));
+    Q5result.add (new S5("Mike Carey", 9, (float)40.3));
+    Q5result.add (new S5("Mike Carey", 9, (float)40.3));
+    Q5result.add (new S5("Mike Carey", 9, (float)40.3));
+    Q5result.add (new S5("David Dewitt",10, (float)47.2));
+    Q5result.add (new S5("David Dewitt",10, (float)47.2));
+    Q5result.add (new S5("Jeff Naughton", 5,(float) 35.0));
+    Q5result.add (new S5("Yannis Ioannidis", 8, (float)40.2));
 
-    Q6result.addElement (new S2("David Dewitt"));
-    Q6result.addElement (new S2("Mike Carey"));
-    Q6result.addElement (new S2("Raghu Ramakrishnan"));
-    Q6result.addElement (new S2("Yannis Ioannidis"));
+    Q6result.add (new S2("David Dewitt"));
+    Q6result.add (new S2("Mike Carey"));
+    Q6result.add (new S2("Raghu Ramakrishnan"));
+    Q6result.add (new S2("Yannis Ioannidis"));
    
     
    
@@ -228,8 +228,8 @@ private Group [] mygroup;
 	try {
           mygroup[0].mytuple[i] = new Tuple();
           mygroup[0].mytuple[i].setHdr(types, sizes); 
-          mygroup[0].mytuple[i].setStrFld(1,((S1)Q1result.elementAt(i)).sname);  
-          mygroup[0].mytuple[i].setStrFld(2,((S1)Q1result.elementAt(i)).date);  
+          mygroup[0].mytuple[i].setStrFld(1,((S1)Q1result.get(i)).sname);  
+          mygroup[0].mytuple[i].setStrFld(2,((S1)Q1result.get(i)).date);  
 	}
 	catch (Exception e) {
 	  System.err.println ("**** Error setting up the tuples");
@@ -252,7 +252,7 @@ private Group [] mygroup;
         try {
           mygroup[0].mytuple[i] = new Tuple();
           mygroup[0].mytuple[i].setHdr( types, sizes);
-          mygroup[0].mytuple[i].setStrFld(1,((S2)Q2result.elementAt(i)).sname);
+          mygroup[0].mytuple[i].setStrFld(1,((S2)Q2result.get(i)).sname);
 	}
 	catch (Exception e) {
 	  System.err.println ("**** Error setting up the tuples");
@@ -275,7 +275,7 @@ private Group [] mygroup;
 	  try {
 	    mygroup[0].mytuple[i] = new Tuple();
 	    mygroup[0].mytuple[i].setHdr(types, sizes);
-	    mygroup[0].mytuple[i].setStrFld(1,((S2)Q3result.elementAt(i)).sname);
+	    mygroup[0].mytuple[i].setStrFld(1,((S2)Q3result.get(i)).sname);
 	  }
 	  catch (Exception e) {
 	    System.err.println ("**** Error setting up the tuples");
@@ -298,7 +298,7 @@ private Group [] mygroup;
 	  try {
 	    mygroup[0].mytuple[i] = new Tuple();
 	    mygroup[0].mytuple[i].setHdr(types, sizes);
-	    mygroup[0].mytuple[i].setStrFld(1,((S2)Q4result.elementAt(i)).sname);
+	    mygroup[0].mytuple[i].setStrFld(1,((S2)Q4result.get(i)).sname);
 	  }
 	  catch (Exception e) {
 	    System.err.println ("**** Error setting up the tuples");
@@ -323,9 +323,9 @@ private Group [] mygroup;
 	  try {
 	    mygroup[0].mytuple[i] = new Tuple();
 	    mygroup[0].mytuple[i].setHdr(types, sizes);
-	    mygroup[0].mytuple[i].setStrFld(1,((S5)Q5result.elementAt(i)).sname);
-	    mygroup[0].mytuple[i].setIntFld(2,((S5)Q5result.elementAt(i)).rating);
-	    mygroup[0].mytuple[i].setFloFld(3,((S5)Q5result.elementAt(i)).age);
+	    mygroup[0].mytuple[i].setStrFld(1,((S5)Q5result.get(i)).sname);
+	    mygroup[0].mytuple[i].setIntFld(2,((S5)Q5result.get(i)).rating);
+	    mygroup[0].mytuple[i].setFloFld(3,((S5)Q5result.get(i)).age);
 	  }
 	  catch (Exception e) {
 	    System.err.println ("**** Error setting up the tuples");
@@ -348,7 +348,7 @@ private Group [] mygroup;
 	  try {
             mygroup[0].mytuple[i] = new Tuple();
             mygroup[0].mytuple[i].setHdr( types, sizes);
-            mygroup[0].mytuple[i].setStrFld(1,((S2)Q6result.elementAt(i)).sname);
+            mygroup[0].mytuple[i].setStrFld(1,((S2)Q6result.get(i)).sname);
 	  }
 	  catch (Exception e) {
 	    System.err.println ("**** Error setting up the tuples");
@@ -477,8 +477,7 @@ private Group [] mygroup;
       // mygroup[curGroup].mytuple[count].print(types);
 
       try {
-	TupleUtils tUtil = new TupleUtils();
-	if(tUtil.Equal(mygroup[curGroup].mytuple[count],t,types,(int)columnum)) {
+	if(TupleUtils.Equal(mygroup[curGroup].mytuple[count],t,types,(int)columnum)) {
 	  MarkTuple(curGroup, count);
 	}
 
@@ -497,9 +496,8 @@ private Group [] mygroup;
       // look for tuple t inside curGroup
       for( int i=0; i<mygroup[curGroup].len; i++ ) {
 	try {
-	  TupleUtils tUtil = new TupleUtils();
 	  if((mygroup[curGroup].mark[i] == 0) && 
-	     (tUtil.Equal(mygroup[curGroup].mytuple[i],t,types,(int)columnum))) {// found
+	     (TupleUtils.Equal(mygroup[curGroup].mytuple[i],t,types,(int)columnum))) {// found
 	    MarkTuple(curGroup, i);
 	    return;
 	  }
@@ -644,9 +642,8 @@ private Group [] mygroup;
       if(gmark[i] == 0) {
 	for( int j=0; j<mygroup[i].len; j++) {
 	  try {
-	    TupleUtils tUtil = new TupleUtils();
 	    if((mygroup[i].mark[j] == 0) && 
-	       ( tUtil.Equal(mygroup[i].mytuple[j],t,types,(int)columnum))) {
+	       ( TupleUtils.Equal(mygroup[i].mytuple[j],t,types,(int)columnum))) {
 	      t_num[0] = j;
 	      return i;
 	    }
