@@ -107,9 +107,7 @@ public class BTreeFile extends IndexFile
 	throw new GetFileEntryException(e,"");
       }
     }
-  
-  
-  
+   
   private Page pinPage(PageId pageno) 
     throws PinPageException
     {
@@ -160,6 +158,7 @@ public class BTreeFile extends IndexFile
       } 
       
     }
+ 
   private void delete_file_entry(String filename)
     throws DeleteFileEntryException
     {
@@ -183,9 +182,6 @@ public class BTreeFile extends IndexFile
 	throw new UnpinPageException(e,"");
       }  
     }
-  
-  
-  
   
   /**  BTreeFile class
    * an index file with given filename should already exist; this opens it.
@@ -212,7 +208,6 @@ public class BTreeFile extends IndexFile
        * - dbname contains a copy of the name of the database
        */
     }    
-  
   
   /**
    *  if index file exists, open it; else create it.
@@ -304,7 +299,6 @@ public class BTreeFile extends IndexFile
       }
     }  
   
-  
   private void  _destroyFile(PageId pageno) 
     throws IOException, 
 	   IteratorException, 
@@ -360,8 +354,7 @@ public class BTreeFile extends IndexFile
       // - headerPage, headerPageId valid, pinned and marked as dirty
       
     }
-  
-  
+   
   /** insert record with the given key and rid
    *@param key the key of the record. Input parameter.
    *@param rid the rid of the record. Input parameter.
@@ -554,9 +547,6 @@ public class BTreeFile extends IndexFile
       
       return;
     }
-  
-  
-  
   
   private KeyDataEntry  _insert(KeyClass key, RID rid,  
 				PageId currentPageId) 
@@ -967,9 +957,6 @@ public class BTreeFile extends IndexFile
       }
     }
   
-  
-  
-  
   /** delete leaf entry  given its <key, rid> pair.
    *  `rid' is IN the data entry; it is not the id of the data entry)
    *@param key the key in pair <key, rid>. Input Parameter.
@@ -1020,10 +1007,7 @@ public class BTreeFile extends IndexFile
       else
 	throw new DeleteFashionException(null,"");
     }
-  
-  
-  
-  
+   
   /* 
    * findRunStart.
    * Status BTreeFile::findRunStart (const void   lo_key,
@@ -1042,8 +1026,7 @@ public class BTreeFile extends IndexFile
    *@return return a BTLeafPage instance which is pinned. 
    *        null if no key was found.
    */
-  
-  BTLeafPage findRunStart (KeyClass lo_key, 
+   BTLeafPage findRunStart (KeyClass lo_key, 
 			   RID startrid)
     throws IOException, 
 	   IteratorException,  
@@ -1160,9 +1143,7 @@ public class BTreeFile extends IndexFile
       
       return pageLeaf;
     }
-  
-  
-  
+   
   /*
    *  Status BTreeFile::NaiveDelete (const void *key, const RID rid) 
    * 
@@ -1175,7 +1156,6 @@ public class BTreeFile extends IndexFile
    * to find the one containing <key,rid>, which we then delete via
    * BTLeafPage::delUserRid.
    */
-  
   private boolean NaiveDelete ( KeyClass key, RID rid)
     throws LeafDeleteException,  
 	   KeyNotMatchException,  
@@ -1280,8 +1260,7 @@ public class BTreeFile extends IndexFile
    * BTLeafPage::delUserRid.
    *@return false if no such record; true if succees 
    */
-  
-  private boolean FullDelete (KeyClass key,  RID rid)
+   private boolean FullDelete (KeyClass key,  RID rid)
     throws IndexInsertRecException,
 	   RedistributeException,
 	   IndexSearchException, 
@@ -1767,8 +1746,6 @@ public class BTreeFile extends IndexFile
       return null; //neither leaf and index page
       
     }
-  
-  
   
   /** create a scan with given keys
    * Cases:
