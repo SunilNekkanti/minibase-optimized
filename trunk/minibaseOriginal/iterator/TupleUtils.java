@@ -297,13 +297,15 @@ public class TupleUtils
 	 */
 	
 	public static short[] setup_op_tuple(Tuple Jtuple, AttrType res_attrs[],
-			AttrType in1[], int len_in1,
+			AttrType in1[],
 			short t1_str_sizes[], 
-			FldSpec proj_list[], int nOutFlds)
+			FldSpec proj_list[])
 	throws IOException,
 	TupleUtilsException, 
 	InvalidRelation
 	{
+		int len_in1 = in1.length;
+		int nOutFlds = proj_list.length;
 		short [] sizesT1 = new short [len_in1];
 		int i, count = 0;
 		

@@ -86,12 +86,11 @@ public class NestedLoopsJoins  extends Iterator
 	 *@exception IOException some I/O fault
 	 *@exception NestedLoopException exception from this class
 	 */
-	public NestedLoopsJoins( AttrType    in1[],    
-			int     len_in1,           
+	public NestedLoopsJoins( AttrType    in1[],              
 			short   t1_str_sizes[],
 			AttrType    in2[],         
-			int     len_in2,           
 			short   t2_str_sizes[],   
+			
 			int     amt_of_mem,        
 			Iterator     am1,          
 			String relationName,      
@@ -102,6 +101,8 @@ public class NestedLoopsJoins  extends Iterator
 	) throws IOException,NestedLoopException
 	{
 		
+		int     len_in1 = in1.length;
+		int     len_in2 = in2.length;
 		_in1 = new AttrType[in1.length];
 		_in2 = new AttrType[in2.length];
 		System.arraycopy(in1,0,_in1,0,in1.length);

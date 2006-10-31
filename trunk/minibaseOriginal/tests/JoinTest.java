@@ -43,7 +43,8 @@ class JoinsDriver implements GlobalConst {
 	public JoinsDriver() {
 
 		String logpath,dbpath;
-		if (OS.OS == OS.WINDOWS){
+		
+		if (System.getProperty("os.name").contains("Windows")){
 			//	Para windows
 			logpath = "c:\\windows\\temp\\jointest.testlog";
 			dbpath = "c:\\windows\\temp\\jointest.minibase.testdb";
@@ -441,7 +442,7 @@ class JoinsDriver implements GlobalConst {
 		iterator.Iterator am = null;
 		System.out.print ("After Building btree index on sailors.sid.\n\n");
 		try {
-			am = (iterator.Iterator)new IndexScan ( index.getIndexType(), index.getRelationName(),index.getIndexName(), Stypes, Ssizes, 4, 2,
+			am = (iterator.Iterator)new IndexScan ( index.getIndexType(), index.getRelationName(),index.getIndexName(), Stypes, Ssizes,
 					Sprojection, null, 1, false);
 		}
 
@@ -476,8 +477,8 @@ class JoinsDriver implements GlobalConst {
 
 		NestedLoopsJoins nlj = null;
 		try {
-			nlj = new NestedLoopsJoins (Stypes2, 2, Ssizes,
-					Rtypes, 3, Rsizes,
+			nlj = new NestedLoopsJoins (Stypes2, Ssizes,
+					Rtypes,  Rsizes,
 					10,
 					am, "reserves.in",
 					outFilter, null, proj1, 2);
@@ -513,8 +514,8 @@ class JoinsDriver implements GlobalConst {
 		
 		NestedLoopsJoins nlj2 = null ; 
 		try {
-			nlj2 = new NestedLoopsJoins (Jtypes, 2, Jsizes,
-					Btypes, 3, Bsizes,
+			nlj2 = new NestedLoopsJoins (Jtypes, Jsizes,
+					Btypes, Bsizes,
 					10,
 					nlj, "boats.in",
 					outFilter2, null, proj2, 1);
@@ -1174,8 +1175,8 @@ class JoinsDriver implements GlobalConst {
 
 		NestedLoopsJoins inl = null;
 		try {
-			inl = new NestedLoopsJoins (Stypes, 4, Ssizes,
-					Rtypes, 3, Rsizes,
+			inl = new NestedLoopsJoins (Stypes,  Ssizes,
+					Rtypes,  Rsizes,
 					10,
 					am, "reserves.in",
 					outFilter, null, proj1, 2);
@@ -1191,8 +1192,8 @@ class JoinsDriver implements GlobalConst {
 
 		NestedLoopsJoins nlj = null;
 		try {
-			nlj = new NestedLoopsJoins (Jtypes, 2, Jsizes,
-					Btypes, 3, Bsizes,
+			nlj = new NestedLoopsJoins (Jtypes, Jsizes,
+					Btypes,  Bsizes,
 					10,
 					inl, "boats.in",
 					outFilter2, null, proj2, 1);
