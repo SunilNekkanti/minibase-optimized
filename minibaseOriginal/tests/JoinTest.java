@@ -42,13 +42,16 @@ class JoinsDriver implements GlobalConst {
 	 */
 	public JoinsDriver() {
 
-//		Para windows
-		//String logpath = "c:\\windows\\temp\\testlog";
-		//String logpath = "c:\\windows\\temp\\minibase.testdb";
-
-		//Para unix
-		String logpath = "/tmp/jointest.minibase-log";
-		String dbpath = "/tmp/jointest.minibase-db";
+		String logpath,dbpath;
+		if (OS.OS == OS.WINDOWS){
+			//	Para windows
+			logpath = "c:\\windows\\temp\\jointest.testlog";
+			dbpath = "c:\\windows\\temp\\jointest.minibase.testdb";
+		} else {
+			//Para unix
+			logpath = "/tmp/jointest.minibase-log";
+			dbpath = "/tmp/jointest.minibase-db";
+		}
 
 		File file = new File(logpath);
 		file.delete();

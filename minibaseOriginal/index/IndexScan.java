@@ -31,7 +31,9 @@ import btree.StringKey;
 
 
 /**
- * Index Scan iterator will directly access the required tuple using the provided key. It will also perform selections and projections. information about the tuples and the index are passed to the constructor, then the user calls <code>get_next()</code> to get the tuples.
+ * Index Scan iterator will directly access the required tuple using the provided key. It will also perform selections 
+ * and projections. information about the tuples and the index are passed to the constructor, then the user calls 
+ * <code>get_next()</code> to get the tuples.
  */
 public class IndexScan extends Iterator {
 

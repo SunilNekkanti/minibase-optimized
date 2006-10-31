@@ -55,18 +55,25 @@ implements GlobalConst, Catalogglobal
 		attrs = new AttrType[10];
 
 		attrs[0] = new AttrType(AttrType.attrString);
+		// rel name
 		attrs[1] = new AttrType(AttrType.attrString);
+		// attr name
 		attrs[2] = new AttrType(AttrType.attrInteger);
+		// attr offset
 		attrs[3] = new AttrType(AttrType.attrInteger);
+		// attr pos
 		attrs[4] = new AttrType(AttrType.attrInteger);  
 		// AttrType will be represented by an integer
 		// 0 = string, 1 = real, 2 = integer
 		attrs[5] = new AttrType(AttrType.attrInteger);
+		// attr len
 		attrs[6] = new AttrType(AttrType.attrInteger);
+		// Index
 		attrs[7] = new AttrType(AttrType.attrString);   // ?????  BK ?????
+		// min val
 		attrs[8] = new AttrType(AttrType.attrString);   // ?????  BK ?????
+		// max val
 		attrs[9] = new AttrType(AttrType.attrInteger);
-
 
 		// Find the largest possible tuple for values attrs[7] & attrs[8]
 		//   str_sizes[2] & str_sizes[3]

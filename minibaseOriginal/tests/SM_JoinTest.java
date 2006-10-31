@@ -140,11 +140,18 @@ public class SM_JoinTest
 			int numsailors = 25;
 			int numreserves = 10;
 			int numboats = 5;
-			String logpath = "c:\\windows\\temp\\testlog";
-			String dbpath = "c:\\windows\\temp\\minibase.testdb";
-			/*String logpath = "/tmp/joinlog";
-			String dbpath = "/tmp/minibase.jointestdb";
 			
+			String logpath,dbpath;
+			if (OS.OS == OS.WINDOWS){
+				//	Para windows
+				logpath = "c:\\windows\\temp\\join.testlog";
+				dbpath = "c:\\windows\\temp\\join.minibase.testdb";
+			} else {
+				//Para unix
+				logpath = "/tmp/join.minibase-log";
+				dbpath = "/tmp/join.minibase-db";
+			}
+			/*			
 			String remove_cmd = "/bin/rm -rf ";
 			String remove_logcmd = remove_cmd + logpath;
 			String remove_dbcmd = remove_cmd + dbpath;

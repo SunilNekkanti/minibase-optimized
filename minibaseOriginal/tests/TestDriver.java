@@ -49,15 +49,17 @@ public class TestDriver {
 		//NOTE: Assign random numbers to the dbpath doesn't work because
 		//we can never open the same database again if everytime we are
 		//given a different number.  
-
-		//Para windows
-		//logpath = "c:\\windows\\temp\\" + nameRoot + ".minibase-log";
-		//dbpath = "c:\\windows\\temp\\" + nameRoot +".minibase-db";
-
-		//Para unix
-		logpath = "/tmp/" + nameRoot + ".minibase-log";
-		dbpath = "/tmp/" + nameRoot +".minibase-db";
-	}
+		String logpath,dbpath;
+		if (OS.OS == OS.WINDOWS){
+			//	Para windows
+			logpath = "c:\\windows\\temp\\" + nameRoot + ".minibase-log";
+			dbpath = "c:\\windows\\temp\\" + nameRoot +".minibase-db";
+		} else {
+			//Para unix
+			logpath = "/tmp/" + nameRoot + ".minibase-log";
+			dbpath = "/tmp/" + nameRoot +".minibase-db";
+		}	
+		}
 
 	/**
 	 * Another Constructor

@@ -22,7 +22,9 @@ import java.io.IOException;
 
 import bufmgr.exceptions.PageNotReadException;
 /**
- * This file contains an implementation of the nested loops join algorithm as described in the Shapiro paper. The algorithm is extremely simple: foreach tuple r in R do foreach tuple s in S do if (ri == sj) then add (r, s) to the result.
+ * This file contains an implementation of the nested loops join algorithm as described 
+ * in the Shapiro paper. The algorithm is extremely simple: foreach tuple r in R do foreach 
+ * tuple s in S do if (ri == sj) then add (r, s) to the result.
  */
 
 public class NestedLoopsJoins  extends Iterator 
