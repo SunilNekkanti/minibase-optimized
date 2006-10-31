@@ -142,7 +142,7 @@ public class SM_JoinTest
 			int numboats = 5;
 			
 			String logpath,dbpath;
-			if (OS.OS == OS.WINDOWS){
+			if (System.getProperty("os.name").contains("Windows")){
 				//	Para windows
 				logpath = "c:\\windows\\temp\\join.testlog";
 				dbpath = "c:\\windows\\temp\\join.minibase.testdb";

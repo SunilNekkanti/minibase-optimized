@@ -49,8 +49,8 @@ public class TestDriver {
 		//NOTE: Assign random numbers to the dbpath doesn't work because
 		//we can never open the same database again if everytime we are
 		//given a different number.  
-		String logpath,dbpath;
-		if (OS.OS == OS.WINDOWS){
+		
+		if (System.getProperty("os.name").contains("Windows")){
 			//	Para windows
 			logpath = "c:\\windows\\temp\\" + nameRoot + ".minibase-log";
 			dbpath = "c:\\windows\\temp\\" + nameRoot +".minibase-db";

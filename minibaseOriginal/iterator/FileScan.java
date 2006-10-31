@@ -31,7 +31,6 @@ public class FileScan extends  Iterator
 	 * @uml.associationEnd  multiplicity="(0 -1)"
 	 */
 	private AttrType[] _in1;
-	private short in1_len;
 	private short[] s_sizes; 
 	private Heapfile f;
 	private Scan scan;
@@ -77,13 +76,12 @@ public class FileScan extends  Iterator
 	InvalidRelation
 	{   
 		_in1 = in1; 
-		in1_len = (short)in1.length;
 		s_sizes = s1_sizes;
 		nOutFlds = proj_list.length;
 		
 		Jtuple =  new Tuple();
 		AttrType[] Jtypes = new AttrType[nOutFlds];
-		TupleUtils.setup_op_tuple(Jtuple, Jtypes, in1, in1_len, s1_sizes, proj_list, nOutFlds);
+		TupleUtils.setup_op_tuple(Jtuple, Jtypes, in1,  s1_sizes, proj_list);
 		
 		OutputFilter = outFilter;
 		perm_mat = proj_list;

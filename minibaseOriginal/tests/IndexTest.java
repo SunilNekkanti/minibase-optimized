@@ -2,10 +2,10 @@ package tests;
 
 import global.AttrOperator;
 import global.AttrType;
+import global.ExtendedSystemDefs;
 import global.GlobalConst;
 import global.IndexType;
 import global.RID;
-import global.SystemDefs;
 import heap.Heapfile;
 import heap.Scan;
 import heap.Tuple;
@@ -67,7 +67,7 @@ implements GlobalConst {
 	}
 
 	protected boolean runAllTests() {
-		new SystemDefs( dbpath, 300, NUMBUF, "Clock" );
+		new ExtendedSystemDefs( dbpath, logpath,300, 500,NUMBUF, "Clock" );
 		return super.runAllTests();
 	}
 	
@@ -211,7 +211,7 @@ implements GlobalConst {
 		// start index scan
 		IndexScan iscan = null;
 		try {
-			iscan = new IndexScan(new IndexType(IndexType.B_Index), "test1.in", "BTreeIndex", attrType, attrSize, 2, 2, projlist, null, 2, true);
+			iscan = new IndexScan(new IndexType(IndexType.B_Index), "test1.in", "BTreeIndex", attrType, attrSize, projlist, null, 2, true);
 		}
 		catch (Exception e) {
 			status = false;
@@ -361,7 +361,7 @@ implements GlobalConst {
 		// start index scan
 		IndexScan iscan = null;
 		try {
-			iscan = new IndexScan(new IndexType(IndexType.B_Index), "test1.in", "BTreeIndex", attrType, attrSize, 2, 2, projlist, expr, 2, false);
+			iscan = new IndexScan(new IndexType(IndexType.B_Index), "test1.in", "BTreeIndex", attrType, attrSize, projlist, expr, 2, false);
 		}
 		catch (Exception e) {
 			status = false;
@@ -443,7 +443,7 @@ implements GlobalConst {
 		// start index scan
 		iscan = null;
 		try {
-			iscan = new IndexScan(new IndexType(IndexType.B_Index), "test1.in", "BTreeIndex", attrType, attrSize, 2, 2, projlist, expr, 2, false);
+			iscan = new IndexScan(new IndexType(IndexType.B_Index), "test1.in", "BTreeIndex", attrType, attrSize, projlist, expr, 2, false);
 		}
 		catch (Exception e) {
 			status = false;
@@ -693,7 +693,7 @@ implements GlobalConst {
 		// start index scan
 		IndexScan iscan = null;
 		try {
-			iscan = new IndexScan(new IndexType(IndexType.B_Index), "test3.in", "BTIndex", attrType, attrSize, 4, 4, projlist, expr, 3, false);
+			iscan = new IndexScan(new IndexType(IndexType.B_Index), "test3.in", "BTIndex", attrType, attrSize, projlist, expr, 3, false);
 		}
 		catch (Exception e) {
 			status = false;
@@ -761,21 +761,6 @@ implements GlobalConst {
 		System.err.println("------------------- TEST 3 completed ---------------------\n");
 
 		return status;
-	}
-
-	protected boolean test4()
-	{
-		return true;
-	}
-
-	protected boolean test5()
-	{
-		return true;
-	}
-
-	protected boolean test6()
-	{
-		return true;
 	}
 
 	protected String testName()

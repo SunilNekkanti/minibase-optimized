@@ -23,7 +23,8 @@ import catalog.exceptions.Catalogrelexists;
 public class TestGenerico  implements GlobalConst {
 	public static void main(String argv[]) throws Catalogrelexists, Catalogdupattrs, Catalogbadattrcount, Catalogattrexists, Catalogbadtype, Exception  {
 		String logpath,dbpath;
-		if (OS.OS == OS.WINDOWS){
+		
+		if (System.getProperty("os.name").contains("Windows")){
 			//	Para windows
 			logpath = "c:\\windows\\temp\\testlog";
 			dbpath = "c:\\windows\\temp\\minibase.testdb";

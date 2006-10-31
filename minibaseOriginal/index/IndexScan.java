@@ -61,9 +61,8 @@ public class IndexScan extends Iterator {
 			final String  relName,  
 			final String  indName,  
 			AttrType      types[],      
-			short         str_sizes[],     
-			int           noInFlds,          
-			int           noOutFlds,         
+			short         str_sizes[],            
+			        
 			FldSpec       outFlds[],     
 			CondExpr      selects[],  
 			final int     fldNum,
@@ -75,6 +74,7 @@ public class IndexScan extends Iterator {
 	UnknownIndexTypeException,
 	IOException
 	{
+		int noOutFlds = outFlds.length;
 		_fldNum = fldNum;
 		_types = types;
 		_s_sizes = str_sizes;
@@ -83,7 +83,7 @@ public class IndexScan extends Iterator {
 		Jtuple = new Tuple();
 
 		try {
-			TupleUtils.setup_op_tuple(Jtuple, Jtypes, types, noInFlds, str_sizes, outFlds, noOutFlds);
+			TupleUtils.setup_op_tuple(Jtuple, Jtypes, types, str_sizes, outFlds);
 		}
 		catch (TupleUtilsException e) {
 			throw new IndexException(e, "IndexScan.java: TupleUtilsException caught from TupleUtils.setup_op_tuple()");
