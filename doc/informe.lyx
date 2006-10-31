@@ -752,7 +752,7 @@ Conclusiones generales
 \end_layout
 
 \begin_layout Section
-Apendices
+Apéndices
 \end_layout
 
 \begin_layout Section
@@ -761,6 +761,46 @@ Código fuente
 
 \begin_layout Section
 Referencias/Bibliografía
+\end_layout
+
+\begin_layout Itemize
+The Minibase Home Page http://www.cs.wisc.edu/coral/mini_doc/minibase.html
+\end_layout
+
+\begin_layout Itemize
+Página de la materia http://www.dc.uba.ar/people/materias/bd/
+\end_layout
+
+\begin_layout Itemize
+CS432 Assignment 4: Joins (curso de Cornell University, Computer Science
+ Dept.) http://www.cs.cornell.edu/courses/cs432/2002fa/assignments/a4/description.htm
+l
+\end_layout
+
+\begin_layout Itemize
+Minibase Assignment #1: Buffer Manager (curso de Carleton College, Mathematics
+ and Computer Science Dept.) http://www.mathcs.carleton.edu/faculty/dmusican/cs347f0
+3/proj1/
+\end_layout
+
+\begin_layout Itemize
+Project 1: B+ Tree (Computer Science and Engineering) http://www.cse.unsw.edu.au/~cs
+9315/proj/proj1/spec.html
+\end_layout
+
+\begin_layout Itemize
+Buffer Manager Internal Design (York University) http://www.cs.yorku.ca/course_arch
+ive/2003-04/W/4411/proj/bufmgr/
+\end_layout
+
+\begin_layout Itemize
+System Architecture (Iowa State University, College of Liberal Arts and
+ Sciences Department of Computer Science) http://www.cs.iastate.edu
+\end_layout
+
+\begin_layout Itemize
+JavaDocs de Minibase http://www.cs.purdue.edu/homes/aref/Spring2006CS448/prj1doc/ov
+erview-summary.html
 \end_layout
 
 \end_body
