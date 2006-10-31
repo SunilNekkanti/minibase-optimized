@@ -1,4 +1,4 @@
-#LyX 1.4.2 created this file. For more info see http://www.lyx.org/
+#LyX 1.4.3-4 created this file. For more info see http://www.lyx.org/
 \lyxformat 245
 \begin_document
 \begin_header
@@ -229,7 +229,7 @@ Fernando Rodriguez
 \begin_layout Standard
 
 \size small
-XXX/XX 
+516/00 
 \end_layout
 
 \end_inset
@@ -567,6 +567,56 @@ pagenumbering{arabic}
 
 \begin_layout Section
 Introducción a Minibase
+\end_layout
+
+\begin_layout Standard
+Minibase es un sistema de administración de bases de datos desarrollado
+ para uso educativo.
+ Si bien la documentación oficial ostenta tener un parser y un optimizador,
+ la implementación sobre la cual trabajamos no implementa estas componentes.
+ Sin embargo, sí tiene un buffer pool, mecanismos de almacenamiento tales
+ como heap files e índices, con estructuras de tipo árbol B+, y un sistema
+ de administración del espacio en disco.
+ 
+\end_layout
+
+\begin_layout Standard
+El objetivo de Minibase no es sólo obtener un sistema de administración
+ de bases de datos que sea funcional, sino también tener acceso a los componente
+s principales para facilitar su estudio.
+ En las siguientes secciones del informe, vamos a analizar esas componentes,
+ y finalmente estudiaremos la ejecución de una consulta en esta DBMS.
+ 
+\end_layout
+
+\begin_layout Subsection
+Historia y evolución de Minibase 
+\end_layout
+
+\begin_layout Standard
+Ramakrishnan, junto con Mike Carey, quería extender Minirel, que era una
+ pequeña RDBMS creada como un proyecto de curso de universidad.
+ Pretendían hacerlo en C++ y agregarle control de concurrencia, control
+ de recuperación, optimizador de consultas, más métodos de evaluación de
+ operadores relacionales y herramientas de diseño.
+ De allí surgió Minibase.
+ 
+\end_layout
+
+\begin_layout Standard
+La mayor parte del código fue escrita por alumnos del curso; distintos grupos
+ se dedicaron a distintas componentes, mientras que otros se ocuparon de
+ integrar las partes.
+ Con el tiempo, el código fue refinado y extendido, y nuevos grupos de personas
+ escribieron utilitarios, entre los que se incluyen herramientas de visualizació
+n.
+ 
+\end_layout
+
+\begin_layout Standard
+Lamentablemente, toda esta funcionalidad no venía integrada en la versión
+ que nos suministró la cátedra.
+ 
 \end_layout
 
 \begin_layout Standard
