@@ -504,7 +504,6 @@ implements GlobalConst, Catalogglobal
 					btree = new BTreeFile(indexName, attrRec.attrType.attrType, attrRec.attrLen, 0);
 				} 
 
-
 				// ADD ENTRY IN INDEXCAT
 
 

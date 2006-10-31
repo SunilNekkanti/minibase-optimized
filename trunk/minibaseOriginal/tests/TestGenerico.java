@@ -22,14 +22,16 @@ import catalog.exceptions.Catalogrelexists;
 
 public class TestGenerico  implements GlobalConst {
 	public static void main(String argv[]) throws Catalogrelexists, Catalogdupattrs, Catalogbadattrcount, Catalogattrexists, Catalogbadtype, Exception  {
-		//Para windows
-		//String logpath = "c:\\windows\\temp\\testlog";
-		//String logpath = "c:\\windows\\temp\\minibase.testdb";
-		
-		//Para unix
-		String logpath = "/tmp/testlog";
-		String dbpath = "/tmp/minibase.testdb";
-		
+		String logpath,dbpath;
+		if (OS.OS == OS.WINDOWS){
+			//	Para windows
+			logpath = "c:\\windows\\temp\\testlog";
+			dbpath = "c:\\windows\\temp\\minibase.testdb";
+		} else {
+			//Para unix
+			logpath = "/tmp/minibase-log";
+			dbpath = "/tmp/minibase-db";
+		}		
 		File file = new File(logpath);
 		file.delete();
 		file = new File(dbpath);

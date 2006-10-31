@@ -16,7 +16,11 @@ import iterator.exceptions.UnknowAttrType;
 import java.io.IOException;
 
 /**
- * The Sort class sorts a file. All necessary information are passed as  arguments to the constructor. After the constructor call, the user can repeatly call <code>get_next()</code> to get tuples in sorted order. After the sorting is done, the user should call <code>close()</code> to clean up.
+ * The Sort class sorts a file. All necessary information are passed as 
+ * arguments to the constructor. After the constructor call, the user can 
+ * repeatly call <code>get_next()</code> to get tuples in sorted order. 
+ * After the sorting is done, the user should call 
+ * <code>close()</code> to clean up.
  */
 public class Sort extends Iterator implements GlobalConst
 {

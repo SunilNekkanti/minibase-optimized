@@ -222,7 +222,7 @@ public class Utility implements Catalogglobal{
 		}
 		
 //		INSERT INTO DATAFILE
-		heap.insertRecord(tuple.getTupleByteArray());
+		RID rid = heap.insertRecord(tuple.getTupleByteArray());
 		
 //		NOW INSERT INTO EACH INDEX FOR RELATION
 		
@@ -287,7 +287,7 @@ public class Utility implements Catalogglobal{
 					if (btree == null){
 						throw new Catalognomem(null, "Catalog: No Enough Memory!");
 					}
-					btree.insert(key,null);
+					btree.insert(key,rid);
 				} 
 				catch (Exception e1) {
 					throw e1;

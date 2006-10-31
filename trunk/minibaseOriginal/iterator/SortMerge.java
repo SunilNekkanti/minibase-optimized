@@ -23,7 +23,11 @@ import java.io.IOException;
 import bufmgr.exceptions.PageNotReadException;
 
 /**
- * This file contains the interface for the sort_merg joins. We name the two relations being joined as R and S. This file contains an implementation of the sort merge join algorithm as described in the Shapiro paper. It makes use of the external sorting utility to generate runs, and then uses the iterator interface to get successive tuples for the final merge.
+ * This file contains the interface for the sort_merg joins. We name the two relations
+ * being joined as R and S. This file contains an implementation of the sort merge join 
+ * algorithm as described in the Shapiro paper. It makes use of the external sorting 
+ * utility to generate runs, and then uses the iterator interface to get successive 
+ * tuples for the final merge.
  */
 public class SortMerge extends Iterator implements GlobalConst
 {
@@ -37,8 +41,8 @@ public class SortMerge extends Iterator implements GlobalConst
 	 * @uml.associationEnd  multiplicity="(0 -1)"
 	 */
 	private AttrType _in2[];
-	private  int in1_len;
-	private  int in2_len;
+	//private  int in1_len;
+	//private  int in2_len;
 	private  Iterator p_i1;
 	// pointers to the two iterators. If the
 	private  Iterator p_i2;
@@ -142,8 +146,8 @@ public class SortMerge extends Iterator implements GlobalConst
 		_in2 = new AttrType[in2.length];
 		System.arraycopy(in1,0,_in1,0,in1.length);
 		System.arraycopy(in2,0,_in2,0,in2.length);
-		in1_len = len_in1;
-		in2_len = len_in2;
+		//in1_len = len_in1;
+		//in2_len = len_in2;
 		
 		Jtuple = new Tuple();
 		AttrType[] Jtypes = new AttrType[n_out_flds];
@@ -160,7 +164,8 @@ public class SortMerge extends Iterator implements GlobalConst
 		
 		int n_strs2 = 0;
 		
-		for (int i = 0; i < len_in2; i++) if (_in2[i].attrType == AttrType.attrString) n_strs2++;
+		for (int i = 0; i < len_in2; i++) 
+			if (_in2[i].attrType == AttrType.attrString) n_strs2++;
 		inner_str_sizes = new short [n_strs2];
 		
 		for (int i = 0; i < n_strs2; i++)    inner_str_sizes[i] = s2_sizes[i];
