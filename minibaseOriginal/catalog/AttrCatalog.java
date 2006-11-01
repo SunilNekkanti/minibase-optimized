@@ -407,7 +407,7 @@ implements GlobalConst, Catalogglobal
 		Scan pscan = null;
 		// OPEN SCAN
 		try {
-			pscan = new Scan(this);
+			pscan = openScan();
 		}
 		catch (Exception e1) {
 			throw new AttrCatalogException(e1, "scan failed");
@@ -437,8 +437,8 @@ implements GlobalConst, Catalogglobal
 				throw new AttrCatalogException(e4, "read_tuple failed");
 			}
 
-			if ( record.relName.equalsIgnoreCase(relation)==true 
-					&& record.attrName.equalsIgnoreCase(attrName)==true )
+			if ( record.relName.equalsIgnoreCase(relation) 
+					&& record.attrName.equalsIgnoreCase(attrName))
 			{
 				try {
 					deleteRecord(rid);
