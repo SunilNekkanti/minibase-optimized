@@ -72,6 +72,8 @@ public class TestGenerico  implements GlobalConst {
 				SystemDefs.JavabaseCatalog.getAttrCat().getTupleStructure(name, tuple);
 				tuple.print(types);
 			}
+			
+			scan.closescan();
 		}
 	}
 }

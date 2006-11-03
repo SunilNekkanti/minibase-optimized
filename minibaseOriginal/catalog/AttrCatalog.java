@@ -54,25 +54,26 @@ implements GlobalConst, Catalogglobal
 		tuple = new Tuple(Tuple.max_size);
 		attrs = new AttrType[10];
 
-		attrs[0] = new AttrType(AttrType.attrString);
 		// rel name
-		attrs[1] = new AttrType(AttrType.attrString);
+		attrs[0] = new AttrType(AttrType.attrString);
 		// attr name
-		attrs[2] = new AttrType(AttrType.attrInteger);
+		attrs[1] = new AttrType(AttrType.attrString);
 		// attr offset
-		attrs[3] = new AttrType(AttrType.attrInteger);
+		attrs[2] = new AttrType(AttrType.attrInteger);
 		// attr pos
-		attrs[4] = new AttrType(AttrType.attrInteger);  
+		attrs[3] = new AttrType(AttrType.attrInteger);
 		// AttrType will be represented by an integer
 		// 0 = string, 1 = real, 2 = integer
-		attrs[5] = new AttrType(AttrType.attrInteger);
+		attrs[4] = new AttrType(AttrType.attrInteger);  
 		// attr len
+		attrs[5] = new AttrType(AttrType.attrInteger);
+		// Index		
 		attrs[6] = new AttrType(AttrType.attrInteger);
-		// Index
-		attrs[7] = new AttrType(AttrType.attrString);   // ?????  BK ?????
 		// min val
-		attrs[8] = new AttrType(AttrType.attrString);   // ?????  BK ?????
+		attrs[7] = new AttrType(AttrType.attrString);   // ?????  BK ?????
 		// max val
+		attrs[8] = new AttrType(AttrType.attrString);   // ?????  BK ?????
+		// Pk
 		attrs[9] = new AttrType(AttrType.attrInteger);
 
 		// Find the largest possible tuple for values attrs[7] & attrs[8]
@@ -115,7 +116,7 @@ implements GlobalConst, Catalogglobal
 
 		Scan pscan = null; 
 		try {
-			pscan = new Scan(this);
+			pscan = this.openScan();
 		}
 		catch (Exception e1) {
 			throw new AttrCatalogException(e1, "scan failed");
@@ -150,6 +151,7 @@ implements GlobalConst, Catalogglobal
 
 			if ( record.relName.equalsIgnoreCase(relation)
 					&& record.attrName.equalsIgnoreCase(attrName) )
+				pscan.closescan();
 				return record;
 		}
 	};
@@ -233,7 +235,7 @@ implements GlobalConst, Catalogglobal
 			}
 			if (tuple == null) 
 				throw new Catalogindexnotfound(null,
-						"Catalog: Index not Found!");
+				"Catalog: Index not Found!");
 			try {
 				tuple.setHdr( attrs, str_sizes);
 				attrRec = read_tuple(tuple);
@@ -251,6 +253,8 @@ implements GlobalConst, Catalogglobal
 			if(count == attrCnt)  // if all atts found
 				break; 
 		}
+		
+		pscan.closescan();
 		return Attrs;    
 	};
 
@@ -428,7 +432,7 @@ implements GlobalConst, Catalogglobal
 
 			if (tuple == null) 
 				throw new Catalogattrnotfound(null,
-						"Catalog: Attribute not Found!");
+				"Catalog: Attribute not Found!");
 			try {
 				tuple.setHdr( attrs, str_sizes);
 				record = read_tuple(tuple);
@@ -446,6 +450,7 @@ implements GlobalConst, Catalogglobal
 				catch (Exception e3) {
 					throw new AttrCatalogException(e3, "deleteRecord failed");
 				}
+				pscan.closescan();
 				return;
 			}
 		}
@@ -549,16 +554,15 @@ implements GlobalConst, Catalogglobal
 	public void dropRelation(String relation){};
 
 	// ADD AN INDEX TO A RELATION
-	public void addIndex(String relation, String attrname,
-			IndexType accessType){};
+	public void addIndex(String relation, String attrname,IndexType accessType){};
 
 
-			Tuple tuple;
-			short [] str_sizes;
-			/**
-			 * @uml.property  name="attrs"
-			 * @uml.associationEnd  multiplicity="(0 -1)"
-			 */
-			AttrType [] attrs;
-			short max;
+	Tuple tuple;
+	short [] str_sizes;
+	/**
+	 * @uml.property  name="attrs"
+	 * @uml.associationEnd  multiplicity="(0 -1)"
+	 */
+	AttrType [] attrs;
+	short max;
 };

@@ -194,6 +194,9 @@ public class Scan implements GlobalConst{
     	firstDataPage();
   }
 
+    protected void  finalize(){
+    	closescan();
+    }
 
     /** Closes the Scan object */
     public void closescan()

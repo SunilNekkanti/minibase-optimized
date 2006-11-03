@@ -88,6 +88,7 @@ implements  GlobalConst, Catalogglobal
 			names.add(tuple.getStrFld(1));
 		}
 
+		scan.closescan();
 		return names;
 	}
 	// GET RELATION DESCRIPTION FOR A RELATION
@@ -144,6 +145,7 @@ implements  GlobalConst, Catalogglobal
 			RelDesc record = read_tuple(tuple);
 
 			if (record.relName.equalsIgnoreCase(relation)){
+				pscan.closescan();
 				return record;
 			}
 		}
@@ -369,7 +371,7 @@ implements  GlobalConst, Catalogglobal
 
 		Scan pscan = null;
 		try {
-			pscan = new Scan(this);
+			pscan = this.openScan();
 		}
 		catch (Exception e1) {
 			System.err.println ("Scan"+e1);
@@ -409,6 +411,7 @@ implements  GlobalConst, Catalogglobal
 					System.err.println ("deleteRecord"+e3);
 					throw new RelCatalogException(e3, "deleteRecord failed");
 				}
+				pscan.closescan();
 				return;
 			}
 		}
