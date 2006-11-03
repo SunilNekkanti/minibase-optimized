@@ -8,7 +8,14 @@ package catalog;
 
 public class attrNode
  {
-  public String attrName;
+  public attrNode(String attrName, String attrValue) {
+		this.attrName = attrName;
+		this.attrValue = attrValue;
+	}
+public attrNode() {
+	// TODO Auto-generated constructor stub
+}
+public String attrName;
   public String attrValue;
  }; 
 

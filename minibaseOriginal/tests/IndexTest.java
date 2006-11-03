@@ -1,5 +1,6 @@
 package tests;
 
+import global.AttrOperator;
 import global.AttrType;
 import global.ExtendedSystemDefs;
 import global.GlobalConst;
@@ -7,16 +8,22 @@ import global.IndexType;
 import global.SystemDefs;
 import heap.Tuple;
 import index.IndexScan;
+import iterator.CondExpr;
 import iterator.FldSpec;
 import iterator.RelSpec;
+
+import java.util.Random;
+
 import catalog.IndexDesc;
 import catalog.Utility;
+import catalog.attrInfo;
+import catalog.attrNode;
 
 
 class IndexDriver extends TestDriver 
 implements GlobalConst {
 
-	private static String   data2[] = {
+	private static String   data[] = {
 		"andyw", "awny", "azat", "barthel", "binh", "bloch", "bradw", 
 		"chingju", "chui", "chung-pi", "cychan", "dai", "daode", "dhanoa", 
 		"dissoswa", "djensen", "dsilva", "dwiyono", "edwards", "evgueni", 
@@ -32,11 +39,9 @@ implements GlobalConst {
 		"wan", "wawrzon", "wenchao", "wlau", "xbao", "xiaoming", "xin", 
 		"yi-chun", "yiching", "yuc", "yung", "yuvadee", "zmudzin" };
 
-	private static int   NUM_RECORDS = data2.length; 
+	private static int   NUM_RECORDS = data.length; 
 	private static int   LARGE = 1000; 
-	private static short REC_LEN2 = 160; 
-
-
+	
 	public IndexDriver() {
 		super("indextest");
 	}
@@ -119,8 +124,8 @@ implements GlobalConst {
 					e.printStackTrace();
 				}
 
-				if (outval.compareTo(data2[count]) != 0) {
-					System.err.println("outval = " + outval + "\tdata2[count] = " + data2[count]);
+				if (outval.compareTo(data[count]) != 0) {
+					System.err.println("outval = " + outval + "\tdata2[count] = " + data[count]);
 
 					System.err.println("Test1 -- OOPS! index scan not in sorted order");
 					status = false;
@@ -138,7 +143,7 @@ implements GlobalConst {
 			status = false;
 		}
 		else if (flag && status) {
-			System.err.println("Test1 -- Index Scan OK");
+			System.out.println("Test1 -- Index Scan OK");
 		}
 
 		// clean up
@@ -150,7 +155,7 @@ implements GlobalConst {
 			e.printStackTrace();
 		}
 
-		System.err.println("------------------- TEST 1 completed ---------------------\n");
+		System.out.println("------------------- TEST 1 completed ---------------------\n");
 
 		return status;
 	}
@@ -161,59 +166,20 @@ implements GlobalConst {
 		System.out.println("------------------------ TEST 2 --------------------------");
 
 		boolean status = true;
-/*
-		AttrType[] attrType = new AttrType[2];
-		attrType[0] = new AttrType(AttrType.attrString);
-		attrType[1] = new AttrType(AttrType.attrString);
-		short[] attrSize = new short[2];
-		attrSize[0] = REC_LEN2;
-		attrSize[1] = REC_LEN1;
-
-		// create a tuple of appropriate size
-		Tuple t = new Tuple();
+		
+		IndexDesc index = null;
 		try {
-			t.setHdr( attrType, attrSize);
+			index = SystemDefs.JavabaseCatalog.getIndexInfo("test1.in", "data", new IndexType (IndexType.B_Index));
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
-		catch (Exception e) {
-			status = false;
-			e.printStackTrace();
-		}
-
-		int size = t.size();
-
-		// open existing data file
-		try {
-			new Heapfile("test1.in");
-		}
-		catch (Exception e) {
-			status = false;
-			e.printStackTrace();
-		}
-
-		t = new Tuple(size);
-		try {
-			t.setHdr(attrType, attrSize);
-		}
-		catch (Exception e) {
-			status = false;
-			e.printStackTrace();
-		}
-
-		// open existing index
-		try {
-			new BTreeFile("BTreeIndex");
-		}
-		catch (Exception e) {
-			status = false;
-			e.printStackTrace();
-		}
-
+		
 		System.out.println("BTreeIndex opened successfully.\n"); 
-
-		FldSpec[] projlist = new FldSpec[2];
+		
+		FldSpec[] projlist = new FldSpec[1];
 		RelSpec rel = new RelSpec(RelSpec.outer); 
 		projlist[0] = new FldSpec(rel, 1);
-		projlist[1] = new FldSpec(rel, 2);
 
 		// set up an identity selection
 		CondExpr[] expr = new CondExpr[2];
@@ -221,28 +187,37 @@ implements GlobalConst {
 		expr[0].op = new AttrOperator(AttrOperator.aopEQ);
 		expr[0].type1 = new AttrType(AttrType.attrSymbol);
 		expr[0].type2 = new AttrType(AttrType.attrString);
-		expr[0].operand1.symbol = new FldSpec(new RelSpec(RelSpec.outer), 2);
+		expr[0].operand1.symbol = new FldSpec(new RelSpec(RelSpec.outer), 1);
 		expr[0].operand2.string = "dsilva";
 		expr[0].next = null;
 		expr[1] = null;
-
+		
+		AttrType [] attrType = null;
+		short []   attrSize = null;
+		try {
+			attrType = SystemDefs.JavabaseCatalog.getAttrCat().getAttrType("test1.in");
+			attrSize = SystemDefs.JavabaseCatalog.getAttrCat().getStringsSizeType("test1.in");
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		// start index scan
 		IndexScan iscan = null;
 		try {
-			iscan = new IndexScan(new IndexType(IndexType.B_Index), "test1.in", "BTreeIndex", attrType, attrSize, projlist, expr, 2, false);
+			iscan = new IndexScan ( index.getIndexType(), index.getRelationName(),index.getIndexName(), attrType, attrSize,	projlist, expr, 1, false);
 		}
 		catch (Exception e) {
 			status = false;
 			e.printStackTrace();
 		}
-
-
-		int count = 0;
-		t = null;
+		
+		Tuple t = null;
 		String outval = null;
 
 		try {
 			t = iscan.get_next();
+			
 		}
 		catch (Exception e) {
 			status = false;
@@ -256,7 +231,7 @@ implements GlobalConst {
 		}
 
 		try {
-			outval = t.getStrFld(2);
+			outval = t.getStrFld(1);
 		}
 		catch (Exception e) {
 			status = false;
@@ -289,21 +264,21 @@ implements GlobalConst {
 			status = false;
 			e.printStackTrace();
 		}
-
+		
 		// now try a range scan
 		expr = new CondExpr[3]; 
 		expr[0] = new CondExpr();
 		expr[0].op = new AttrOperator(AttrOperator.aopGE);
 		expr[0].type1 = new AttrType(AttrType.attrSymbol);
 		expr[0].type2 = new AttrType(AttrType.attrString);
-		expr[0].operand1.symbol = new FldSpec(new RelSpec(RelSpec.outer), 2);
+		expr[0].operand1.symbol = new FldSpec(new RelSpec(RelSpec.outer), 1);
 		expr[0].operand2.string = "dsilva";
 		expr[0].next = null;
 		expr[1] = new CondExpr();
 		expr[1].op = new AttrOperator(AttrOperator.aopLE);
 		expr[1].type1 = new AttrType(AttrType.attrSymbol);
 		expr[1].type2 = new AttrType(AttrType.attrString);
-		expr[1].operand1.symbol = new FldSpec(new RelSpec(RelSpec.outer), 2);
+		expr[1].operand1.symbol = new FldSpec(new RelSpec(RelSpec.outer), 1);
 		expr[1].operand2.string = "yuc";
 		expr[1].next = null;
 		expr[2] = null;
@@ -311,15 +286,14 @@ implements GlobalConst {
 		// start index scan
 		iscan = null;
 		try {
-			iscan = new IndexScan(new IndexType(IndexType.B_Index), "test1.in", "BTreeIndex", attrType, attrSize, projlist, expr, 2, false);
+			iscan = new IndexScan ( index.getIndexType(), index.getRelationName(),index.getIndexName(), attrType, attrSize,	projlist, expr, 1, false);
 		}
 		catch (Exception e) {
 			status = false;
 			e.printStackTrace();
 		}
-
-
-		count = 16; // because starting from dsilva
+		
+		int count = 16; // because starting from dsilva
 		t = null;
 
 		try {
@@ -341,15 +315,15 @@ implements GlobalConst {
 			}
 
 			try {
-				outval = t.getStrFld(2);
+				outval = t.getStrFld(1);
 			}
 			catch (Exception e) {
 				status = false;
 				e.printStackTrace();
 			}
 
-			if (outval.compareTo(data2[count]) != 0) {
-				System.err.println("outval = " + outval + "\tdata2[count] = " + data2[count]);
+			if (outval.compareTo(data[count]) != 0) {
+				System.err.println("outval = " + outval + "\tdata2[count] = " + data[count]);
 
 				System.err.println("Test2 -- OOPS! index scan not in sorted order");
 				status = false;
@@ -369,7 +343,7 @@ implements GlobalConst {
 			status = false;
 		}
 		else if (flag && status) {
-			System.err.println("Test2 -- Index Scan OK");
+			System.out.println("Test2 -- Index Scan OK");
 		}
 
 		// clean up
@@ -381,8 +355,8 @@ implements GlobalConst {
 			e.printStackTrace();
 		}
 
-		System.err.println("------------------- TEST 2 completed ---------------------\n");
-*/
+		System.out.println("------------------- TEST 2 completed ---------------------\n");
+		
 		return status;
 	}
 
@@ -392,145 +366,59 @@ implements GlobalConst {
 		System.out.println("------------------------ TEST 3 --------------------------");
 
 		boolean status = true;
-/*
-		Random random1 = new Random();
-		Random random2 = new Random();
-
-		AttrType[] attrType = new AttrType[4];
-		attrType[0] = new AttrType(AttrType.attrString);
-		attrType[1] = new AttrType(AttrType.attrString);
-		attrType[2] = new AttrType(AttrType.attrInteger);
-		attrType[3] = new AttrType(AttrType.attrReal);
-		short[] attrSize = new short[2];
-		attrSize[0] = REC_LEN1;
-		attrSize[1] = REC_LEN1;
-
-		Tuple t = new Tuple();
-
+				
+		attrInfo[] attrList = new attrInfo[4];
+		
+		attrList[0]= new attrInfo("1", new AttrType(AttrType.attrString), 32, false);
+		attrList[1]= new attrInfo("2", new AttrType(AttrType.attrString), 32, false);
+		attrList[2]= new attrInfo("3", new AttrType(AttrType.attrInteger), 0, false);
+		attrList[3]= new attrInfo("4", new AttrType(AttrType.attrReal), 0, false);		
+		
 		try {
-			t.setHdr(attrType, attrSize);
-		}
-		catch (Exception e) {
-			System.err.println("*** error in Tuple.setHdr() ***");
-			status = false;
+			SystemDefs.JavabaseCatalog.createRel( "test3.in", attrList);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		int size = t.size();
-
-		// Create unsorted data file "test3.in"
-		RID             rid;
-		Heapfile        f = null;
-		try {
-			f = new Heapfile("test3.in");
-		}
-		catch (Exception e) {
-			status = false;
-			e.printStackTrace();
-		}
-
-		t = new Tuple(size);
-		try {
-			t.setHdr( attrType, attrSize);
-		}
-		catch (Exception e) {
-			status = false;
-			e.printStackTrace();
-		}
-
+				
 		int inum = 0;
 		float fnum = 0;
 		int count = 0;
 
+		Random random1 = new Random();
+		Random random2 = new Random();
+		//TODO: MEjorar rendimiento
 		for (int i=0; i<LARGE; i++) {
+		//for (int i=0; i<5; i++) {
+			attrNode[] node = new attrNode[4];
+
 			// setting fields
 			inum = random1.nextInt();
 			fnum = random2.nextFloat();
+
+			node[0] = new attrNode("1",data[i%NUM_RECORDS]);
+			node[1] = new attrNode("2","");
+			node[2] = new attrNode("3",Integer.toString(inum%1000));
+			node[3] = new attrNode("4",Float.toString(fnum));
+
 			try {
-				t.setStrFld(1, data1[i%NUM_RECORDS]);
-				t.setIntFld(3, inum%1000);
-				t.setFloFld(4, fnum);
+				Utility.insertRecordUT("test3.in", node);
 			}
 			catch (Exception e) {
 				status = false;
 				e.printStackTrace();
 			}
-
-			try {
-				rid = f.insertRecord(t.returnTupleByteArray());
-			}
-			catch (Exception e) {
-				status = false;
-				e.printStackTrace();
-			}
 		}
-
-		// create an scan on the heapfile
-		Scan scan = null;
-
+		
 		try {
-			scan = new Scan(f);
+			SystemDefs.JavabaseCatalog.addIndex("test3.in", "3", new IndexType (IndexType.B_Index), 1);
+		} catch (Exception e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
 		}
-		catch (Exception e) {
-			status = false;
-			e.printStackTrace();
-			Runtime.getRuntime().exit(1);
-		}
-
-		// create the index file on the integer field
-		BTreeFile btf = null;
-		try {
-			btf = new BTreeFile("BTIndex", AttrType.attrInteger, 4, 1);//delete 
-		}
-		catch (Exception e) {
-			status = false;
-			e.printStackTrace();
-			Runtime.getRuntime().exit(1);
-		}
-
+		
 		System.out.println("BTreeIndex created successfully.\n"); 
-
-		rid = new RID();
-		int key = 0;
-		Tuple temp = null;
-
-		try {
-			temp = scan.getNext(rid);
-		}
-		catch (Exception e) {
-			status = false;
-			e.printStackTrace();
-		}
-		while ( temp != null) {
-			t.tupleCopy(temp);
-
-			try {
-				key = t.getIntFld(3);
-			}
-			catch (Exception e) {
-				status = false;
-				e.printStackTrace();
-			}
-
-			try {
-				btf.insert(new IntegerKey(key), rid); 
-			}
-			catch (Exception e) {
-				status = false;
-				e.printStackTrace();
-			}
-
-			try {
-				temp = scan.getNext(rid);
-			}
-			catch (Exception e) {
-				status = false;
-				e.printStackTrace();
-			}
-		}
-
-		// close the file scan
-		scan.closescan();
-
+		
 		System.out.println("BTreeIndex file created successfully.\n"); 
 
 		FldSpec[] projlist = new FldSpec[4];
@@ -558,6 +446,16 @@ implements GlobalConst {
 		expr[1].next = null;
 		expr[2] = null;
 
+		AttrType [] attrType = null;
+		short []   attrSize = null;
+		try {
+			attrType = SystemDefs.JavabaseCatalog.getAttrCat().getAttrType("test3.in");
+			attrSize = SystemDefs.JavabaseCatalog.getAttrCat().getStringsSizeType("test3.in");
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		// start index scan
 		IndexScan iscan = null;
 		try {
@@ -569,7 +467,7 @@ implements GlobalConst {
 		}
 
 
-		t = null;
+		Tuple t = null;
 		int iout = 0;
 		int ival = 100; // low key
 
@@ -614,7 +512,7 @@ implements GlobalConst {
 			}
 		}
 		if (status) {
-			System.err.println("Test3 -- Index scan on int key OK\n");
+			System.out.println("Test3 -- Index scan on int key OK\n");
 		}
 
 		// clean up
@@ -625,8 +523,8 @@ implements GlobalConst {
 			status = false;
 			e.printStackTrace();
 		}
-*/
-		System.err.println("------------------- TEST 3 completed ---------------------\n");
+
+		System.out.println("------------------- TEST 3 completed ---------------------\n");
 
 		return status;
 	}
