@@ -221,6 +221,8 @@ public class Utility implements Catalogglobal{
 			}
 		}
 		
+		scan.closescan();
+		
 //		INSERT INTO DATAFILE
 		RID rid = heap.insertRecord(tuple.getTupleByteArray());
 		
