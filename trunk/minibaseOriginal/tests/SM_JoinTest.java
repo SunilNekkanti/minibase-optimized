@@ -5,10 +5,7 @@ import global.AttrOperator;
 import global.AttrType;
 import global.ExtendedSystemDefs;
 import global.GlobalConst;
-import global.RID;
-import global.SystemDefs;
 import global.TupleOrder;
-import heap.Heapfile;
 import heap.Tuple;
 import iterator.CondExpr;
 import iterator.DuplElim;
@@ -18,7 +15,6 @@ import iterator.RelSpec;
 import iterator.SortMerge;
 
 import java.io.File;
-import java.util.Vector;
 
 import catalog.Utility;
 
