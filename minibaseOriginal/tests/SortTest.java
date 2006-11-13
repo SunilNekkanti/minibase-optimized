@@ -454,7 +454,7 @@ implements GlobalConst {
 			status = false;
 		}
 		else if (flag && status) {
-			System.err.println("Test3 -- Sorting of int field OK\n");
+			System.out.println("Test3 -- Sorting of int field OK\n");
 		}
 
 		// clean up

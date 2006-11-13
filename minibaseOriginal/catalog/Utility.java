@@ -163,7 +163,7 @@ public class Utility implements Catalogglobal{
 			break;
 			
 			case (AttrType.attrReal):
-				Float floatVal1 = new Float(attrList[i].attrValue);
+				Float floatVal1 = Float.parseFloat(attrList[i].attrValue);
 			float fVal = floatVal1.floatValue();
 			tuple.setFloFld(attrRecs[i].attrPos, fVal);
 			break;
@@ -423,6 +423,15 @@ public class Utility implements Catalogglobal{
 	 ["-" | ""] [0..9]+ ["." | ""] [0..9]+       */
 	static boolean check_float(attrNode N)
 	{
+		try{
+			Float.parseFloat(N.attrValue);
+		}
+		catch(NumberFormatException e){
+			return false;
+		}
+		
+		return true;
+		/*
 		byte [] index = N.attrValue.getBytes();
 		int length = N.attrValue.length();
 		
@@ -461,6 +470,7 @@ public class Utility implements Catalogglobal{
 						return false;
 		}
 		return true;
+		*/
 	}
 	
 //	-------------------------------------------------------------------
