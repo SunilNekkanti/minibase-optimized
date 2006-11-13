@@ -228,28 +228,14 @@ Interacción con otros componentes
 \end_layout
 
 \begin_layout Standard
-Falta?
-\end_layout
-
-\begin_layout Subsection
-Ejemplo de uso
-\end_layout
-
-\begin_layout Standard
-Si se justifica
-\end_layout
-
-\begin_layout Subsubsection
-Diagramas de secuencia
-\end_layout
-
-\begin_layout Subsection
-Evaluación del componente (opinión acerca de la calidad de código, diseño,
- etc.)
+El catalogo utiliza fuertemente el resto de las componentes, ya que es el
+ punto de acceso a la base de datos.
+ Toda acción tiene que ser revisada por el catalogo para poder extraer la
+ información necesaria.
 \end_layout
 
 \begin_layout Standard
-Falta?
+
 \end_layout
 
 \end_body

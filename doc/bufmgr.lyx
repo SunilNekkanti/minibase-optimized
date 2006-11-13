@@ -1,4 +1,4 @@
-#LyX 1.4.3-4 created this file. For more info see http://www.lyx.org/
+#LyX 1.4.2 created this file. For more info see http://www.lyx.org/
 \lyxformat 245
 \begin_document
 \begin_header
@@ -13,11 +13,18 @@
 \paperfontsize default
 \spacing single
 \papersize default
-\use_geometry false
+\use_geometry true
 \use_amsmath 0
 \cite_engine basic
 \use_bibtopic false
 \paperorientation portrait
+\leftmargin 1cm
+\topmargin 3cm
+\rightmargin 1cm
+\bottommargin 3cm
+\headheight 2cm
+\headsep 2cm
+\footskip 2cm
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation indent
@@ -42,26 +49,26 @@ Descripción general
 
 \begin_layout Standard
 El Buffer Manager es la estructura encargada de traer páginas de memoria
- secundaria a memoria principal sin la necesidad de leerlas de la memoria
+ secundaria a memoria principal sin la necesidad de leerlas desde la memoria
  secundaria constantemente.
  Para este propósito, posee una colección frames, que son los encargados
  de alojar las páginas en la memoria principal.
- La utilidad fundamental es traer páginas de disco y brindarle a las clases
+ Este mecanismo permite traer páginas desde el disco y brindarle a las clases
  superiores los métodos necesarios para mantenerlas en memoria hasta que
- estos digan lo contrario.
+ digan lo contrario.
  
 \end_layout
 
 \begin_layout Standard
 Las páginas removidas del Buffer serán grabadas en el disco sólo en caso
  de haber sido modificadas.
- Para elegir qué página remover se utiliza un algoritmo de remoción de páginas.
- Minibase presenta distintas implementaciones: Clock, LRU y MRU.
+ Para elegir qué página remover se utiliza un algoritmo de remoción de páginas
+ entre las implementaciones de Minibase: Clock, LRU y MRU.
 \end_layout
 
 \begin_layout Standard
-Con este objetivo, las páginas cuentan con una marca indicando si han sido
- modificadas ( dirty ).
+Para marcar cuando una pagina fue modificada, estas cuentan con una marca
+ indicando si han sido modificadas ( dirty ).
  Luego, antes de remover la página de memoria, el Buffer Manager la persiste
  (llamando al DiskSpace Manager) en caso de estar marcada, para evitar que
  se pierdan los cambios realizados.
@@ -89,10 +96,12 @@ El Buffer Manager contiene métodos para obtener una página, liberarla, crearla,
 Diseño interno, estructuras
 \end_layout
 
-\begin_layout Standard
-
+\begin_layout Paragraph
+Buffer
 \emph on
-Buffer pool
+ 
+\emph default
+pool
 \end_layout
 
 \begin_layout Standard
@@ -100,9 +109,7 @@ El buffer pool es una collección de frames ( secuencia de páginas de tamaño
  fijo que se encuentran en memoria principal )
 \end_layout
 
-\begin_layout Standard
-
-\emph on
+\begin_layout Paragraph
 Descriptores
 \end_layout
 
@@ -130,9 +137,7 @@ Esto describe la página que es guardada en el frame.
  
 \end_layout
 
-\begin_layout Standard
-
-\emph on
+\begin_layout Paragraph
 Directorio de búsqueda ( tabla de hash )
 \end_layout
 
@@ -276,7 +281,7 @@ Los atributos miembro son básicamente los mencionados anteriormente más
 \end_layout
 
 \begin_layout Standard
-Tiene métodos para guardar expllícitamente las páginas en disco, para obtener
+Tiene métodos para guardar explícitamente las páginas en disco, para obtener
  una página y marcarla, para desmarcarla y para eliminarla del disco.
 \end_layout
 

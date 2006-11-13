@@ -1,4 +1,4 @@
-#LyX 1.4.3-4 created this file. For more info see http://www.lyx.org/
+#LyX 1.4.2 created this file. For more info see http://www.lyx.org/
 \lyxformat 245
 \begin_document
 \begin_header
@@ -227,8 +227,6 @@ Una vez leída del disco la página 0, se la da al BM.
 
 \begin_layout Standard
 
-\newpage
- 
 \end_layout
 
 \end_body

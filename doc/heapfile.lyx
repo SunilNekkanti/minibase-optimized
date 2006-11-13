@@ -1,4 +1,4 @@
-#LyX 1.4.3-4 created this file. For more info see http://www.lyx.org/
+#LyX 1.4.2 created this file. For more info see http://www.lyx.org/
 \lyxformat 245
 \begin_document
 \begin_header
@@ -13,11 +13,18 @@
 \paperfontsize default
 \spacing single
 \papersize default
-\use_geometry false
+\use_geometry true
 \use_amsmath 0
 \cite_engine basic
 \use_bibtopic false
 \paperorientation portrait
+\leftmargin 1cm
+\topmargin 3cm
+\rightmargin 1cm
+\bottommargin 3cm
+\headheight 2cm
+\headsep 2cm
+\footskip 2cm
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation indent
@@ -81,55 +88,7 @@ as como páginas con slots.
 La primer página del directorio de páginas, es la página de cabecera( header
  page ) para todo el heapfile.
  Para recordar donde está ubicada esta página, se mantiene por medio de
- DM, un cojunto de tuplas 
-\begin_inset ERT
-status collapsed
-
-\begin_layout Standard
-
-
-\backslash
-textless
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Standard
-
-{}
-\end_layout
-
-\end_inset
-
-nom_BD, 1er_pag_del_dir_de_datos
-\begin_inset ERT
-status collapsed
-
-\begin_layout Standard
-
-
-\backslash
-textgreater
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Standard
-
-{}
-\end_layout
-
-\end_inset
-
-
+ DM, un cojunto de tuplas <nom_BD, 1er_pag_del_dir_de_datos>
 \end_layout
 
 \begin_layout Subsection
@@ -246,7 +205,7 @@ Representa una página dividida en slots.
 \begin_layout Standard
 
 \emph on
-Insertar un registro.
+Insertar un registro:
 \end_layout
 
 \begin_layout Enumerate
@@ -274,7 +233,7 @@ o con número de slot )
 \begin_layout Standard
 
 \emph on
-Eliminar un registro
+Eliminar un registro:
 \end_layout
 
 \begin_layout Enumerate
@@ -310,12 +269,6 @@ HeapFile interactúa fuertemente con BufferManager, para obtener y guardar
 
 \begin_layout Subsection
 Ejemplo de uso
-\end_layout
-
-\begin_layout Standard
-
-\newpage
- 
 \end_layout
 
 \end_body
