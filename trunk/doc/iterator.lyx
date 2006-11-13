@@ -10,11 +10,18 @@
 \paperfontsize default
 \spacing single
 \papersize default
-\use_geometry false
+\use_geometry true
 \use_amsmath 1
 \cite_engine basic
 \use_bibtopic false
 \paperorientation portrait
+\leftmargin 1cm
+\topmargin 3cm
+\rightmargin 1cm
+\bottommargin 3cm
+\headheight 2cm
+\headsep 2cm
+\footskip 2cm
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation indent
@@ -279,10 +286,146 @@ Ejemplo de uso
 \end_layout
 
 \begin_layout Standard
-TODO: algun ejemplo de uso q muestre claramente los detalles
+La utilización de un iterador es bastante simple.
+ Alcanza con inicializarlo con los parametros necesarios (sobre que iteradores
+ o realaciones se accede y cuales son sus atributos, los atributos de salida
+ y las condiciones de selección).
+ Por ejemplo para FileScan tendriamos:
 \end_layout
 
 \begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+FileScan scan = new FileScan (
+\begin_inset Quotes eld
+\end_inset
+
+relacion.in
+\begin_inset Quotes erd
+\end_inset
+
+,atributos,tamañosAtributos, proyeccion,condiciones);
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Para el acceso iterativo a las tuplas se utiliza simplemente el get_next:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Tuple tuple = null;
+\end_layout
+
+\begin_layout Standard
+while((tuple = scan.get_next()) != null){
+\end_layout
+
+\begin_layout Standard
+//Hacer algo con la tupla
+\end_layout
+
+\begin_layout Standard
+}
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Cuando se termina de utilizar el scan hay que acordarse de hacer un close:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+scan.close();
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
 
 \end_layout
 
