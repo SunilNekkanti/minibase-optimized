@@ -10,11 +10,18 @@
 \paperfontsize default
 \spacing single
 \papersize default
-\use_geometry false
+\use_geometry true
 \use_amsmath 1
 \cite_engine basic
 \use_bibtopic false
 \paperorientation portrait
+\leftmargin 1cm
+\topmargin 3cm
+\rightmargin 1cm
+\bottommargin 3cm
+\headheight 2cm
+\headsep 2cm
+\footskip 2cm
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation indent
@@ -95,9 +102,12 @@ DER
 \end_layout
 
 \begin_layout Standard
+\align center
 \begin_inset Graphics
 	filename der.png
 	lyxscale 50
+	scale 50
+	keepAspectRatio
 
 \end_inset
 
@@ -113,9 +123,12 @@ Las clases principales del catálogo son las siguientes:
 \end_layout
 
 \begin_layout Standard
+\align center
 \begin_inset Graphics
 	filename clases.png
 	lyxscale 50
+	scale 50
+	keepAspectRatio
 
 \end_inset
 
