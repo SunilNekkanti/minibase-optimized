@@ -8,6 +8,7 @@ import heap.Scan;
 import heap.Tuple;
 import heap.exceptions.InvalidTupleSizeException;
 import heap.exceptions.InvalidTypeException;
+import index.IndexUtils;
 import index.exceptions.IndexException;
 import iterator.exceptions.JoinsException;
 import iterator.exceptions.LowMemException;
@@ -20,6 +21,17 @@ import iterator.exceptions.UnknownKeyTypeException;
 
 import java.io.IOException;
 
+import btree.BTreeFile;
+import btree.DataClass;
+import btree.IndexFile;
+import btree.IndexFileScan;
+import btree.IntegerKey;
+import btree.KeyClass;
+import btree.KeyDataEntry;
+import btree.LeafData;
+import btree.exceptions.ConstructPageException;
+import btree.exceptions.GetFileEntryException;
+import btree.exceptions.PinPageException;
 import bufmgr.exceptions.PageNotReadException;
 /**
  * This file contains an implementation of the nested loops join algorithm as described 
@@ -51,7 +63,6 @@ public class LeandroJoin  extends Iterator
 	 * @uml.property  name="rightFilter"
 	 * @uml.associationEnd  multiplicity="(0 -1)"
 	 */
-	private   CondExpr RightFilter[];
 	private   boolean done;
 	// Is the join complete
 	private   boolean get_from_outer;
@@ -65,7 +76,10 @@ public class LeandroJoin  extends Iterator
 	private   FldSpec   perm_mat[];
 	private   int        nOutFlds;
 	private   Heapfile  hf;
-	private   Scan      inner;
+	private   IndexFileScan      inner;
+	private IndexFile innerIndexFile;
+	private int join_col_1;	
+	private String index_name;
 	
 	/**constructor
 	 *Initialize the two relations which are joined, including relation type,
@@ -85,22 +99,39 @@ public class LeandroJoin  extends Iterator
 	 *@exception IOException some I/O fault
 	 *@exception NestedLoopException exception from this class
 	 */
-	public LeandroJoin( AttrType    in1[],    
-			int     len_in1,           
+	public LeandroJoin( 
+			AttrType    in1[],    
 			short   t1_str_sizes[],
 			AttrType    in2[],         
-			int     len_in2,           
 			short   t2_str_sizes[],   
+
 			int     amt_of_mem,        
+
 			Iterator     am1,          
+			int     join_col_in1,                
 			String relationName,      
-			CondExpr outFilter[],      
-			CondExpr rightFilter[],    
-			FldSpec   proj_list[],
-			int        n_out_flds
+			String index_2_name,
+			CondExpr outFilter[], 
+			FldSpec   proj_list[]
 	) throws IOException,NestedLoopException
 	{
-		
+		int       n_out_flds = proj_list.length;
+		int     len_in1 = in1.length;
+		int     len_in2 = in2.length;
+		index_name = index_2_name;
+		try {
+			innerIndexFile = new BTreeFile(index_name);
+		} catch (GetFileEntryException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (PinPageException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (ConstructPageException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		join_col_1 = join_col_in1;
 		_in1 = new AttrType[in1.length];
 		_in2 = new AttrType[in2.length];
 		System.arraycopy(in1,0,_in1,0,in1.length);
@@ -113,7 +144,6 @@ public class LeandroJoin  extends Iterator
 		inner_tuple = new Tuple();
 		Jtuple = new Tuple();
 		OutputFilter = outFilter;
-		RightFilter  = rightFilter;
 		
 		inner = null;
 		done  = false;
@@ -187,7 +217,7 @@ public class LeandroJoin  extends Iterator
 			// If a get_next on the outer returns DONE?, then the nested loops
 			//join is done too.
 			
-			if (get_from_outer == true)
+			if (get_from_outer)
 			{
 				get_from_outer = false;
 				if (inner != null)     // If this not the first time,
@@ -196,12 +226,6 @@ public class LeandroJoin  extends Iterator
 					inner = null;
 				}
 				
-				try {
-					inner = hf.openScan();
-				}
-				catch(Exception e){
-					throw new NestedLoopException(e, "openScan failed");
-				}
 				
 				if ((outer_tuple=outer.get_next()) == null)
 				{
@@ -213,7 +237,19 @@ public class LeandroJoin  extends Iterator
 					}
 					
 					return null;
-				}   
+				}
+				
+				try {
+					// innerIndexFile es un indexFile!
+					KeyClass rightValue = new IntegerKey(outer_tuple.getIntFld(join_col_1));
+					//outer_tuple.getStrFld(fldNo)
+					inner = IndexUtils.BTree_scan(rightValue,rightValue,innerIndexFile);
+				}
+				catch(Exception e){
+					throw new NestedLoopException(e, "openScan failed");
+				}
+
+				
 			}  // ENDS: if (get_from_outer == TRUE)
 			
 			
@@ -222,25 +258,26 @@ public class LeandroJoin  extends Iterator
 			// is no match (with pred),get a tuple from the inner.
 			
 			
-			RID rid = new RID();
-			while ((inner_tuple = inner.getNext(rid)) != null)
+			RID rid;
+			KeyDataEntry inner_data = null;
+			while ((inner_data = inner.get_next()) != null)
 			{
+				rid = ((LeafData)inner_data.data).getData();
+				inner_tuple= hf.getRecord(rid);
 				inner_tuple.setHdr( _in2,t2_str_sizescopy);
-				if (PredEval.Eval(RightFilter, inner_tuple, null, _in2, null))
+				if (PredEval.Eval(OutputFilter, outer_tuple, inner_tuple, 
+						_in1, _in2))
 				{
-					if (PredEval.Eval(OutputFilter, outer_tuple, inner_tuple, _in1, _in2))
-					{
-						// Apply a projection on the outer and inner tuples.
-						Projection.Join(outer_tuple, _in1, 
-								inner_tuple, _in2, 
-								Jtuple, perm_mat, nOutFlds);
-						return Jtuple;
-					}
+					// Apply a projection on the outer and inner tuples.
+					Projection.Join(outer_tuple, _in1, 
+							inner_tuple, _in2, 
+							Jtuple, perm_mat, nOutFlds);
+					return Jtuple;
 				}
 			}
 			
 			// There has been no match. (otherwise, we would have 
-			//returned from t//he while loop. Hence, inner is 
+			//returned from the while loop. Hence, inner is 
 			//exhausted, => set get_from_outer = TRUE, go to top of loop
 			
 			get_from_outer = true; // Loop back to top and get next outer tuple.	      

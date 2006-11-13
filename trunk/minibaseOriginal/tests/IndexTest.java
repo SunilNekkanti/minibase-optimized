@@ -360,7 +360,6 @@ implements GlobalConst {
 		return status;
 	}
 
-
 	protected boolean test3()
 	{ 
 		System.out.println("------------------------ TEST 3 --------------------------");
@@ -536,7 +535,7 @@ implements GlobalConst {
 
 		return status;
 	}
-
+	
 	protected String testName()
 	{
 		return "Index";

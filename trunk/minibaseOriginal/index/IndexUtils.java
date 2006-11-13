@@ -165,6 +165,15 @@ public class IndexUtils {
       
     } 
 
+  public static IndexFileScan BTree_scan(KeyClass begin, KeyClass end, IndexFile indFile) 
+  throws IOException,	   UnknownKeyTypeException,	   InvalidSelectionException,	   KeyNotMatchException,	   UnpinPageException,	   PinPageException,	   IteratorException,	   ConstructPageException
+  {
+    IndexFileScan indScan;
+    
+	indScan = ((BTreeFile)indFile).new_scan(begin, end);
+	return indScan;
+  } 
+
   /**
    * getValue returns the key value extracted from the selection condition.
    * @param cd the selection condition

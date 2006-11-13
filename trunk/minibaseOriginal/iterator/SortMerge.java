@@ -109,7 +109,8 @@ public class SortMerge extends Iterator implements GlobalConst
 	 *@exception TupleUtilsException exception from using tuple utils
 	 *@exception IOException some I/O fault
 	 */
-	public SortMerge(AttrType    in1[],                               
+	public SortMerge(
+			AttrType    in1[],                               
 			short   s1_sizes[],
 			AttrType    in2[],                                 
 			short   s2_sizes[],

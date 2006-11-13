@@ -14,6 +14,8 @@ import iterator.CondExpr;
 import iterator.DuplElim;
 import iterator.FileScan;
 import iterator.FldSpec;
+import iterator.Iterator;
+import iterator.LeandroJoin;
 import iterator.NestedLoopsJoins;
 import iterator.RelSpec;
 import iterator.Sort;
@@ -87,7 +89,7 @@ class JoinsDriver implements GlobalConst {
 		Query4();
 		Query5();
 		Query6();
-
+		Query7();
 
 		System.out.print ("Finished joins testing"+"\n");
 
@@ -1255,6 +1257,194 @@ class JoinsDriver implements GlobalConst {
 
 	}
 
+
+	public void Query7() {
+		System.out.print("**********************Query7 strating *********************\n");
+		boolean status = OK;
+
+		// Sailors, Boats, Reserves Queries.
+
+		System.out.print 
+		("Query: Find the names of sailors who have reserved a boat\n"
+				+ "       and print each name once.\n\n"
+				+ "  SELECT DISTINCT S.sname\n"
+				+ "  FROM   Sailors S, Reserves R\n"
+				+ "  WHERE  S.sid = R.sid\n\n"
+				+ "(Tests FileScan, Projection, Leandro Join and "
+				+ "Duplication elimination.)\n\n");
+
+		CondExpr [] outFilter = new CondExpr[2];
+		outFilter[0] = new CondExpr();
+		outFilter[1] = new CondExpr();
+
+		Query3_CondExpr(outFilter);
+
+		Tuple t = new Tuple();
+		t = null;
+
+		AttrType [] Stypes = null;
+		short []   Ssizes = null;
+		try {
+			Stypes = SystemDefs.JavabaseCatalog.getAttrCat().getAttrType("sailors.in");
+			Ssizes = SystemDefs.JavabaseCatalog.getAttrCat().getStringsSizeType("sailors.in");
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		AttrType [] Rtypes = null;
+		short []   Rsizes = null;
+		try {
+			Rtypes = SystemDefs.JavabaseCatalog.getAttrCat().getAttrType("reserves.in");
+			Rsizes = SystemDefs.JavabaseCatalog.getAttrCat().getStringsSizeType("reserves.in");
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		FldSpec [] Sprojection = {
+				new FldSpec(new RelSpec(RelSpec.outer), 1),
+				new FldSpec(new RelSpec(RelSpec.outer), 2),
+				new FldSpec(new RelSpec(RelSpec.outer), 3),
+				new FldSpec(new RelSpec(RelSpec.outer), 4)
+		};
+
+		iterator.Iterator am = null;
+		try {
+			am  = new FileScan("sailors.in", Stypes, Ssizes,
+					Sprojection, null);
+		}
+		catch (Exception e) {
+			status = FAIL;
+			System.err.println (""+e);
+		}
+
+		if (status != OK) {
+			//bail out
+			System.err.println ("*** Error setting up scan for sailors");
+			Runtime.getRuntime().exit(1);
+		}
+
+		FldSpec [] Rprojection = {
+				new FldSpec(new RelSpec(RelSpec.outer), 1),
+				new FldSpec(new RelSpec(RelSpec.outer), 2),
+				new FldSpec(new RelSpec(RelSpec.outer), 3)
+		}; 
+		
+		
+		try {
+			SystemDefs.JavabaseCatalog.addIndex("reserves.in", "sid", new IndexType (IndexType.B_Index), 1);
+		} catch (Exception e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
+		IndexDesc index = null;
+		try {
+			index = SystemDefs.JavabaseCatalog.getIndexInfo("reserves.in", "sid", new IndexType (IndexType.B_Index));
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+
+		
+		System.out.println("BTreeIndex created successfully.\n"); 
+		
+		System.out.println("BTreeIndex file created successfully.\n"); 
+
+		/*
+		iterator.Iterator am2 = null;
+		try {
+			am2 = new FileScan("reserves.in", Rtypes, Rsizes, 
+					Rprojection, null);
+		}
+		catch (Exception e) {
+			status = FAIL;
+			System.err.println (""+e);
+		}
+		 */
+		if (status != OK) {
+			//bail out
+			System.err.println ("*** Error setting up scan for reserves");
+			Runtime.getRuntime().exit(1);
+		}
+
+		FldSpec [] proj_list = {
+				new FldSpec(new RelSpec(RelSpec.outer), 2)
+		};
+
+		AttrType [] jtype     = { new AttrType(AttrType.attrString) };
+
+		TupleOrder ascending = new TupleOrder(TupleOrder.Ascending);
+		LeandroJoin lj = null;
+		short  []  jsizes    = new short[1];
+		jsizes[0] = 30;
+		try {
+			lj = new LeandroJoin(
+					Stypes, Ssizes,
+					Rtypes, Rsizes,
+					10,	am, 1, 
+					"reserves.in",index.getIndexName(),
+					outFilter, proj_list);
+			
+			
+			
+		}
+		catch (Exception e) {
+			status = FAIL;
+			System.err.println (""+e);
+		}
+
+		if (status != OK) {
+			//bail out
+			System.err.println ("*** Error constructing SortMerge");
+			Runtime.getRuntime().exit(1);
+		}
+
+
+
+		DuplElim ed = null;
+		try {
+		ed = new DuplElim(jtype, (short)1, jsizes, lj, 10, false);
+		}
+		catch (Exception e) {
+			System.err.println (""+e);
+			Runtime.getRuntime().exit(1);
+		}
+
+		QueryCheck qcheck4 = new QueryCheck(4);
+
+
+		t = null;
+
+		try {
+			while ((t = ed.get_next()) != null) {
+				t.print(jtype);
+				qcheck4.Check(t);
+			}
+		}
+		catch (Exception e) {
+			System.err.println (""+e);
+			e.printStackTrace(); 
+			Runtime.getRuntime().exit(1);
+		}
+
+		qcheck4.report(7);
+		try {
+			ed.close();
+		}
+		catch (Exception e) {
+			status = FAIL;
+			e.printStackTrace();
+		}
+		System.out.println ("\n");  
+		if (status != OK) {
+			//bail out
+			System.err.println ("*** Error setting up scan for sailors");
+			Runtime.getRuntime().exit(1);
+		}
+	}
 
 	private void Disclaimer() {
 		System.out.print ("\n\nAny resemblance of persons in this database to"

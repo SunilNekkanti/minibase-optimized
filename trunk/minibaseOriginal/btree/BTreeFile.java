@@ -49,7 +49,8 @@ import bufmgr.exceptions.ReplacerException;
 import diskmgr.Page;
 
 /**
- * btfile.java This is the main definition of class BTreeFile, which derives from  abstract base class IndexFile. It provides an insert/delete interface.
+ * btfile.java This is the main definition of class BTreeFile, which derives from  
+ * abstract base class IndexFile. It provides an insert/delete interface.
  */
 public class BTreeFile extends IndexFile 
 implements GlobalConst {
