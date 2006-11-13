@@ -3,7 +3,12 @@ import chainexception.*;
 
 public class InvalidTupleSizeException extends ChainException{
 
-   public InvalidTupleSizeException()
+   /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8005589005698303727L;
+
+public InvalidTupleSizeException()
    {
       super();
    }

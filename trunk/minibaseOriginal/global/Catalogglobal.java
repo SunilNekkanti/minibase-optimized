@@ -1,8 +1,5 @@
 package global;
 
-import bufmgr.*;
-import diskmgr.*;
-import catalog.*;
 
 public interface Catalogglobal {
   

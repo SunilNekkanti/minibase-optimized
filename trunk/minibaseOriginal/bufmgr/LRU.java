@@ -3,8 +3,6 @@
 package bufmgr;
 
 import bufmgr.exceptions.InvalidFrameNumberException;
-import diskmgr.*;
-import global.*;
 
   /**
    * class LRU is a subclass of class Replacer using LRU

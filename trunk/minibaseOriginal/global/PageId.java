@@ -1,6 +1,5 @@
 package global;
 
-import java.io.*;
 
 /** class PageId
  */

@@ -1,8 +1,9 @@
 package heap;
 
-import bufmgr.*;
-import diskmgr.*;
-import global.*;
+import global.GlobalConst;
+import global.PageId;
+import global.RID;
+import global.SystemDefs;
 import heap.exceptions.FileAlreadyDeletedException;
 import heap.exceptions.HFBufMgrException;
 import heap.exceptions.HFDiskMgrException;
@@ -12,7 +13,9 @@ import heap.exceptions.InvalidTupleSizeException;
 import heap.exceptions.InvalidUpdateException;
 import heap.exceptions.SpaceNotAvailableException;
 
-import java.io.*;
+import java.io.IOException;
+
+import diskmgr.Page;
 
 /**  This heapfile implementation is directory-based. We maintain a
  *  directory of info about the data pages (which are of type HFPage
@@ -325,7 +328,7 @@ public class Heapfile implements Filetype,  GlobalConst {
 		PageId nextDirPageId = new PageId(0);
 
 		HFPage currentDirPage = new HFPage();
-		Page pageinbuffer = new Page();
+		new Page();
 
 		while(currentDirPageId.pid != INVALID_PAGE)
 		{
@@ -451,7 +454,7 @@ public class Heapfile implements Filetype,  GlobalConst {
 				// - (2.2) (currentDirPage->available_space() <= sizeof(DataPageInfo):
 				//         look at the next directory page, if necessary, create it.
 
-				if(currentDirPage.available_space() >= dpinfo.size)
+				if(currentDirPage.available_space() >= DataPageInfo.size)
 				{ 
 					//Start IF02
 					// case (2.1) : add a new data page record into the
@@ -473,7 +476,7 @@ public class Heapfile implements Filetype,  GlobalConst {
 					byte [] tmpData = atuple.getTupleByteArray();
 					currentDataPageRid = currentDirPage.insertRecord(tmpData);
 
-					RID tmprid = currentDirPage.firstRecord();
+					currentDirPage.firstRecord();
 
 
 					// need catch error here!
@@ -916,7 +919,7 @@ public class Heapfile implements Filetype,  GlobalConst {
 		currentDirPageId.pid = _firstDirPageId.pid;
 		PageId nextDirPageId = new PageId();
 		nextDirPageId.pid = 0;
-		Page pageinbuffer = new Page();
+		new Page();
 		HFPage currentDirPage =  new HFPage();
 		Tuple atuple;
 

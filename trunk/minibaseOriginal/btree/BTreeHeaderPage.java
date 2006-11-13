@@ -8,12 +8,14 @@
 
 package btree;
 
-import java.io.*;
-import diskmgr.*;
+import global.PageId;
+import global.SystemDefs;
+import heap.HFPage;
+
+import java.io.IOException;
+
 import btree.exceptions.ConstructPageException;
-import bufmgr.*;
-import global.*;
-import heap.*;
+import diskmgr.Page;
 
   /**
    * Intefrace of a B+ tree index header page.  

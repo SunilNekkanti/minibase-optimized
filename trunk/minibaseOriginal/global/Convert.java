@@ -2,8 +2,12 @@
 
 package global;
 
-import java.io.*;
-import java.lang.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class Convert{
  

@@ -5,6 +5,7 @@ import global.AttrOperator;
 import global.AttrType;
 import global.ExtendedSystemDefs;
 import global.GlobalConst;
+import global.SystemDefs;
 import global.TupleOrder;
 import heap.Tuple;
 import iterator.CondExpr;
@@ -188,17 +189,15 @@ public class SM_JoinTest
 			
 			Query1_CondExpr(outFilter);
 			
-			Tuple t = new Tuple();
-			
-			AttrType [] Stypes = new AttrType[4];
-			Stypes[0] = new AttrType (AttrType.attrInteger);
-			Stypes[1] = new AttrType (AttrType.attrString);
-			Stypes[2] = new AttrType (AttrType.attrInteger);
-			Stypes[3] = new AttrType (AttrType.attrReal);
-			
-			//SOS
-			short [] Ssizes = new short[1];
-			Ssizes[0] = 30; //first elt. is 30
+			AttrType [] Stypes = null;
+			short []   Ssizes = null;
+			try {
+				Stypes = SystemDefs.JavabaseCatalog.getAttrCat().getAttrType("sailors.in");
+				Ssizes = SystemDefs.JavabaseCatalog.getAttrCat().getStringsSizeType("sailors.in");
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			
 			FldSpec [] Sprojection = new FldSpec[4];
 			Sprojection[0] = new FldSpec(new RelSpec(RelSpec.outer), 1);
@@ -222,13 +221,16 @@ public class SM_JoinTest
 				Runtime.getRuntime().exit(1);
 			}
 			
-			AttrType [] Rtypes = new AttrType[3];
-			Rtypes[0] = new AttrType (AttrType.attrInteger);
-			Rtypes[1] = new AttrType (AttrType.attrInteger);
-			Rtypes[2] = new AttrType (AttrType.attrString);
+			AttrType [] Rtypes = null;
+			short []   Rsizes = null;
+			try {
+				Rtypes = SystemDefs.JavabaseCatalog.getAttrCat().getAttrType("reserves.in");
+				Rsizes = SystemDefs.JavabaseCatalog.getAttrCat().getStringsSizeType("reserves.in");
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			
-			short [] Rsizes = new short[1];
-			Rsizes[0] = 15; 
 			FldSpec [] Rprojection = new FldSpec[3];
 			Rprojection[0] = new FldSpec(new RelSpec(RelSpec.outer), 1);
 			Rprojection[1] = new FldSpec(new RelSpec(RelSpec.outer), 2);
@@ -288,8 +290,7 @@ public class SM_JoinTest
 			
 			QueryCheck qcheck1 = new QueryCheck(1);
 			
-			
-			t = null;
+			Tuple t = null;
 			
 			try {
 				while ((t = sm.get_next()) != null) {
@@ -347,25 +348,25 @@ public class SM_JoinTest
 			
 			Query3_CondExpr(outFilter);
 			
-			Tuple t = new Tuple();
-			t = null;
+			AttrType [] Stypes = null;
+			short []   Ssizes = null;
+			try {
+				Stypes = SystemDefs.JavabaseCatalog.getAttrCat().getAttrType("sailors.in");
+				Ssizes = SystemDefs.JavabaseCatalog.getAttrCat().getStringsSizeType("sailors.in");
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			
-			AttrType Stypes[] = {
-					new AttrType(AttrType.attrInteger),
-					new AttrType(AttrType.attrString),
-					new AttrType(AttrType.attrInteger),
-					new AttrType(AttrType.attrReal)
-			};
-			short []   Ssizes = new short[1];
-			Ssizes[0] = 30;
-			
-			AttrType [] Rtypes = {
-					new AttrType(AttrType.attrInteger),
-					new AttrType(AttrType.attrInteger),
-					new AttrType(AttrType.attrString),
-			};
-			short  []  Rsizes = new short[1];
-			Rsizes[0] =15;
+			AttrType [] Rtypes = null;
+			short []   Rsizes = null;
+			try {
+				Rtypes = SystemDefs.JavabaseCatalog.getAttrCat().getAttrType("reserves.in");
+				Rsizes = SystemDefs.JavabaseCatalog.getAttrCat().getStringsSizeType("reserves.in");
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			
 			FldSpec [] Sprojection = {
 					new FldSpec(new RelSpec(RelSpec.outer), 1),
@@ -473,8 +474,9 @@ public class SM_JoinTest
 			
 			QueryCheck qcheck3 = new QueryCheck(3);
 			
+		
+			Tuple t = null;
 			
-			t = null;
 			
 			try {
 				while ((t = sm.get_next()) != null) {
@@ -528,25 +530,26 @@ public class SM_JoinTest
 			
 			Query3_CondExpr(outFilter);
 			
-			Tuple t = new Tuple();
-			t = null;
+			AttrType [] Stypes = null;
+			short []   Ssizes = null;
+			try {
+				Stypes = SystemDefs.JavabaseCatalog.getAttrCat().getAttrType("sailors.in");
+				Ssizes = SystemDefs.JavabaseCatalog.getAttrCat().getStringsSizeType("sailors.in");
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			
-			AttrType Stypes[] = {
-					new AttrType(AttrType.attrInteger),
-					new AttrType(AttrType.attrString),
-					new AttrType(AttrType.attrInteger),
-					new AttrType(AttrType.attrReal)
-			};
-			short []   Ssizes = new short[1];
-			Ssizes[0] = 30;
+			AttrType [] Rtypes = null;
+			short []   Rsizes = null;
+			try {
+				Rtypes = SystemDefs.JavabaseCatalog.getAttrCat().getAttrType("reserves.in");
+				Rsizes = SystemDefs.JavabaseCatalog.getAttrCat().getStringsSizeType("reserves.in");
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			
-			AttrType [] Rtypes = {
-					new AttrType(AttrType.attrInteger),
-					new AttrType(AttrType.attrInteger),
-					new AttrType(AttrType.attrString),
-			};
-			short  []  Rsizes = new short[1];
-			Rsizes[0] =15;
 			
 			FldSpec [] Sprojection = {
 					new FldSpec(new RelSpec(RelSpec.outer), 1),
@@ -637,7 +640,7 @@ public class SM_JoinTest
 			QueryCheck qcheck4 = new QueryCheck(4);
 			
 			
-			t = null;
+			Tuple t = null;
 			
 			try {
 				while ((t = ed.get_next()) != null) {
@@ -687,25 +690,25 @@ public class SM_JoinTest
 			CondExpr [] outFilter;
 			outFilter = Query5_CondExpr();
 			
-			Tuple t = new Tuple();
-			t = null;
+			AttrType [] Stypes = null;
+			short []   Ssizes = null;
+			try {
+				Stypes = SystemDefs.JavabaseCatalog.getAttrCat().getAttrType("sailors.in");
+				Ssizes = SystemDefs.JavabaseCatalog.getAttrCat().getStringsSizeType("sailors.in");
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			
-			AttrType Stypes[] = {
-					new AttrType(AttrType.attrInteger),
-					new AttrType(AttrType.attrString),
-					new AttrType(AttrType.attrInteger),
-					new AttrType(AttrType.attrReal)
-			};
-			short []   Ssizes = new short[1];
-			Ssizes[0] = 30;
-			
-			AttrType [] Rtypes = {
-					new AttrType(AttrType.attrInteger),
-					new AttrType(AttrType.attrInteger),
-					new AttrType(AttrType.attrString),
-			};
-			short  []  Rsizes = new short[1];
-			Rsizes[0] = 15;
+			AttrType [] Rtypes = null;
+			short []   Rsizes = null;
+			try {
+				Rtypes = SystemDefs.JavabaseCatalog.getAttrCat().getAttrType("reserves.in");
+				Rsizes = SystemDefs.JavabaseCatalog.getAttrCat().getStringsSizeType("reserves.in");
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			
 			FldSpec [] Sprojection = {
 					new FldSpec(new RelSpec(RelSpec.outer), 1),
@@ -793,7 +796,7 @@ public class SM_JoinTest
 			
 			QueryCheck qcheck5 = new QueryCheck(5);
 			//Tuple t = new Tuple();
-			t = null;
+			Tuple t = null;
 			
 			try {
 				while ((t = sm.get_next()) != null) {

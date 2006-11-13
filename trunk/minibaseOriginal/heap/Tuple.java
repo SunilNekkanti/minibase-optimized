@@ -526,19 +526,5 @@ public class Tuple implements GlobalConst{
 		System.out.println("]");
 		
 	}
-	
-	/**
-	 * private method
-	 * Padding must be used when storing different types.
-	 * 
-	 * @param	offset
-	 * @param type   the type of tuple
-	 * @return short typle
-	 */
-	
-	private short pad(short offset, AttrType type)
-	{
-		return 0;
-	}
 }
 

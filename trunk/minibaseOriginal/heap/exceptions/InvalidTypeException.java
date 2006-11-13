@@ -5,7 +5,12 @@ import chainexception.*;
 public class InvalidTypeException extends ChainException {
 
 
-  public InvalidTypeException ()
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = -18140849084811686L;
+
+public InvalidTypeException ()
   {
      super();
   }

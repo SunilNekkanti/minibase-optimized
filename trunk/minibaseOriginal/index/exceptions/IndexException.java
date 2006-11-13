@@ -1,11 +1,14 @@
 package index.exceptions;
 
-import java.lang.*;
-import chainexception.*;
+import chainexception.ChainException;
 
 public class IndexException extends ChainException 
 {
-  public IndexException() {super();}
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = -889160813758622559L;
+public IndexException() {super();}
   public IndexException(String s) {super(null,s);}
   public IndexException(Exception e, String s) {super(e,s);}
 }

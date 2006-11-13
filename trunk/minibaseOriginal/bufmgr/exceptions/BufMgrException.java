@@ -3,7 +3,12 @@ import chainexception.*;
 
 public class BufMgrException extends ChainException{
 
-  public BufMgrException(Exception e, String name)
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7580320871141384532L;
+
+public BufMgrException(Exception e, String name)
   { super(e, name); }
  
 }

@@ -3,7 +3,12 @@ import chainexception.*;
 
 public class Catalognomem extends ChainException {
 
-   public Catalognomem(Exception err, String name)
+   /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4522187874844370502L;
+
+public Catalognomem(Exception err, String name)
 	{
 	       super(err, name);
 	}

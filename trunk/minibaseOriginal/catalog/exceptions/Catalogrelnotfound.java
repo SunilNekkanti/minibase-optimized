@@ -3,7 +3,12 @@ import chainexception.*;
 
 public class Catalogrelnotfound extends ChainException {
 
-   public Catalogrelnotfound(Exception err, String name)
+   /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6430490281549239167L;
+
+public Catalogrelnotfound(Exception err, String name)
 	{
 	       super(err, name);
 	}

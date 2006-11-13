@@ -3,7 +3,12 @@ import chainexception.*;
 
 public class HashOperationException extends ChainException{
 
-  public HashOperationException(Exception e, String name)
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2093114833638071583L;
+
+public HashOperationException(Exception e, String name)
   { super(e, name); }
  
 

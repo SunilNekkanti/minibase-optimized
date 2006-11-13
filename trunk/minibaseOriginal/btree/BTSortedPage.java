@@ -7,16 +7,18 @@
 
 package btree;
 
-import java.io.*;
-import java.lang.*;
+import global.PageId;
+import global.RID;
+import global.SystemDefs;
+import heap.HFPage;
+import heap.exceptions.InvalidSlotNumberException;
+
+import java.io.IOException;
 
 import btree.exceptions.ConstructPageException;
 import btree.exceptions.DeleteRecException;
 import btree.exceptions.InsertRecException;
-import global.*;
-import diskmgr.*;
-import heap.*;
-import heap.exceptions.InvalidSlotNumberException;
+import diskmgr.Page;
 
 
 /**

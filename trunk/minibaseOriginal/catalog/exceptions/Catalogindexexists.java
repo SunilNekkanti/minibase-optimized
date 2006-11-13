@@ -3,7 +3,12 @@ import chainexception.*;
 
 public class Catalogindexexists extends ChainException {
 
- public Catalogindexexists()
+ /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6575671617711125132L;
+
+public Catalogindexexists()
    {
       super();
    }

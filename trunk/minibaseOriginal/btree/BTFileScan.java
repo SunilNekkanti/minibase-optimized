@@ -5,9 +5,12 @@
  *
  */
 package btree;
-import global.*;
-import heap.*;
-import java.io.*;
+import global.GlobalConst;
+import global.PageId;
+import global.RID;
+import global.SystemDefs;
+
+import java.io.IOException;
 
 import btree.exceptions.ScanDeleteException;
 import btree.exceptions.ScanIteratorException;

@@ -3,7 +3,12 @@ import chainexception.*;
 
 public class BufferPoolExceededException extends ChainException{
 
-  public BufferPoolExceededException(Exception e, String name)
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7243078291851132453L;
+
+public BufferPoolExceededException(Exception e, String name)
   { super(e, name); }
  
 }

@@ -4,7 +4,12 @@ import chainexception.*;
 public class SpaceNotAvailableException extends ChainException{
 
 
-  public SpaceNotAvailableException()
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3883901080726230087L;
+
+public SpaceNotAvailableException()
   {
      super();
   

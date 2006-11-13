@@ -3,7 +3,11 @@ import chainexception.*;
 
 public class KeyNotMatchException extends ChainException
 {
-  public KeyNotMatchException() {super();}
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1488582557412041501L;
+public KeyNotMatchException() {super();}
   public KeyNotMatchException(String s) {super(null,s);}
   public KeyNotMatchException(Exception e, String s) {super(e,s);}
 

@@ -3,7 +3,12 @@ import chainexception.*;
 
 public class FieldNumberOutOfBoundException extends ChainException{
 
-   public FieldNumberOutOfBoundException()
+   /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5385179634718406966L;
+
+public FieldNumberOutOfBoundException()
    {
       super();
    }

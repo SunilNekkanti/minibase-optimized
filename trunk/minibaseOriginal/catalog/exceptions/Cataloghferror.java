@@ -3,7 +3,12 @@ import chainexception.*;
 
 public class Cataloghferror extends ChainException {
 
- public Cataloghferror()
+ /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1704280921457767379L;
+
+public Cataloghferror()
    {
       super();
    }

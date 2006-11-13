@@ -345,12 +345,12 @@ implements GlobalConst {
 	{
 
 		BTreeHeaderPage header;
-		PageId old_data;
+		
 
 
 		header= new BTreeHeaderPage( pinPage(headerPageId));
 
-		old_data = headerPage.get_rootId();
+		headerPage.get_rootId();
 		header.set_rootId( newRoot);
 
 		// clock in dirty bit to bm so our dtor needn't have to worry about it
@@ -510,7 +510,6 @@ implements GlobalConst {
 		{
 			BTIndexPage newRootPage;
 			PageId      newRootPageId;
-			Object      newEntryKey;
 
 			// the information about the pair <key, PageId> is
 			// packed in newRootEntry: extract it
@@ -681,8 +680,6 @@ implements GlobalConst {
 			//     given up from the level down in the recursion
 
 			KeyDataEntry      tmpEntry;
-			PageId       tmpPageId;
-			RID insertRid;
 			RID delRid=new RID();
 
 			for ( tmpEntry= currentIndexPage.getFirst( delRid);
@@ -1176,10 +1173,7 @@ implements GlobalConst {
 	{
 		BTLeafPage leafPage;
 		RID curRid=new RID();  // iterator
-		KeyClass curkey;
-		RID dummyRid; 
 		PageId nextpage;
-		boolean deleted;
 		KeyDataEntry entry;
 
 		if ( trace!=null )
@@ -1355,8 +1349,6 @@ implements GlobalConst {
 		if (sortPage.getType()==NodeType.LEAF ) {
 			RID curRid=new RID();  // iterator
 			KeyDataEntry tmpEntry;
-			KeyClass curkey;
-			RID dummyRid; 
 			PageId nextpage;
 			BTLeafPage leafPage;
 			leafPage=new BTLeafPage(page, headerPage.get_keyType());        
@@ -1364,8 +1356,7 @@ implements GlobalConst {
 
 			KeyClass deletedKey=key;
 			tmpEntry=leafPage.getFirst(curRid);
-
-			RID delRid;    
+   
 			// for all records with key equal to 'key', delete it if its rid = 'rid'
 			while((tmpEntry!=null) && (BT.keyCompare(key,tmpEntry.key)>=0)) { 
 				// WriteUpdateLog is done in the btleafpage level - to log the
@@ -1480,7 +1471,7 @@ implements GlobalConst {
 							}
 
 							// move all entries from rightChild to leftChild
-							RID firstRid=new RID(), insertRid;
+							RID firstRid=new RID();
 							for (tmpEntry= rightChild.getFirst(firstRid);
 							tmpEntry != null;
 							tmpEntry=rightChild.getFirst(firstRid)) {
@@ -1579,7 +1570,6 @@ implements GlobalConst {
 			// delete the oldChildKey
 
 			// save possible old child entry before deletion
-			PageId dummyPageId; 
 			KeyClass deletedKey = key;
 			RID curRid=indexPage.deleteKey(oldChildKey);
 
@@ -1711,8 +1701,7 @@ implements GlobalConst {
 
 					// pull down the entry in its parent node
 					// and put it at the end of the left child
-					RID firstRid=new RID(), insertRid;
-					PageId curPageId;
+					RID firstRid=new RID();
 
 					leftChild.insertKey(  parentPage.findKey(oldChildEntry),
 							rightChild.getLeftLink());
@@ -1816,8 +1805,6 @@ implements GlobalConst {
 
 			BTSortedPage sortedPage;
 			RID metaRid=new RID();
-			PageId childPageId;
-			KeyClass key;
 			KeyDataEntry entry;
 			sortedPage=new BTSortedPage( pinPage( id), headerPage.get_keyType());
 

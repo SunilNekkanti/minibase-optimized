@@ -4,7 +4,12 @@ import chainexception.*;
 
 public class PagePinnedException extends ChainException{
 
-  public PagePinnedException(Exception e, String name)
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1540379955943259621L;
+
+public PagePinnedException(Exception e, String name)
   { super(e, name); }
  
 
