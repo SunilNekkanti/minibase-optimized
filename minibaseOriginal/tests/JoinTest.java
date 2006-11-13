@@ -536,7 +536,7 @@ class JoinsDriver implements GlobalConst {
 		TupleOrder ascending = new TupleOrder(TupleOrder.Ascending);
 		Sort sort_names = null;
 		try {
-			sort_names = new Sort (JJtype,(short)1, JJsize,
+			sort_names = new Sort (JJtype, JJsize,
 					(iterator.Iterator) nlj2, 1, ascending, JJsize[0], 10);
 		}
 		catch (Exception e) {
@@ -1210,7 +1210,7 @@ class JoinsDriver implements GlobalConst {
 		TupleOrder ascending = new TupleOrder(TupleOrder.Ascending);
 		Sort sort_names = null;
 		try {
-			sort_names = new Sort (JJtype,(short)1, JJsize,
+			sort_names = new Sort (JJtype, JJsize,
 					(iterator.Iterator) nlj, 1, ascending, JJsize[0], 10);
 		}
 		catch (Exception e) {

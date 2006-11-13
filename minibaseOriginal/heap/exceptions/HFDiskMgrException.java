@@ -6,7 +6,12 @@ import chainexception.*;
 public class HFDiskMgrException extends ChainException{
 
 
-  public HFDiskMgrException()
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4146863555507371725L;
+
+public HFDiskMgrException()
   {
      super();
   

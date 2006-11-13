@@ -2,12 +2,15 @@
 
 package heap;
 
-import diskmgr.*;
-import global.*;
+import global.Convert;
+import global.GlobalConst;
+import global.PageId;
+import global.RID;
 import heap.exceptions.InvalidSlotNumberException;
 
-import java.io.*;
-import java.lang.*;
+import java.io.IOException;
+
+import diskmgr.Page;
 
 
 

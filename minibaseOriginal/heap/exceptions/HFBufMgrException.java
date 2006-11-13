@@ -4,7 +4,12 @@ import chainexception.*;
 public class HFBufMgrException extends ChainException{
 
 
-  public HFBufMgrException()
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1667381573158879763L;
+
+public HFBufMgrException()
   {
      super();
   

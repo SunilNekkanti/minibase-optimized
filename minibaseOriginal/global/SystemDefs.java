@@ -47,8 +47,6 @@ public class SystemDefs {
 			int num_pgs, int maxlogsize,
 			int bufpoolsize, String replacement_policy )
 	{
-		
-		boolean status = true;
 		JavabaseBM = null;
 		JavabaseDB = null;
 		JavabaseDBName = null;

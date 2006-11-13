@@ -7,8 +7,10 @@
 
 
 package btree;
-import java.io.*;
-import java.lang.*;
+import global.PageId;
+import global.RID;
+
+import java.io.IOException;
 
 import btree.exceptions.ConstructPageException;
 import btree.exceptions.IndexFullDeleteException;
@@ -16,9 +18,7 @@ import btree.exceptions.IndexInsertRecException;
 import btree.exceptions.IndexSearchException;
 import btree.exceptions.IteratorException;
 import btree.exceptions.RedistributeException;
-import global.*;
-import diskmgr.*;
-import heap.*;
+import diskmgr.Page;
 
 /**
  * A BTIndexPage is an index page on a B+ tree.  It holds abstract 

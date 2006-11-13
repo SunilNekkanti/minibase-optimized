@@ -6,7 +6,12 @@ import chainexception.*;
 public class HFException extends ChainException{
 
 
-  public HFException()
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1633427656267223398L;
+
+public HFException()
   {
      super();
   

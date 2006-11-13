@@ -580,7 +580,6 @@ public class Sort extends Iterator implements GlobalConst
 	 * @exception SortException something went wrong in the lower layer. 
 	 */
 	public Sort(AttrType[] in,         
-			short      len_in,             
 			short[]    str_sizes,
 			Iterator   am,                 
 			int        sort_fld,          
@@ -589,6 +588,7 @@ public class Sort extends Iterator implements GlobalConst
 			int        n_pages      
 	) throws IOException, SortException
 	{
+		short      len_in = (short) in.length;
 		_in = new AttrType[len_in];
 		n_cols = len_in;
 		int n_strs = 0;

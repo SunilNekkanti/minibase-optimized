@@ -3,7 +3,12 @@ import chainexception.*;
 
 public class IndexCatalogException extends ChainException{
 
-   public IndexCatalogException(Exception err, String name)
+   /**
+	 * 
+	 */
+	private static final long serialVersionUID = -180653938707111748L;
+
+public IndexCatalogException(Exception err, String name)
     {
       super(err, name);
     }

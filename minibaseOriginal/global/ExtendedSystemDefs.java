@@ -10,9 +10,10 @@
 
 package global;
 
-import bufmgr.*;
-import catalog.*;
-import diskmgr.*;
+import catalog.AttrCatalog;
+import catalog.Catalog;
+import catalog.IndexCatalog;
+import catalog.RelCatalog;
 
 /**
  * @author  Fernando

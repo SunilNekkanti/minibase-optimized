@@ -6,14 +6,17 @@ package heap;
  *
  */
 
-import bufmgr.*;
-import bufmgr.exceptions.HashEntryNotFoundException;
-import diskmgr.*;
-import global.*;
+import global.GlobalConst;
+import global.PageId;
+import global.RID;
+import global.SystemDefs;
 import heap.exceptions.HFBufMgrException;
 import heap.exceptions.InvalidTupleSizeException;
 
-import java.io.*;
+import java.io.IOException;
+
+import bufmgr.exceptions.HashEntryNotFoundException;
+import diskmgr.Page;
 
 
 /**
@@ -405,7 +408,6 @@ public class Scan implements GlobalConst{
 	{
 		DataPageInfo dpinfo;
 
-		boolean nextDataPageStatus;
 		PageId nextDirPageId = new PageId();
 		Tuple rectuple = null;
 
@@ -485,7 +487,6 @@ public class Scan implements GlobalConst{
 		datapageRid = dirpage.nextRecord(datapageRid);
 
 		if (datapageRid == null) {
-			nextDataPageStatus = false;
 			// we have read all datapage records on the current directory page
 
 			// get next directory page
@@ -525,10 +526,8 @@ public class Scan implements GlobalConst{
 
 				try {
 					datapageRid = dirpage.firstRecord();
-					nextDataPageStatus = true;
 				}
 				catch (Exception e){
-					nextDataPageStatus = false;
 					return false;
 				} 
 			}

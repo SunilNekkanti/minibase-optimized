@@ -2,7 +2,14 @@
 
 package diskmgr;
 
-import java.io.*;
+import global.Convert;
+import global.GlobalConst;
+import global.PageId;
+import global.SystemDefs;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 
 import diskmgr.exceptions.DiskMgrException;
 import diskmgr.exceptions.DuplicateEntryException;
@@ -12,8 +19,6 @@ import diskmgr.exceptions.FileNameTooLongException;
 import diskmgr.exceptions.InvalidPageNumberException;
 import diskmgr.exceptions.InvalidRunSizeException;
 import diskmgr.exceptions.OutOfSpaceException;
-import bufmgr.*;
-import global.*;
 
 public class DB implements GlobalConst {
 
@@ -891,7 +896,7 @@ class DBHeaderPage implements PageUsedBytes, GlobalConst {
       pageno.pid = INVALID_PAGE;
       setNextPage(pageno);
       
-      PageId temppid = getNextPage();
+      getNextPage();
       
       int num_entries  = (MAX_SPACE - pageusedbytes) /SIZE_OF_FILE_ENTRY; 
       setNumOfEntries(num_entries);

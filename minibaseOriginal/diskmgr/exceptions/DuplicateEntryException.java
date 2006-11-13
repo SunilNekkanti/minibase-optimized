@@ -3,7 +3,12 @@ import chainexception.*;
 
 public class DuplicateEntryException extends ChainException {
   
-  public DuplicateEntryException(Exception e, String name)
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2235221438700951431L;
+
+public DuplicateEntryException(Exception e, String name)
     {
       super(e, name); 
     }

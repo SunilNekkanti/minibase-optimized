@@ -92,7 +92,7 @@ public class DuplElim extends Iterator
 		if (!inp_sorted)
 		{
 			try {
-				_am = new Sort(in, len_in, s_sizes, am, 1, order,
+				_am = new Sort(in, s_sizes, am, 1, order,
 						sortFldLen, amt_of_mem);
 			}catch(SortException e){
 				e.printStackTrace();

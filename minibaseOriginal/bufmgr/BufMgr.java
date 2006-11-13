@@ -2,13 +2,11 @@
 
 package bufmgr;
 
-import diskmgr.*;
-import diskmgr.exceptions.DiskMgrException;
-import diskmgr.exceptions.FileIOException;
-import diskmgr.exceptions.InvalidPageNumberException;
-import global.*;
-import java.io.*;
-import java.util.*;
+import global.GlobalConst;
+import global.PageId;
+import global.SystemDefs;
+
+import java.io.IOException;
 
 import bufmgr.exceptions.BufMgrException;
 import bufmgr.exceptions.BufferPoolExceededException;
@@ -21,6 +19,10 @@ import bufmgr.exceptions.PageNotReadException;
 import bufmgr.exceptions.PagePinnedException;
 import bufmgr.exceptions.PageUnpinnedException;
 import bufmgr.exceptions.ReplacerException;
+import diskmgr.Page;
+import diskmgr.exceptions.DiskMgrException;
+import diskmgr.exceptions.FileIOException;
+import diskmgr.exceptions.InvalidPageNumberException;
 
 /**
  * A frame description class. It describes each page in the buffer pool, the
@@ -518,12 +520,6 @@ public class BufMgr implements GlobalConst
 
 		replacer.setBufferManager(this);
 
-	}
-
-	// Debug use only
-	private void bmhashdisplay()
-	{
-		hashTable.display();
 	}
 
 	/**

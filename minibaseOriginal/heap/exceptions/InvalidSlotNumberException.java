@@ -5,7 +5,12 @@ import chainexception.*;
 public class InvalidSlotNumberException extends ChainException {
 
 
-  public InvalidSlotNumberException ()
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2935101143467879005L;
+
+public InvalidSlotNumberException ()
   {
      super();
   }

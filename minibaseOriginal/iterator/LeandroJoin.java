@@ -9,8 +9,6 @@ import heap.Tuple;
 import heap.exceptions.InvalidTupleSizeException;
 import heap.exceptions.InvalidTypeException;
 import index.exceptions.IndexException;
-import iterator.exceptions.JoinLowMemory;
-import iterator.exceptions.JoinNewFailed;
 import iterator.exceptions.JoinsException;
 import iterator.exceptions.LowMemException;
 import iterator.exceptions.NestedLoopException;

@@ -4,7 +4,12 @@ import chainexception.*;
 public class InvalidUpdateException extends ChainException{
 
 
-  public InvalidUpdateException ()
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2009665777182788023L;
+
+public InvalidUpdateException ()
   {
      super();
   }
