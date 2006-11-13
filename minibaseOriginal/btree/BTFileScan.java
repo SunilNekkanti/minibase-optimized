@@ -16,7 +16,8 @@ import btree.exceptions.ScanDeleteException;
 import btree.exceptions.ScanIteratorException;
 
 /**
- * BTFileScan implements a search/iterate interface to B+ tree  index files (class BTreeFile).  It derives from abstract base class IndexFileScan.
+ * BTFileScan implements a search/iterate interface to B+ tree  index files (class BTreeFile).  
+ * It derives from abstract base class IndexFileScan.
  */
 public class BTFileScan  extends IndexFileScan
              implements  GlobalConst

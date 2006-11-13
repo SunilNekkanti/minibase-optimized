@@ -90,7 +90,6 @@ public class NestedLoopsJoins  extends Iterator
 			short   t1_str_sizes[],
 			AttrType    in2[],         
 			short   t2_str_sizes[],   
-			
 			int     amt_of_mem,        
 			Iterator     am1,          
 			String relationName,      
