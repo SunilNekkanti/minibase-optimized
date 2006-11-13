@@ -30,40 +30,53 @@
 \begin_body
 
 \begin_layout Section
-Index-BTree
+Index
 \end_layout
 
 \begin_layout Subsection
 Descripción general
 \end_layout
 
+\begin_layout Standard
+Esta componente ofrece las utilidades para poder crear y acceder a la informacio
+n de un indice.
+ La unica implementación soporta hasta el momento es sobre arboles B+.
+\end_layout
+
 \begin_layout Subsection
 Clases principales y sus protocolos principales
+\end_layout
+
+\begin_layout Standard
+La clase principal es 
+\emph on
+IndexScan
+\emph default
+.
+ Este iterador permite recorrer las tuplas que referencia un indice utilizando
+ 
+\emph on
+IndexFileScan
+\emph default
+.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+IndexFileScan
+\emph default
+ permite iterar sobre un arbol B+.
 \end_layout
 
 \begin_layout Subsection
 Interacción con otros componentes
 \end_layout
 
-\begin_layout Subsection
-Ejemplo de uso
-\end_layout
-
 \begin_layout Standard
-Si se justifica
-\end_layout
-
-\begin_layout Subsubsection
-Diagramas de secuencia
-\end_layout
-
-\begin_layout Subsubsection
-Script de ejemplo
-\end_layout
-
-\begin_layout Subsection
-Evaluación del componente (opinión acerca de la calidad de código, diseño,
- etc.)
+Index utiliza fuertemente la componente btree, que es una implementación
+ de un arbol B+.
 \end_layout
 
 \end_body

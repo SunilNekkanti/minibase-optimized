@@ -33,16 +33,6 @@
 Iterator
 \end_layout
 
-\begin_layout Standard
-TODO: Revisar los arboles binarios como estan construido y hacer un analisis
- mas profundo
-\end_layout
-
-\begin_layout Standard
-TODO: Analizar mas profundamente las clases de eval y projection, y en la
- parte de uso explicar como se introduce una condicion
-\end_layout
-
 \begin_layout Subsection
 Descripción general
 \end_layout
@@ -292,12 +282,8 @@ Ejemplo de uso
 TODO: algun ejemplo de uso q muestre claramente los detalles
 \end_layout
 
-\begin_layout Subsubsection
-Diagramas de secuencia
-\end_layout
-
 \begin_layout Standard
-No se justifica
+
 \end_layout
 
 \begin_layout Subsection

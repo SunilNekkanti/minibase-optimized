@@ -621,9 +621,26 @@ n.
 \end_layout
 
 \begin_layout Standard
-Lamentablemente, toda esta funcionalidad no venía integrada en la versión
- que nos suministró la cátedra.
- 
+Lamentablemente ese codigo no esta disponible, cuando se pide el codigo
+ de Minibase en la pagina de Ramakrishnan, se recibe una version en Java
+ con problemas de compilación y severamente incompleta.
+\end_layout
+
+\begin_layout Section
+Objetivos
+\end_layout
+
+\begin_layout Standard
+El objetivo principal de este trabajo practico es poner en funcionamiento
+ Minibase.
+ Para ello tuvimos que analizar el codigo en profundidad y realizar varios
+ tests caso por caso para poder encontrar todos los problemas.
+\end_layout
+
+\begin_layout Standard
+Como objetivos secundarios estan la creación de un nuevo tipo de Join y
+ de un utilitario para la creación de nuevas relaciones.
+ Tambien se extendio el catalogo para soportar el atributo Primary Key.
 \end_layout
 
 \begin_layout Standard
