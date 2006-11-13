@@ -150,9 +150,10 @@ implements GlobalConst, Catalogglobal
 			}
 
 			if ( record.relName.equalsIgnoreCase(relation)
-					&& record.attrName.equalsIgnoreCase(attrName) )
+					&& record.attrName.equalsIgnoreCase(attrName) ){
 				pscan.closescan();
 				return record;
+			}
 		}
 	};
 

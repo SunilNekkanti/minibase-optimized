@@ -388,8 +388,8 @@ implements GlobalConst {
 		Random random1 = new Random();
 		Random random2 = new Random();
 		//TODO: MEjorar rendimiento
-		for (int i=0; i<LARGE; i++) {
-		//for (int i=0; i<5; i++) {
+		//for (int i=0; i<LARGE; i++) {
+		for (int i=0; i<5; i++) {
 			attrNode[] node = new attrNode[4];
 
 			// setting fields
@@ -456,10 +456,18 @@ implements GlobalConst {
 			e1.printStackTrace();
 		}
 		
+		IndexDesc index = null;
+		try {
+			index = SystemDefs.JavabaseCatalog.getIndexInfo("test3.in", "3", new IndexType (IndexType.B_Index));
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		// start index scan
 		IndexScan iscan = null;
 		try {
-			iscan = new IndexScan(new IndexType(IndexType.B_Index), "test3.in", "BTIndex", attrType, attrSize, projlist, expr, 3, false);
+			iscan = new IndexScan ( index.getIndexType(), index.getRelationName(),index.getIndexName(), attrType, attrSize,	projlist, expr, 1, false);
 		}
 		catch (Exception e) {
 			status = false;
