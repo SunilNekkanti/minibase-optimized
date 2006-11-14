@@ -3,6 +3,7 @@ package iterator;
 
 import global.AttrType;
 import global.RID;
+import global.SystemDefs;
 import heap.Heapfile;
 import heap.Scan;
 import heap.Tuple;
@@ -226,7 +227,7 @@ public class LeandroJoin  extends Iterator
 					inner = null;
 				}
 				
-				
+				SystemDefs.estadisticas++;				
 				if ((outer_tuple=outer.get_next()) == null)
 				{
 					done = true;
@@ -262,6 +263,7 @@ public class LeandroJoin  extends Iterator
 			KeyDataEntry inner_data = null;
 			while ((inner_data = inner.get_next()) != null)
 			{
+				SystemDefs.estadisticas++;
 				rid = ((LeafData)inner_data.data).getData();
 				inner_tuple= hf.getRecord(rid);
 				inner_tuple.setHdr( _in2,t2_str_sizescopy);
