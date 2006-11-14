@@ -116,8 +116,8 @@ class JoinsSpeedDriver implements GlobalConst {
 		System.out.println("SortMergeJoin hace " + SystemDefs.estadisticas + " get_next\n");
 		
 		SystemDefs.estadisticas = 0;
-		QueryLeandroJoin();
-		System.out.println("LeandroJoin hace " + SystemDefs.estadisticas + " get_next\n");
+		QuerySpeedJoin();
+		System.out.println("SpeedJoin hace " + SystemDefs.estadisticas + " get_next\n");
 		
 		
 		SystemDefs.estadisticas = 0;
@@ -220,8 +220,8 @@ class JoinsSpeedDriver implements GlobalConst {
 		}
 	}
 
-	public void QueryLeandroJoin() {
-		System.out.println("***** Query LeandroJoin starting *****");
+	public void QuerySpeedJoin() {
+		System.out.println("***** Query SpeedJoin starting *****");
 
 		iterator.Iterator am = null;
 		try {
@@ -262,7 +262,7 @@ class JoinsSpeedDriver implements GlobalConst {
 					outFilter, proj_list);			
 		}
 		catch (Exception e) {
-			System.err.println ("*** Error constructing LeandroJoin\n" + e);
+			System.err.println ("*** Error constructing SpeedJoin\n" + e);
 			Runtime.getRuntime().exit(1);
 		}
 
@@ -291,7 +291,7 @@ class JoinsSpeedDriver implements GlobalConst {
 			Runtime.getRuntime().exit(1);
 		}
 
-		qcheck.report("LeandroJoin");
+		qcheck.report("SpeedJoin");
 		try {
 			ed.close();
 		}
