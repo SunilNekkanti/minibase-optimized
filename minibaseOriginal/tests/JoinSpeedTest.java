@@ -9,16 +9,13 @@ import global.IndexType;
 import global.SystemDefs;
 import global.TupleOrder;
 import heap.Tuple;
-import index.IndexScan;
 import iterator.CondExpr;
 import iterator.DuplElim;
 import iterator.FileScan;
 import iterator.FldSpec;
-import iterator.Iterator;
-import iterator.LeandroJoin;
+import iterator.SpeedJoin;
 import iterator.NestedLoopsJoins;
 import iterator.RelSpec;
-import iterator.Sort;
 import iterator.SortMerge;
 
 import java.io.File;
@@ -260,9 +257,9 @@ class JoinsSpeedDriver implements GlobalConst {
 		
 		System.out.println("BTreeIndex created successfully."); 
 
-		LeandroJoin lj = null;
+		SpeedJoin lj = null;
 		try {
-			lj = new LeandroJoin(
+			lj = new SpeedJoin(
 					Stypes, Ssizes,
 					Rtypes, Rsizes,
 					10,	am, 1, 

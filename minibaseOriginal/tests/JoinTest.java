@@ -15,7 +15,7 @@ import iterator.DuplElim;
 import iterator.FileScan;
 import iterator.FldSpec;
 import iterator.Iterator;
-import iterator.LeandroJoin;
+import iterator.SpeedJoin;
 import iterator.NestedLoopsJoins;
 import iterator.RelSpec;
 import iterator.Sort;
@@ -1377,11 +1377,11 @@ class JoinsDriver implements GlobalConst {
 
 		AttrType [] jtype     = { new AttrType(AttrType.attrString) };
 
-		LeandroJoin lj = null;
+		SpeedJoin lj = null;
 		short  []  jsizes    = new short[1];
 		jsizes[0] = 30;
 		try {
-			lj = new LeandroJoin(
+			lj = new SpeedJoin(
 					Stypes, Ssizes,
 					Rtypes, Rsizes,
 					10,	am, 1, 
