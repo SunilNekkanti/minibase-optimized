@@ -40,7 +40,7 @@ import bufmgr.exceptions.PageNotReadException;
  * tuple s in S do if (ri == sj) then add (r, s) to the result.
  */
 
-public class LeandroJoin  extends Iterator 
+public class SpeedJoin  extends Iterator 
 {
 	/**
 	 * @uml.property  name="_in1"
@@ -100,7 +100,7 @@ public class LeandroJoin  extends Iterator
 	 *@exception IOException some I/O fault
 	 *@exception NestedLoopException exception from this class
 	 */
-	public LeandroJoin( 
+	public SpeedJoin( 
 			AttrType    in1[],    
 			short   t1_str_sizes[],
 			AttrType    in2[],         
