@@ -497,7 +497,7 @@ implements GlobalConst, Catalogglobal
 
 
 		// ADDED BY BILL KIMMEL - DELETE LATER
-		System.out.println("Index name is " +indexName);
+		//System.out.println("Index name is " +indexName);
 
 		BTreeFile btree = null;
 

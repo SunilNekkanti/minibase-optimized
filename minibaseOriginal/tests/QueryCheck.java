@@ -721,5 +721,67 @@ private Group [] mygroup;
       System.out.print ( "*******************Query"+querynum +" finished!!!*****************\n\n");
     }
     return;
+  }
+  
+  // report the status of the query
+  public void report(String queryname) {
+    if( total<tuplenum )
+      System.out.print ("\n*****Error occured in QueryCheck.\n\n");
+    
+    TupleList temp;
+    
+    try {
+      if( missing != null ) {
+	System.out.print ("\n***The following tuples are missing "
+			  + "from your answer:\n");
+	temp = missing;
+	while(temp != null ) {
+	  temp.tuple.print(types);
+	  temp = temp.next;
+	}
+      }
+      
+      if( extra != null ) {
+	System.out.print ("\n***The following tuples from your answer " 
+			  + "are incorrect:\n" );
+	temp = extra;
+	while(temp != null ) {
+	  temp.tuple.print(types);
+	  temp = temp.next;
+	}
+      } 
+    }
+    catch (Exception e) {
+      System.err.println (""+e);
+      System.err.println ("**** Error printing the tuples out");
+    }
+      
+    if( missing != null || extra != null ) {
+      System.out.print ("\nIf you see the same tuples in the " 
+			+ "missing list and the extra\n");
+      System.out.print ("  list, your tuples are probably not " 
+			+ "grouped correctly.\n");
+    }
+    
+    // check group order error flag
+    if( G_O_flag != 0 )
+      System.out.print ("\n*****Your group ordering is wrong.\n\n");
+    
+    // check tuple order error flag
+    int t_order_error = 0;   
+    for( int j=0; j<groupnum; j++) {
+      if( T_O_flag[j] == 1) {
+	t_order_error =1;
+	System.out.print ("\n*****Your tuple order in group " + j 
+			  + " is wrong.\n\n");
+      }
+    }
+    
+    if( total == tuplenum && missing == null && 
+	extra == null && G_O_flag == 0 && t_order_error == 0) {
+      System.out.println ( "Query " + queryname +" is correct");
+    }
+    return;
   }   
+
 }

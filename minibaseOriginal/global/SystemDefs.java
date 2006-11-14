@@ -17,6 +17,8 @@ public class SystemDefs {
 	public static boolean MINIBASE_RESTART_FLAG = false;
 	public static String MINIBASE_DBNAME;
 	
+	public static int estadisticas;
+	
 	public SystemDefs (){};
 	
 	public SystemDefs(String dbname, int num_pgs, int bufpoolsize,
