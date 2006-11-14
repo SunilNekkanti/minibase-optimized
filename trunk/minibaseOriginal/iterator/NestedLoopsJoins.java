@@ -3,6 +3,7 @@ package iterator;
 
 import global.AttrType;
 import global.RID;
+import global.SystemDefs;
 import heap.Heapfile;
 import heap.Scan;
 import heap.Tuple;
@@ -204,6 +205,7 @@ public class NestedLoopsJoins  extends Iterator
 					throw new NestedLoopException(e, "openScan failed");
 				}
 				
+				SystemDefs.estadisticas++;
 				if ((outer_tuple=outer.get_next()) == null)
 				{
 					done = true;
@@ -226,6 +228,7 @@ public class NestedLoopsJoins  extends Iterator
 			RID rid = new RID();
 			while ((inner_tuple = inner.getNext(rid)) != null)
 			{
+				SystemDefs.estadisticas++;
 				inner_tuple.setHdr( _in2,t2_str_sizescopy);
 				if (PredEval.Eval(RightFilter, inner_tuple, null, _in2, null))
 				{

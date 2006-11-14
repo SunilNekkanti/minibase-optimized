@@ -2,6 +2,7 @@ package iterator;
 
 import global.AttrType;
 import global.GlobalConst;
+import global.SystemDefs;
 import global.TupleOrder;
 import heap.Heapfile;
 import heap.Tuple;
@@ -369,6 +370,8 @@ public class SortMerge extends Iterator implements GlobalConst
 					catch (Exception e){
 						throw new JoinsException(e,"IoBuf error in sortmerge");
 					}
+					SystemDefs.estadisticas++;
+
 					if ((tuple1=p_i1.get_next()) == null)
 					{
 						get_from_in1       = true;
@@ -387,6 +390,7 @@ public class SortMerge extends Iterator implements GlobalConst
 					catch (Exception e){
 						throw new JoinsException(e,"IoBuf error in sortmerge");
 					}
+					SystemDefs.estadisticas++;
 					if ((tuple2=p_i2.get_next()) == null)
 					{
 						get_from_in2       = true;
