@@ -304,6 +304,7 @@ public class SortMerge extends Iterator implements GlobalConst
 			if (process_next_block)
 			{
 				process_next_block = false;
+				SystemDefs.estadisticas++;
 				if (get_from_in1 && (tuple1 = p_i1.get_next()) == null)
 				{
 					done = true;
@@ -324,6 +325,7 @@ public class SortMerge extends Iterator implements GlobalConst
 				while ((comp_res < 0 && _order.tupleOrder == TupleOrder.Ascending) ||
 						(comp_res > 0 && _order.tupleOrder == TupleOrder.Descending))
 				{
+					SystemDefs.estadisticas++;
 					if ((tuple1 = p_i1.get_next()) == null) {
 						done = true;
 						return null;
@@ -338,6 +340,7 @@ public class SortMerge extends Iterator implements GlobalConst
 				while ((comp_res > 0 && _order.tupleOrder == TupleOrder.Ascending) ||
 						(comp_res < 0 && _order.tupleOrder == TupleOrder.Descending))
 				{
+					SystemDefs.estadisticas++;
 					if ((tuple2 = p_i2.get_next()) == null)
 					{
 						done = true;

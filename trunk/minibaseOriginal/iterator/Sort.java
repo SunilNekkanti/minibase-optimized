@@ -3,6 +3,7 @@ package iterator;
 import global.AttrType;
 import global.GlobalConst;
 import global.PageId;
+import global.SystemDefs;
 import global.TupleOrder;
 import heap.Heapfile;
 import heap.Tuple;
@@ -210,6 +211,7 @@ public class Sort extends Iterator implements GlobalConst
 		// maintain a fixed maximum number of elements in the heap
 		while ((p_elems_curr_Q + p_elems_other_Q) < max_elems) {
 			try {
+				SystemDefs.estadisticas++;
 				tuple = _am.get_next();  // according to Iterator.java
 			} catch (Exception e) {
 				e.printStackTrace(); 
@@ -323,6 +325,8 @@ public class Sort extends Iterator implements GlobalConst
 			else if (p_elems_curr_Q == 0) {
 				while ((p_elems_curr_Q + p_elems_other_Q) < max_elems) {
 					try {
+						SystemDefs.estadisticas++;
+
 						tuple = _am.get_next();  // according to Iterator.java
 					} catch (Exception e) {
 						throw new SortException(e, "get_next() failed");
