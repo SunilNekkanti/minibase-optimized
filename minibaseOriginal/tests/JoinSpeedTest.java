@@ -27,9 +27,6 @@ import catalog.Utility;
 
 class JoinsSpeedDriver implements GlobalConst {
 
-	private boolean OK = true;
-	private boolean FAIL = false;
-
 	private CondExpr[] outFilter;
 	private AttrType [] Stypes = null;
 	private short []   Ssizes = null;
@@ -79,7 +76,6 @@ class JoinsSpeedDriver implements GlobalConst {
 			Utility.loadRecordsUT("boats.in","boats.db"); 
 			Utility.loadRecordsUT("reserves.in","reserves.db"); 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}    
 		outFilter = new CondExpr[2];
@@ -91,7 +87,6 @@ class JoinsSpeedDriver implements GlobalConst {
 			Stypes = SystemDefs.JavabaseCatalog.getAttrCat().getAttrType("sailors.in");
 			Ssizes = SystemDefs.JavabaseCatalog.getAttrCat().getStringsSizeType("sailors.in");
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		try {
