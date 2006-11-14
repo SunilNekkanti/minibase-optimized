@@ -352,6 +352,7 @@ public class Utility implements Catalogglobal{
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			throw e1;
 		}
 		
 		while (in.available() !=0) {
