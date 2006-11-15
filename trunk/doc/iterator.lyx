@@ -304,21 +304,15 @@ status open
 begin{verbatim}
 \end_layout
 
-\end_inset
+\begin_layout Standard
 
-
+FileScan scan = new FileScan ("relacion.in",atributos,tamañosAtributos, proyeccio
+n,condiciones);
 \end_layout
 
-\begin_layout Standard
-FileScan scan = new FileScan (
-\begin_inset Quotes eld
 \end_inset
 
-relacion.in
-\begin_inset Quotes erd
-\end_inset
 
-,atributos,tamañosAtributos, proyeccion,condiciones);
 \end_layout
 
 \begin_layout Standard
@@ -343,7 +337,7 @@ Para el acceso iterativo a las tuplas se utiliza simplemente el get_next:
 
 \begin_layout Standard
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Standard
 
@@ -352,25 +346,29 @@ status collapsed
 begin{verbatim}
 \end_layout
 
-\end_inset
-
-
-\end_layout
-
 \begin_layout Standard
+
 Tuple tuple = null;
 \end_layout
 
 \begin_layout Standard
+
 while((tuple = scan.get_next()) != null){
 \end_layout
 
 \begin_layout Standard
+
 //Hacer algo con la tupla
 \end_layout
 
 \begin_layout Standard
+
 }
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -395,7 +393,7 @@ Cuando se termina de utilizar el scan hay que acordarse de hacer un close:
 
 \begin_layout Standard
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Standard
 
@@ -404,13 +402,14 @@ status collapsed
 begin{verbatim}
 \end_layout
 
+\begin_layout Standard
+
+scan.close();
+\end_layout
+
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-scan.close();
 \end_layout
 
 \begin_layout Standard
