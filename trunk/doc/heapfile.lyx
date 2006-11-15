@@ -6,7 +6,7 @@
 \begin_preamble
 
 \end_preamble
-\language english
+\language spanish
 \inputencoding latin1
 \fontscheme default
 \graphics default
@@ -80,7 +80,7 @@ Heapfile mantiene una estructura de información sobre las páginas de datos
 Las páginas de datos del HeapFile también son del tipo HFPage, están implementad
 as como páginas con slots.
  Cada una de éstas páginas contiene los slots al inicio, con información
- sobre los registros( longitud, offset, tipo, étc ) registros al final y
+ sobre los registros( longitud, offset, tipo, etc ) registros al final y
  espacio libre en el medio ( si es que hay ).
 \end_layout
 
@@ -88,7 +88,7 @@ as como páginas con slots.
 La primer página del directorio de páginas, es la página de cabecera( header
  page ) para todo el heapfile.
  Para recordar donde está ubicada esta página, se mantiene por medio de
- DM, un cojunto de tuplas <nom_BD, 1er_pag_del_dir_de_datos>
+ DM, un conjunto de tuplas <nom_BD, 1er_pag_del_dir_de_datos>
 \end_layout
 
 \begin_layout Subsection
@@ -102,7 +102,7 @@ Heapfile
 \begin_layout Standard
 Heapfile tiene métodos para devolver eficientemente la cantidad de registros
  que tiene el HeapFile, para insertar un registro.
- Al crear un Heapfile, se asegura que el nombre no exista y asignandole
+ Al crear un Heapfile, se asegura que el nombre no exista y asignándole
  un nombre único.
 \end_layout
 
@@ -145,7 +145,7 @@ Empieza a recorrer las páginas del directorio, buscando alguna página de
 \begin_layout Enumerate
 Si no encontró espacio disponible: crea una nueva página de datos ( por
  medio del BM ), crea una entrada para esta página en el directorio de páginas
- ( idem ).
+ ( ídem ).
 \end_layout
 
 \begin_layout Enumerate
@@ -189,7 +189,7 @@ HFPage
 \begin_layout Standard
 Representa una página dividida en slots.
  Se utilizan slots al principio que indican la información del registro(
- longitud, offset, tipo, número de slot, étc ).
+ longitud, offset, tipo, número de slot, etc ).
  Los registros se guardan al final.
  Cuando se borra un registro, se elimina el registro físicamente y en la
  información del slot, se establece su tamaño en un valor negativo.
@@ -222,7 +222,7 @@ Si no lo encuentra, crea uno nuevo.
 
 \begin_layout Enumerate
 Inserta la información del slot( número de slot, longitud del registro,
- offset del registro, étc )
+ offset del registro, etc )
 \end_layout
 
 \begin_layout Enumerate

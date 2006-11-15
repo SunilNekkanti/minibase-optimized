@@ -6,7 +6,7 @@
 \begin_preamble
 
 \end_preamble
-\language english
+\language spanish
 \inputencoding latin1
 \fontscheme default
 \graphics default
@@ -105,7 +105,7 @@ pool
 \end_layout
 
 \begin_layout Standard
-El buffer pool es una collección de frames ( secuencia de páginas de tamaño
+El buffer pool es una colección de frames ( secuencia de páginas de tamaño
  fijo que se encuentran en memoria principal )
 \end_layout
 
@@ -192,7 +192,7 @@ Se borra la entrada para la página vieja en el directorio del Buffer Manager
 
 \end_deeper
 \begin_layout Itemize
-Tambien, se actualiza la entrada para este frame en el arreglo de descriptores.
+También, se actualiza la entrada para este frame en el arreglo de descriptores.
  
 \end_layout
 
@@ -223,7 +223,7 @@ BufHTEntry
 \begin_layout Standard
 Es el nodo que se utiliza para representar una lista simplemente encadenada,
  que es guardada en los buckets de la tabla de hash.
- Guarda informacion sobre:
+ Guarda información sobre:
 \end_layout
 
 \begin_layout Itemize

@@ -6,7 +6,7 @@
 \begin_preamble
  
 \end_preamble
-\language english
+\language spanish
 \inputencoding latin1
 \fontscheme default
 \graphics default
@@ -48,8 +48,8 @@ Explicación
 \end_layout
 
 \begin_layout Standard
-SpeedJoin es una estrategia de join que utiliza la existencia de un indice
- en la relacion 
+SpeedJoin es una estrategia de join que utiliza la existencia de un índice
+ en la relación 
 \begin_inset Quotes eld
 \end_inset
 
@@ -61,7 +61,7 @@ interna
 \end_layout
 
 \begin_layout Standard
-El pseudocodigo de un recorrido completo sobre el SpeedJoin es el siguiente:
+El pseudocódigo de un recorrido completo sobre el SpeedJoin es el siguiente:
 \end_layout
 
 \begin_layout Standard
@@ -109,9 +109,9 @@ end{verbatim}
 
 \begin_layout Standard
 A simple vista es similar a un NestedLoopsJoin.
- La diferencia principal entre ambos, es que en vez de iterar la relacion
+ La diferencia principal entre ambos, es que en vez de iterar la relación
  interna de principio a fin, solo lo hace dentro de los valores que necesita,
- ya que utiliza el indice para extraer eficientemente dichos límites.
+ ya que utiliza el índice para extraer eficientemente dichos límites.
 \end_layout
 
 \begin_layout Subsection
@@ -119,15 +119,15 @@ Implementación
 \end_layout
 
 \begin_layout Standard
-El constructor del join recibe principalmente 5 parametros (en la implementacion
- real son más, ya que datos que corresponden al mismo parametro se envian
+El constructor del join recibe principalmente 5 parámetros (en la implementación
+ real son más, ya que datos que corresponden al mismo parámetro se envían
  por separado).
 \end_layout
 
 \begin_layout Itemize
-Relacion externa: La relación que se iterará.
- Aqui se acepta en realidad cualquier iterador, por lo que la relacion externa
- podria provenir de un join, proyección, etc.
+Relación externa: La relación que se iterará.
+ Aquí se acepta en realidad cualquier iterador, por lo que la relación externa
+ podría provenir de un join, proyección, etc.
  
 \end_layout
 
@@ -136,18 +136,18 @@ Elemento de la relación externa que participará del join
 \end_layout
 
 \begin_layout Itemize
-Relación interna: La relación cuyo indice será utilizado.
+Relación interna: La relación cuyo índice será utilizado.
  Cabe aclarar que no puede provenir de otro join o proyección, ya que se
- necesita acceder al indice directamente y no usando otros iteradores
+ necesita acceder al índice directamente y no usando otros iteradores
 \end_layout
 
 \begin_layout Itemize
-Indice a utilizar: El indice de la relacion interna
+Índice a utilizar: El índice de la relación interna
 \end_layout
 
 \begin_layout Itemize
-Proyeccion a realizar: Se refiere a que campos se enviar'an en la tupla
- de salida y en que orden 
+Proyección a realizar: Se refiere a que campos se enviarán en la tupla de
+ salida y en que orden 
 \end_layout
 
 \begin_layout Standard
@@ -206,18 +206,18 @@ end{verbatim}
 Cuando se agotan las tuplas de la relación interna, se avanza iterando la
  relación externa y luego realizando una búsqueda en el índice de la relación
  interna.
- En la primera línea del codigo se extrae el elemento de la relación externa
+ En la primera línea del código se extrae el elemento de la relación externa
  que será utilizada para el join.
  
 \end_layout
 
 \begin_layout Standard
 En la segunda, se realiza una búsqueda en el índice de la relación interna.
- Notar que se envia dos veces el parametro 
+ Notar que se envía dos veces el parámetro 
 \emph on
 RightValue
 \emph default
-, ya que los indices permiten escanear rangos de valores aparte de coincidencias
+, ya que los índices permiten escanear rangos de valores aparte de coincidencias
  exactas.
 \end_layout
 
@@ -274,11 +274,11 @@ end{verbatim}
 \end_layout
 
 \begin_layout Standard
-Este es el código que se encarga de iterar el indice de la relación interna.
- En la línea 1, se pide al indice el próximo valor a analizar.
+Este es el código que se encarga de iterar el índice de la relación interna.
+ En la línea 1, se pide al índice el próximo valor a analizar.
  Luego se extrae del índice el valor RID correspondiente a dicha posición
  del índice.
- Por último, se busca en la relacion interna la tupla correspondiente al
+ Por último, se busca en la relación interna la tupla correspondiente al
  RID devuelto por el índice.
 \end_layout
 
@@ -348,7 +348,7 @@ end{verbatim}
 
 \begin_layout Standard
 Éstas tres formas, son las estrategias de join que se encuentran implementadas
- en NestedLoopsJoin y SortMergeJoin, incluidas en la version original de
+ en NestedLoopsJoin y SortMergeJoin, incluidas en la versión original de
  Minibase, y SpeedJoin, implementada en el presente trabajo.
 \end_layout
 
@@ -396,7 +396,7 @@ Para obtener estadísticas de los getnext llamados durante los distintos
 \end_layout
 
 \begin_layout Itemize
-Enviar un parametro por referencia al join y que lo devuelva sumando la
+Enviar un parámetro por referencia al join y que lo devuelva sumando la
  cantidad de getnext utilizados.
  
 \end_layout
@@ -408,7 +408,7 @@ Utilizar una variable global a la que cada vez que se realiza getnext es
 \end_layout
 
 \begin_layout Standard
-La primera opción es quizas la m'as 
+La primera opción es quizás la m'as 
 \begin_inset Quotes eld
 \end_inset
 
@@ -464,7 +464,7 @@ cada vez que se realiza un llamado a getnext
 \end_layout
 
 \begin_layout Subsubsection
-Analisis teorico de las mediciones
+Análisis teórico de las mediciones
 \end_layout
 
 \begin_layout Standard
@@ -483,7 +483,7 @@ reserves.in Tiene 10 elementos, pero solo 6 sid distintos.
 
 \begin_layout Standard
 La parte de eliminación de duplicados es común a los 3 joins, analicemos
- cuantos getnext deberian hacer aproximadamente.
+ cuantos getnext deberían hacer aproximadamente.
 \end_layout
 
 \begin_layout Paragraph
@@ -493,7 +493,7 @@ Eliminación de duplicados
 \end_layout
 
 \begin_layout Standard
-Recibe una relacion con 10 elementos.
+Recibe una relación con 10 elementos.
  Para ordenarla hace 10 getnext (para obtenerlos).
  Luego de ello quedan 6 elementos distintos, por lo que al iterarlos se
  utilizarán 6 getnext más.
@@ -519,7 +519,7 @@ SortMergeJoin
 \end_layout
 
 \begin_layout Standard
-Aqui se iteran completamente las dos relaciones para ordenarlas.
+Aquí se iteran completamente las dos relaciones para ordenarlas.
  Luego se vuelven a iterar para hacer el merge (en realidad es posible que
  no se iteren las 2 hasta el final debido a que se puede 
 \begin_inset Quotes eld
@@ -542,11 +542,11 @@ SpeedJoin
 \end_layout
 
 \begin_layout Standard
-Aqui se itera completamente la relacion externa, y de la relacion interna
+Aquí se itera completamente la relación externa, y de la relación interna
  solo se iteran las tuplas que coinciden en sid con la tupla externa iterada.
- Como todas las tuplas de la relacion interna (reserves.in) coinciden en
+ Como todas las tuplas de la relación interna (reserves.in) coinciden en
  sid con solo una tupla de la relación externa (sailors.in que tiene como
- pk a sid), en total se van a iterar (en algun orden) todas las tuplas de
+ pk a sid), en total se van a iterar (en algún orden) todas las tuplas de
  esta relación interna.
  Sumándole la eliminación de duplicados da 25 + 10 + 15 = 51
 \end_layout
@@ -613,12 +613,12 @@ end{verbatim}
 \end_layout
 
 \begin_layout Standard
-Lo que demuestra en este caso que SpeedJoin es la opción más rapida.
+Lo que demuestra en este caso que SpeedJoin es la opción más rápida.
 \end_layout
 
 \begin_layout Standard
 Si en sailors.in hubiese habido sid repetidos, entonces SpeedJoin hubiese
- iterado más de una vez los valores de la relacion interna, por lo que sus
+ iterado más de una vez los valores de la relación interna, por lo que sus
  estadísticas se hubieran acercado más a las del SortMergeJoin.
 \end_layout
 

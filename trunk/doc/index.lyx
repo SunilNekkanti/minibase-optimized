@@ -39,8 +39,8 @@ Descripción general
 
 \begin_layout Standard
 Esta componente ofrece las utilidades para poder crear y acceder a la informacio
-n de un indice.
- La unica implementación soporta hasta el momento es sobre arboles B+.
+n de un índice.
+ La única implementación soporta hasta el momento es sobre arboles B+.
 \end_layout
 
 \begin_layout Subsection
@@ -53,7 +53,7 @@ La clase principal es
 IndexScan
 \emph default
 .
- Este iterador permite recorrer las tuplas que referencia un indice utilizando
+ Este iterador permite recorrer las tuplas que referencia un índice utilizando
  
 \emph on
 IndexFileScan
@@ -67,7 +67,7 @@ IndexFileScan
 \emph on
 IndexFileScan
 \emph default
- permite iterar sobre un arbol B+.
+ permite iterar sobre un árbol B+.
 \end_layout
 
 \begin_layout Subsection
@@ -76,7 +76,7 @@ Interacción con otros componentes
 
 \begin_layout Standard
 Index utiliza fuertemente la componente btree, que es una implementación
- de un arbol B+.
+ de un árbol B+.
 \end_layout
 
 \end_body

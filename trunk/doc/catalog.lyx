@@ -257,7 +257,7 @@ Esta clase fue modificada, para el agregado de las PKs.
  Esto es, se agregó un campo más al catálogo donde se especifica si un atributo
  de una tabla forma parte (o no) de la PK de la misma.
  Dicho campo es de tipo integer (1 equivale a verdadero y 0 a falso).
- Adicionalmente se moficiaron todas los métodos involucrados con el manejo
+ Adicionalmente se modificaron todas los métodos involucrados con el manejo
  de dicho catálogo para agregar el nuevo campo (read_tuple y make_tuple).
 \end_layout
 
@@ -281,7 +281,7 @@ RelCatalog
 AttrCatalog
 \emph default
 , esta clase está implementada como un heapfile.
- La infomación mantenida sobre los índices es la siguiente: el nombre de
+ La información mantenida sobre los índices es la siguiente: el nombre de
  la tabla, el nombre del atributo sobre el cuál aplica el índice, el tipo
  de índice o método de acceso (Hash, B-Tree), el ordenamiento (ascendente
  o descendente), si es clustered o no, el número de claves (valores) distintas
@@ -468,7 +468,7 @@ end{verbatim}
 \end_layout
 
 \begin_layout Standard
-Notar que el anteúltimo parámetro que recibe el constructor de 
+Notar que el ante último parámetro que recibe el constructor de 
 \emph on
 attrInfo
 \emph default
@@ -634,7 +634,7 @@ Obtener información sobre una tabla, atributo(s) o índice(s)
 
 \begin_layout Standard
 Para obtener información sobre una tabla específica bastará con especificar
- el nombre de la relacióny un record donde se pasará dicha información.
+ el nombre de la relación y un record donde se pasará dicha información.
  Por ejemplo:
 \end_layout
 
@@ -731,7 +731,7 @@ SystemDefs.JavabaseCatalog
 \emph on
 Catalog
 \emph default
-) de la base de datos, que a su vez contienen los catalogos de tablas, atributos
+) de la base de datos, que a su vez contienen los catálogos de tablas, atributos
  e índices (instancias de 
 \emph on
 RelCatalog
@@ -800,15 +800,15 @@ Dado que el catalogo (
 \emph on
 SystemDefs.JavabaseCatalog
 \emph default
-) delega las responsabilidades en sus catalogos particulares, las expresiones
+) delega las responsabilidades en sus catálogos particulares, las expresiones
  (1) y (2) son equivalentes (aunque sería más conveniente acceder siempre
- a traves de 
+ a través de 
 \emph on
 SystemDefs.JavabaseCatalog
 \emph default
 ).
  Para obtener información sobre un atributo en particular, por ejemplo el
- atributo srating de la tablasailors basta con hacer lo siguiente:
+ atributo srating de la tabla sailors basta con hacer lo siguiente:
 \end_layout
 
 \begin_layout Standard
