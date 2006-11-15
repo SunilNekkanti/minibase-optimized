@@ -739,6 +739,21 @@ preview false
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Include \input{joins.lyx}
+preview false
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\newpage
+
+\end_layout
+
 \begin_layout Section
 Tests
 \end_layout
