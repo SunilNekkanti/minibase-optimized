@@ -267,9 +267,5 @@ HeapFile interactúa fuertemente con BufferManager, para obtener y guardar
  las páginas.
 \end_layout
 
-\begin_layout Subsection
-Ejemplo de uso
-\end_layout
-
 \end_body
 \end_document
