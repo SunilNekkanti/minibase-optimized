@@ -159,7 +159,7 @@ public class SpeedJoin  extends Iterator
 					t1_str_sizes, t2_str_sizes,
 					proj_list, nOutFlds);
 		}catch (TupleUtilsException e){
-			throw new NestedLoopException(e,"TupleUtilsException is caught by NestedLoopsJoins.java");
+			throw new NestedLoopException(e,"TupleUtilsException is caught by SpeedJoin.java");
 		}
 		
 		
