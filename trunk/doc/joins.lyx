@@ -1,0 +1,557 @@
+#LyX 1.4.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 245
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+ 
+\end_preamble
+\language english
+\inputencoding latin1
+\fontscheme default
+\graphics default
+\paperfontsize default
+\spacing single
+\papersize default
+\use_geometry true
+\use_amsmath 0
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\leftmargin 1cm
+\topmargin 3cm
+\rightmargin 1cm
+\bottommargin 3cm
+\headheight 2cm
+\headsep 2cm
+\footskip 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+LeandroJoin
+\end_layout
+
+\begin_layout Subsection
+Explicaci�n
+\end_layout
+
+\begin_layout Standard
+LeandroJoin es una estrategia de join que utiliza la existencia de un indice
+ en la relacion 
+\begin_inset Quotes eld
+\end_inset
+
+interna
+\begin_inset Quotes erd
+\end_inset
+
+ para acelerar el tiempo de procesamiento del mismo.
+\end_layout
+
+\begin_layout Standard
+El pseudocodigo de un recorrido completo sobre el Leandro Join es el siguiente:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+ Para cada tupla de la relacion externa Buscar en el indice todos las tuplas
+ de la relacion interna que contengan el valor con el cual se hace join
+ Procesar(tupla externa, tupla interna) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A simple vista es similar a un NestedLoopsJoin.
+ La diferencia principal entre ambos, es que en vez de iterar la relacion
+ interna de principio a fin, solo lo hace dentro de los valores que necesita,
+ ya que utiliza el indice para extraer eficientemente dichos l�mites.
+\end_layout
+
+\begin_layout Subsection
+Implementaci�n
+\end_layout
+
+\begin_layout Standard
+El constructor del join recibe principalmente 5 parametros (en la implementacion
+ real son m�s, ya que datos que corresponden al mismo parametro se envian
+ por
+\end_layout
+
+\begin_layout Standard
+separado).
+\end_layout
+
+\begin_layout Itemize
+Relacion externa: La relaci'on que se iterar'a.
+ Aqui se acepta en realidad cualquier iterador, por lo que la relacion externa
+ podria provenir de un join, proyecci'on, etc.
+ 
+\end_layout
+
+\begin_layout Itemize
+Elemento de la relaci'on externa que participar'a del join
+\end_layout
+
+\begin_layout Itemize
+Relaci�n interna: La relaci'on cuyo indice sera utilizado.
+ Cabe aclarar que no puede provenir de otro join o proyecci'on, ya que solo
+ se aceptan indices en las relaciones 
+\begin_inset Quotes eld
+\end_inset
+
+primitivas
+\begin_inset Quotes erd
+\end_inset
+
+ (que pongo aca??) del sistema.
+ 
+\end_layout
+
+\begin_layout Itemize
+Indice a utilizar: El indice de la relacion interna.
+ 
+\end_layout
+
+\begin_layout Itemize
+Proyeccion a realizar: Se refiere a que campos se enviar'an en la tupla
+ de salida y en que orden 
+\end_layout
+
+\begin_layout Standard
+En el c�digo las partes mas importantes son:
+\end_layout
+
+\begin_layout Standard
+En getnext()
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+ 1.
+ KeyClass rightValue = new IntegerKey(outertuple.getIntFld(joincol1)); 2.
+ inner = IndexUtils.BTreescan(rightValue,rightValue,innerIndexFile); 
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Cuando se agotan las tuplas de la relaci'on interna, se avanza iterando
+ la relaci'on externa y luego realizando una b'usqueda en el 'indice de
+ la relaci'on interna.
+ En la primera l'inea del codigo se extrae el elemento de la relaci'on externa
+ que ser'a utilizada para el join.
+  En la segunda, se realiza una b'usqueda en el �ndice de la relaci'on
+ interna.
+  Notar que se envia dos veces el parametro 
+\begin_inset Quotes eld
+\end_inset
+
+RightValue
+\begin_inset Quotes erd
+\end_inset
+
+, ya que los indices permiten escanear rangos de valores aparte de coincidencias
+ exactas.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+ 1.
+ while ((innerdata = inner.getnext()) != null) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+ 2.
+   rid = ((LeafData)innerdata.data).getData(); 3.
+   innertuple= hf.getRecord(rid); 
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Este es el c'odigo que se encarga de iterar el indice de la relaci'on interna.
+  En la l'inea 1, se pide al indice el pr'oximo valor a analizar.
+  Luego se extrae del 'indice el valor RID correspondiente a dicha posicion
+ del 'indice.
+ Por 'ultimo, se busca en la relacion interna la tupla correspondiente al
+ RID devuelto por el 'indice.
+\end_layout
+
+\begin_layout Subsection
+Pruebas y mediciones.
+\end_layout
+
+\begin_layout Standard
+Para realizar pruebas y mediciones sobre la performance de esta estrategia
+ de join, se creo la clase JoinSpeedTest.
+  En 'esta, se realiza de tres formas distintas
+\end_layout
+
+\begin_layout Standard
+la siguiente Query:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+ Query: Find the names of sailors who have reserved a boat and print each
+ name once.
+ SELECT DISTINCT S.sname FROM   Sailors S, Reserves R WHERE  S.sid = R.sid
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+'Estas tres formas, son las estrategias de join que se encuentran implementadas:
+  NestedLoopsJoin y SortMergeJoin, incluidas en la version original de
+ Minibase, y LeandroJoin, implementada en el presente trabajo.
+\end_layout
+
+\begin_layout Subsubsection
+M'etrica de medici'on
+\end_layout
+
+\begin_layout Standard
+Para poder comparar las distintas estrategias ten'iamos varias alternativas.
+\end_layout
+
+\begin_layout Itemize
+Medir el tiempo transcurrido 
+\end_layout
+
+\begin_layout Itemize
+Medir la cantidad de llamados a getnext 
+\end_layout
+
+\begin_layout Itemize
+Medir la cantidad de accesos a disco 
+\end_layout
+
+\begin_layout Standard
+La primer posibilidad era poco practica, ya que al estar realizando otras
+ tareas el sistema operativo mientras corremos los tests, los resultados
+ pueden verse afectados por situaciones ajenas a Minibase.
+  La 'ultima posibilidad es quiz'as la mejor indicadora del costo del join.
+ Sin embargo, la cantidad de llamados a getnext es una buena aproximacion
+ del costo del join, y es bastante m'as simple de implementar.
+  Es por ello que optamos por esta 'ultima opcion.
+\end_layout
+
+\begin_layout Subsubsection
+Implementaci'on
+\end_layout
+
+\begin_layout Standard
+Para obtener estad'isticas de los getnext llamados durante los distintos
+ joins ten'iamos 2 opciones.
+\end_layout
+
+\begin_layout Itemize
+Enviar un parametro por referencia al join y que lo devuelva sumando la
+ cantidad de getnext utilizados.
+ 
+\end_layout
+
+\begin_layout Itemize
+Utilizar una variable global a la que cada vez que se realiza getnext es
+ incrementada en 1.
+ 
+\end_layout
+
+\begin_layout Standard
+La primera opci'on es quizas la m'as 
+\begin_inset Quotes eld
+\end_inset
+
+elegante
+\begin_inset Quotes erd
+\end_inset
+
+, pero lleva a modificar todos los protocolos para obtener una estad'istica
+ utilizada solo para realizar pruebas.
+ Por lo tanto nos decidimos por la segunda opci'on.
+ De este modo se agrego a las tres estrategias de join, la linea:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+   SystemDefs.estadisticas++ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+cada vez que se realiza un llamado a getnext
+\end_layout
+
+\begin_layout Subsubsection
+Analisis teorico de las mediciones
+\end_layout
+
+\begin_layout Standard
+En principio las relaciones a las cuales se les aplicara el join son:
+\end_layout
+
+\begin_layout Itemize
+sailors.in Tiene 25 elementos 
+\end_layout
+
+\begin_layout Itemize
+reserves.in Tiene 10 elementos, pero solo 6 sid distintos.
+  Los 10 elementos tienen un correspondiente sid en la tabla sailors.
+ 
+\end_layout
+
+\begin_layout Standard
+La parte de eliminaci'on de duplicados es com'un a los 3 joins, analicemos
+ cuantos getnext deberian hacer aproximadamente.
+\end_layout
+
+\begin_layout Paragraph
+Eliminaci'on de duplicados
+\newline
+
+\end_layout
+
+\begin_layout Standard
+Recibe una relacion con 10 elementos.
+  Para ordenarla hace 10 getnext (para obtenerlos).
+  Luego de ello quedan 6 elementos distintos, por lo que al iterarlos se
+ utilizar'an 6 getnext m'as.
+  En total son 16 getnext.
+\end_layout
+
+\begin_layout Paragraph
+NestedLoopsJoin
+\newline
+
+\end_layout
+
+\begin_layout Standard
+Recordemos que itera todas las combinaciones de tupla interna y externa,
+ por lo que debe realizar 10*25 = 250 getnext.
+ Sumando la eliminaci'on de duplicados da 276 getnext
+\end_layout
+
+\begin_layout Paragraph
+SortMergeJoin
+\newline
+
+\end_layout
+
+\begin_layout Standard
+Aqui se iteran completamente las dos relaciones para ordenarlas.
+ Luego se vuelven a iterar para hacer el merge (en realidad es posible que
+ no se iteren las 2 hasta el final debido a que se puede 
+\begin_inset Quotes eld
+\end_inset
+
+acabar
+\begin_inset Quotes erd
+\end_inset
+
+ una de las dos relaciones antes que la otra, por lo que se termina el merge
+ sin iterar completamente una de las dos).
+  Y por 'ultimo se eliminan los duplicados.
+  Es en total (25 + 10) * 2 + 16 = 86 getnext.
+\end_layout
+
+\begin_layout Paragraph
+LeandroJoin
+\newline
+
+\end_layout
+
+\begin_layout Standard
+Aqui se itera completamente la relacion externa, y de la relacion interna
+ solo se iteran las tuplas que coinciden en sid con la tupla externa iterada.
+  Como todas las tuplas de la relacion interna (reserves.in) coinciden en
+ sid con solo una tupla de la relaci'on externa (sailors.in que tiene como
+ pk a sid), en total se van a iterar (en algun orden) todas las tuplas de
+ esta relaci'on interna.
+ Sum'andole la eliminaci'on de duplicados da 25 + 10 + 15 = 51
+\end_layout
+
+\begin_layout Subsubsection
+Resultado de las mediciones
+\end_layout
+
+\begin_layout Standard
+Al correr las pruebas se obtienen los siguientes resultados.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+ [extracto del output de la corrida del test] SortMergeJoin hace 87 getnext
+ LeandroJoin hace 48 getnext NestedLoopsJoin hace 288 getnext 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Lo que demuestra en este caso que LeandroJoin es la opci'on m'as rapida.
+\end_layout
+
+\begin_layout Standard
+Si en sailors.in hubiese habido sid repetidos, entonces LeandroJoin hubiese
+ iterado m'as de una vez los valores de la relacion interna, por lo que
+ sus estad'isticas se hubieran acercado m'as a las del SortMergeJoin.
+  Llegado al extremo de que todos los sid de sailors y reserves fueran
+ iguales, LeandroJoin hubiese tardado lo mismo que el NestedLoopsJoin ya
+ que se hubiesen tenido que iterar todas las combinaciones de las dos tablas.
+\end_layout
+
+\end_body
+\end_document
