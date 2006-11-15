@@ -45,20 +45,64 @@ Descripción general
 \end_layout
 
 \begin_layout Standard
-La componente de carga de datos, es simplemente un parser de archivos separados
- por tabs.
- Esta componente permite la creación y carga de relaciones de una manera
- simple y comoda.
+La clase Utility provee de algunas funcionalidades para interactuar con
+ la base de datos sin tener que ocuparse de detalles de bajo nivel.
+ Las tres utilidades provistas por esta clase son las siguientes:
+\end_layout
+
+\begin_layout Enumerate
+Insertar un registro en una tabla
+\end_layout
+
+\begin_layout Enumerate
+Borrar uno (o más) registro(s) de una tabla
+\end_layout
+
+\begin_layout Enumerate
+Cargar un archivo conregistros (en formato ASCII) en una tabla
 \end_layout
 
 \begin_layout Standard
-El formato especificado permite establecer el nombre, tipo y si es primary
- key de los atributos en la relación.
+La primera de las funcionalidades inserta un registro en una tabla actualizando
+ los índices existentes sobre dicha tabla.
+ Esta funcionalidad está implementada en en el método 
+\emph on
+insertRecUT
+\emph default
+ el cual toma como parámetros el nombre de la tabla en donde se debe insertar
+ el registro y una lista con los nombres de los campos y sus respectivos
+ valores (un array de 
+\emph on
+attrNode
+\emph default
+).
+ Previamente a la inserción del registro, esta función verifica que el tipo
+ de los valores pasados como parámetro coincidan con los tipos especificados
+ en el catálogo para la tabla en cuestión, así como también si se viola
+ la clave primara (de existir sobre la tabla).
+\end_layout
+
+\begin_layout Standard
+La utilidad de carga inserta los registros contenidos en un archivo ASCII
+ donde además se especifican los campos de tabla con sus respectivos tipos
+ y longitudes (en la primer fila).
+ Esta funcionalidad está implementada en el método 
+\emph on
+loadUT
+\emph default
+ el cual toma como parámetros el nombre de la tabla y el nombre del archivo
+ que contiene los registros.
+ Para realizar la inserción de los registros utiliza la funcionalidad anterior
+ (con la tabla especificada y los campos de la misma tomados del catálogo).
  Si la relación no existe se crea, y si ya existe, se introducen los nuevos
  registros.
- Por lo general los motores de bases de datos crean un indice sobre los
- atributos primary key, en este caso se decidió no hacerlo ya que se trató
- de reducir los problemas de consistencia con el resto del codigo.
+ 
+\end_layout
+
+\begin_layout Standard
+Por lo general los motores de bases de datos crean un indice sobre los atributos
+ primary key, en este caso se decidió no hacerlo ya que se trató de reducir
+ los problemas de consistencia con el resto del codigo.
  O sea, en Minibase es posible, en ciertas condiciones, crear una relación
  con atributos pk y sin indice sobre ellos, se prefirió adoptar esa postura.
 \end_layout
@@ -80,7 +124,7 @@ Ejemplos de uso
 Para cargar una tabla desde un archivo simplemente se utiliza la funcion
  
 \emph on
-loadRecordsUT
+loadUT
 \emph default
  del paquete 
 \emph on
@@ -106,7 +150,7 @@ begin{verbatim}
 \end_layout
 
 \begin_layout Standard
-Utility.loadRecordsUt(
+Utility.loadUt(
 \begin_inset Quotes eld
 \end_inset
 
