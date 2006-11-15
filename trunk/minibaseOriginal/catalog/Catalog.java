@@ -160,8 +160,7 @@ implements GlobalConst, Catalogglobal
 
 	// get catalog entries for all attributes of a relation
 	// return attrCnt.
-	public  int getRelAttributes(String relation, int attrCnt,
-			AttrDesc [] attrs)
+	public  AttrDesc [] getRelAttributes(String relation)
 	throws Catalogmissparam, 
 	Catalogrelexists, 
 	Catalogdupattrs, 
@@ -178,14 +177,11 @@ implements GlobalConst, Catalogglobal
 	Catalogbadtype,
 	AttrCatalogException
 	{ 
-		attrs = attrCat.getRelInfo(relation);
-
-		return attrs.length;
+		return attrCat.getRelInfo(relation);
 	};
 
 	// get catalog entries for all indexes for a relation
-	public  int getRelIndexes(String relation, int indexCnt,
-			IndexDesc [] indexes)
+	public  IndexDesc [] getRelIndexes(String relation)
 	throws Catalogmissparam, 
 	Catalogrelexists, 
 	Catalogdupattrs, 
@@ -203,9 +199,7 @@ implements GlobalConst, Catalogglobal
 	IndexCatalogException,
 	RelCatalogException
 	{
-		indexes = indCat.getRelInfo(relation);
-
-		return indexes.length;
+		return indCat.getRelInfo(relation);
 	};
 
 	// get catalog entries for all indexes for an attribute 
