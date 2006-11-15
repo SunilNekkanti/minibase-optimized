@@ -621,8 +621,8 @@ n.
 \end_layout
 
 \begin_layout Standard
-Lamentablemente ese codigo no esta disponible, cuando se pide el codigo
- de Minibase en la pagina de Ramakrishnan, se recibe una version en Java
+Lamentablemente ese código no esta disponible, cuando se pide el código
+ de Minibase en la pagina de Ramakrishnan, se recibe una versión en Java
  con problemas de compilación y severamente incompleta.
 \end_layout
 
@@ -633,14 +633,14 @@ Objetivos
 \begin_layout Standard
 El objetivo principal de este trabajo practico es poner en funcionamiento
  Minibase.
- Para ello tuvimos que analizar el codigo en profundidad y realizar varios
+ Para ello tuvimos que analizar el código en profundidad y realizar varios
  tests caso por caso para poder encontrar todos los problemas.
 \end_layout
 
 \begin_layout Standard
-Como objetivos secundarios estan la creación de un nuevo tipo de Join y
+Como objetivos secundarios están la creación de un nuevo tipo de Join y
  de un utilitario para la creación de nuevas relaciones.
- Tambien se extendio el catalogo para soportar el atributo Primary Key.
+ También se extendió el catalogo para soportar el atributo Primary Key.
 \end_layout
 
 \begin_layout Standard
@@ -819,7 +819,7 @@ Todo lo anterior se debe en su mayoría a un diseño de clases muy pobre.
 \end_layout
 
 \begin_layout Standard
-A tal nivel que no parece desapropiado conjeturar que minibase parece haberse
+A tal nivel que no parece desapropiado conjeturar que Minibase parece haberse
  migrado del lenguaje C al lenguaje java sin el más mínimo análisis.
  Obviando completamente los detalles( y no solo detalles ) del pasaje de
  un lenguaje estructurado a otro orientado a objetos, con el consecuente

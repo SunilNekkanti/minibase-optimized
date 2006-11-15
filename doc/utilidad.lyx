@@ -59,7 +59,7 @@ Borrar uno (o más) registro(s) de una tabla
 \end_layout
 
 \begin_layout Enumerate
-Cargar un archivo conregistros (en formato ASCII) en una tabla
+Cargar un archivo con registros (en formato ASCII) en una tabla
 \end_layout
 
 \begin_layout Standard
@@ -100,11 +100,11 @@ loadUT
 \end_layout
 
 \begin_layout Standard
-Por lo general los motores de bases de datos crean un indice sobre los atributos
+Por lo general los motores de bases de datos crean un índice sobre los atributos
  primary key, en este caso se decidió no hacerlo ya que se trató de reducir
- los problemas de consistencia con el resto del codigo.
+ los problemas de consistencia con el resto del código.
  O sea, en Minibase es posible, en ciertas condiciones, crear una relación
- con atributos pk y sin indice sobre ellos, se prefirió adoptar esa postura.
+ con atributos pk y sin índice sobre ellos, se prefirió adoptar esa postura.
 \end_layout
 
 \begin_layout Subsection
@@ -112,8 +112,8 @@ Interacción con otros componentes
 \end_layout
 
 \begin_layout Standard
-La utilidad de carga interactua fuertemente con la componente de catalogo
- para la insercion de los registros y para la creación de las relaciones.
+La utilidad de carga interactúa fuertemente con la componente de catalogo
+ para la inserción de los registros y para la creación de las relaciones.
 \end_layout
 
 \begin_layout Subsection
@@ -121,7 +121,7 @@ Ejemplos de uso
 \end_layout
 
 \begin_layout Standard
-Para cargar una tabla desde un archivo simplemente se utiliza la funcion
+Para cargar una tabla desde un archivo simplemente se utiliza la función
  
 \emph on
 loadUT
@@ -144,29 +144,14 @@ status open
 begin{verbatim}
 \end_layout
 
-\end_inset
+\begin_layout Standard
 
-
+Utility.loadUt("nombre relación","nombre archivo");
 \end_layout
 
-\begin_layout Standard
-Utility.loadUt(
-\begin_inset Quotes eld
 \end_inset
 
-nombre relacion
-\begin_inset Quotes erd
-\end_inset
 
-,
-\begin_inset Quotes erd
-\end_inset
-
-nombre archivo
-\begin_inset Quotes erd
-\end_inset
-
-);
 \end_layout
 
 \begin_layout Standard
@@ -232,7 +217,7 @@ end{verbatim}
 \end_layout
 
 \begin_layout Standard
-La separacion entre las columnas es el caracter tab, esto permite establecer
+La separación entre las columnas es el carácter tab, esto permite establecer
  
 \begin_inset Quotes eld
 \end_inset
@@ -245,7 +230,7 @@ Juan Domingo
  En este ejemplo tenemos una tabla con un registro (Juan Domingo, 1, 2.0)
  en una tabla con un atributo de tipo String, de tamaño 30 y primary key
  y otros dos de tipo entero y real respectivamente.
- El tipo puede contener minusculas y/o mayusculas.
+ El tipo puede contener minúsculas y/o mayúsculas.
  En el caso de String el tamaño se toma el valor que le sigue inmediatamente.
 \end_layout
 

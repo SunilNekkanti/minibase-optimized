@@ -46,10 +46,10 @@ Descripción general
 
 \begin_layout Standard
 La componente iterator es el punto de acceso a las tablas y a sus registros.
- Como tal ofrece, tambien, las operaciones basicas sobre tablas, como join,
- proyeccion y seleccion.
- La iterfaz usada, como dice el nombre, es la de un iterador, el cual se
- inicializa en base a otros iteradores o heapfiles y despues se va accediendo
+ Como tal ofrece, también, las operaciones básicas sobre tablas, como join,
+ proyección y selección.
+ La interfaz usada, como dice el nombre, es la de un iterador, el cual se
+ inicializa en base a otros iteradores o heapfiles y después se va accediendo
  elemento por elemento en un orden definido por el iterador.
 \end_layout
 
@@ -58,7 +58,7 @@ Clases principales y sus protocolos principales
 \end_layout
 
 \begin_layout Standard
-La interfaz de iterador abstaida por la clase 
+La interfaz de iterador abstraída por la clase 
 \emph on
 Iterator
 \emph default
@@ -108,7 +108,7 @@ FileScan
 Scan,
 \emph default
  o sea que no ofrece casi funcionalidad adicional a Scan salvo por algunas
- que se deberian abstraer a otros iteradores.
+ que se deberían abstraer a otros iteradores.
 \end_layout
 
 \begin_layout Standard
@@ -117,9 +117,9 @@ La funcionalidad adicional que ofrece es la de realizar un selección sobre
 \emph on
 Scan
 \emph default
- y realizar una proyeccion.
- Estas dos se deberian implementar utilizando iteradores.
- Notar que si la condición de seleccion es nula, se itera sobre todos los
+ y realizar una proyección.
+ Estas dos se deberían implementar utilizando iteradores.
+ Notar que si la condición de selección es nula, se itera sobre todos los
  registros del 
 \emph on
 Heapfile
@@ -128,7 +128,7 @@ Heapfile
 \end_layout
 
 \begin_layout Standard
-La evaluación de la condicion de seleccion y la proyeccion son proveidas
+La evaluación de la condición de selección y la proyección son proveídas
  por las clases 
 \emph on
 PredEval
@@ -163,9 +163,9 @@ Iterator
 \emph default
 ).
  El algoritmo utilizado es el más simple de los implementados, es un doble
- ciclo donde, en el cuerpo del ciclo interno, se verfican la condicion de
- join.
- Tambien se puede realizar una proyeccion en la salida.
+ ciclo donde, en el cuerpo del ciclo interno, se verifican la condición
+ de join.
+ También se puede realizar una proyección en la salida.
 \end_layout
 
 \begin_layout Subsubsection
@@ -182,7 +182,7 @@ SortMerge
 \emph on
 NestedLoopsJoins
 \emph default
- permite realizar una proyeccion en la salida.
+ permite realizar una proyección en la salida.
 \end_layout
 
 \begin_layout Standard
@@ -206,7 +206,7 @@ BufMgr
 \end_layout
 
 \begin_layout Standard
-Esta implementacion no elimina los registros duplicados.
+Esta implementación no elimina los registros duplicados.
 \end_layout
 
 \begin_layout Subsubsection
@@ -219,7 +219,7 @@ Sort
 Sort
 \emph default
  permite iterar de una manera ordenada la salida de otro iterador.
- Utiliza un arbol binario ordenado para establecer el orden de la salida.
+ Utiliza un árbol binario ordenado para establecer el orden de la salida.
 \end_layout
 
 \begin_layout Subsection
@@ -228,8 +228,8 @@ Interacción con otros componentes
 
 \begin_layout Standard
 Esta clase es el punto de acceso principal a los registros.
- En general con esta clase es con la cual se realiza toda interaccion con
- la base de datos (salvo la modificacion de las tablas o de los registros).
+ En general con esta clase es con la cual se realiza toda interacción con
+ la base de datos (salvo la modificación de las tablas o de los registros).
 \end_layout
 
 \begin_layout Standard
@@ -248,7 +248,7 @@ BufMgr
 .
  Estas clases simplemente permiten a los iteradores comunicarse con el BufMgr
  usando tuplas.
- Con lo cual deberian estar definidas en en el paquete de 
+ Con lo cual deberían estar definidas en en el paquete de 
 \emph on
 BufMgr
 \emph default
@@ -261,11 +261,11 @@ Iterator
 \emph on
 BufMgr
 \emph default
- que no deberia ser necesaria para las tareas que realiza.
+ que no debería ser necesaria para las tareas que realiza.
 \end_layout
 
 \begin_layout Standard
-Respecto a la utilizacion de las otras componentes, 
+Respecto a la utilización de las otras componentes, 
 \emph on
 Iterator
 \emph default
@@ -277,8 +277,8 @@ Scan
 \emph on
 Heapfile
 \emph default
- para la interaccion con las tablas.
- Esta clase deberia heredar de Iterator para reforzar los protocolos.
+ para la interacción con las tablas.
+ Esta clase debería heredar de Iterator para reforzar los protocolos.
 \end_layout
 
 \begin_layout Subsection
@@ -287,10 +287,10 @@ Ejemplo de uso
 
 \begin_layout Standard
 La utilización de un iterador es bastante simple.
- Alcanza con inicializarlo con los parametros necesarios (sobre que iteradores
- o realaciones se accede y cuales son sus atributos, los atributos de salida
+ Alcanza con inicializarlo con los parámetros necesarios (sobre que iteradores
+ o relaciones se accede y cuales son sus atributos, los atributos de salida
  y las condiciones de selección).
- Por ejemplo para FileScan tendriamos:
+ Por ejemplo para FileScan tendríamos:
 \end_layout
 
 \begin_layout Standard
@@ -438,9 +438,9 @@ Evaluación del componente
 Iterator
 \emph default
  ofrece una interfaz poco practica para el uso frecuente.
- Mucha funcionalidad esta repetida, como la proyeccion, que simplemente
- se podria implementar como otro iterador.
- Tambien resulta incomoda la construccion de un iterador por la cantidad
+ Mucha funcionalidad esta repetida, como la proyección, que simplemente
+ se podría implementar como otro iterador.
+ También resulta incomoda la construcción de un iterador por la cantidad
  de estructuras de datos que hay que generar.
  Igualmente esto se debe a pobre diseño de las clases y su modularización
  a favor de un estilo que se encuentra, por lo general, en programas escritos
