@@ -140,22 +140,152 @@ Catalog
 \end_layout
 
 \begin_layout Standard
-La clase Catalog proporciona una interfaz externa para las funcionalidades
- antes mencionadas, delegando dichas funcionalidades en las clases RelCatalog,
- AttrCatalog e IndexCatalogs.
+La clase 
+\emph on
+Catalog
+\emph default
+ proporciona una interfaz externa para las funcionalidades antes mencionadas,
+ delegando dichas funcionalidades en las clases 
+\emph on
+RelCatalog
+\emph default
+, 
+\emph on
+AttrCatalog
+\emph default
+ e 
+\emph on
+IndexCatalog
+\emph default
+.
 \end_layout
 
 \begin_layout Subsubsection
-RelCatalog, AttrCatalog e IndexCatalogs
+RelCatalog
 \end_layout
 
 \begin_layout Standard
-Las clases RelCatalog, AttrCatalog e IndexCatalog mantienen información
- sobre las tablas, los campos y los índices existentes en la base de datos,
- respectivamente.
- Estas clases están implementadas como heapfiles (heredan de la clase HeapFile)
- extendiendo el comportamiento básico de un heapfile con la funcionalidad
- particular para la administración la información que mantienen.
+La clase 
+\emph on
+RelCatalog
+\emph default
+ mantiene la información sobre las tablas existentes en la base de datos.
+ Esta clase está implementada como un heapfile (hereda de  la clase 
+\emph on
+HeapFile
+\emph default
+) extendiendo el comportamiento básico de un heapfile con la funcionalidad
+ particular para la administración la información de las tablas.
+ Básicamente, la información de cada tabla se resume en: 
+\end_layout
+
+\begin_layout Itemize
+El nombre de la tabla la cantidad de atributos que posee
+\end_layout
+
+\begin_layout Itemize
+La cantidad de atributos sobre los cuales existe un índice
+\end_layout
+
+\begin_layout Itemize
+El número total de registros que contiene 
+\end_layout
+
+\begin_layout Itemize
+El número de páginas en el archivo de la tabla
+\end_layout
+
+\begin_layout Subsubsection
+AttrCatalog
+\end_layout
+
+\begin_layout Standard
+La clase 
+\emph on
+AttrCatalog
+\emph default
+ mantiene la información sobre los atributos de todas las tablas existentes
+ en la base de datos.
+ 
+\end_layout
+
+\begin_layout Standard
+De la misma forma que 
+\emph on
+RelCatalog
+\emph default
+, esta clase está implementada como un heapfile agregando la funcionalidad
+ particular para la administración la información sobre los atributos.
+ Esta información se compone de: 
+\end_layout
+
+\begin_layout Itemize
+El nombre de la tabla a la que pertenece
+\end_layout
+
+\begin_layout Itemize
+El nombre del atributo
+\end_layout
+
+\begin_layout Itemize
+El offset (en bytes) dentro de un registro
+\end_layout
+
+\begin_layout Itemize
+La posición dentro de los atributos de la tabla
+\end_layout
+
+\begin_layout Itemize
+El tipo de dato
+\end_layout
+
+\begin_layout Itemize
+La longitud máxima
+\end_layout
+
+\begin_layout Itemize
+La cantidad de índices que existen sobre el atributo
+\end_layout
+
+\begin_layout Itemize
+Los valores mínimo y máximo a lo largo de toda la tabla (ie.
+ en función de los valores para el atributo de todos los registros).
+\end_layout
+
+\begin_layout Standard
+Esta clase fue modificada, para el agregado de las PKs.
+ Esto es, se agregó un campo más al catálogo donde se especifica si un atributo
+ de una tabla forma parte (o no) de la PK de la misma.
+ Dicho campo es de tipo integer (1 equivale a verdadero y 0 a falso).
+ Adicionalmente se moficiaron todas los métodos involucrados con el manejo
+ de dicho catálogo para agregar el nuevo campo (read_tuple y make_tuple).
+\end_layout
+
+\begin_layout Subsubsection
+IndexCatalog
+\end_layout
+
+\begin_layout Standard
+La clase 
+\emph on
+IndexCatalog
+\emph default
+ mantiene la información sobre los índices que existen sobre todas las tablas
+ de la base de datos.
+ Al igual que 
+\emph on
+RelCatalog
+\emph default
+ y 
+\emph on
+AttrCatalog
+\emph default
+, esta clase está implementada como un heapfile.
+ La infomación mantenida sobre los índices es la siguiente: el nombre de
+ la tabla, el nombre del atributo sobre el cuál aplica el índice, el tipo
+ de índice o método de acceso (Hash, B-Tree), el ordenamiento (ascendente
+ o descendente), si es clustered o no, el número de claves (valores) distintas
+ y el número de páginas del archivo de índice.
 \end_layout
 
 \begin_layout Subsubsection
@@ -163,12 +293,42 @@ RelDesc, AttrDesc e IndexDesc
 \end_layout
 
 \begin_layout Standard
-Para administrar la información de tablas, campos e índices, se utilizan
- las clases RelDesc, AttrDesc e IndexDesc, las cuales modelan la especificación
- de una relación, de un atributo y de un índice respectivamente.
+Para administrar la información de tablas, atributos e índices, se utilizan
+ las clases 
+\emph on
+RelDesc
+\emph default
+, 
+\emph on
+AttrDesc
+\emph default
+ e 
+\emph on
+IndexDesc
+\emph default
+, las cuales modelan la especificación de una relación, de un atributo y
+ de un índice respectivamente.
  Mediante estas especificaciones es posible interactuar con los catálogos
- respectivos (por ejemplo, para crear una nueva relación se debe especificar
- 
+ respectivos (ie.
+ obtener la información de cada catálogo así como modificarla).
+ Debido a la extensión del catálogo para la inclusión de PKs, se extendió
+ la clase 
+\emph on
+AttrDesc
+\emph default
+ agregándole una variable para mantener la información sobre si el atributo
+ especificado forma parte (o no) de la PK de la tabla a la que pertenece.
+\end_layout
+
+\begin_layout Subsubsection
+attrInfo 
+\end_layout
+
+\begin_layout Standard
+Esta es una clase auxiliar utilizada para la creación de tablas.
+ Las instancias de la misma modelan la especificación de un atributo conteniendo
+: el nombre del atributo, el tipo de dato y la longitud del mismo.Esta clase
+ también fue extendida para especificar si el atributo es o no una PK.
 \end_layout
 
 \begin_layout Subsubsection
@@ -187,7 +347,19 @@ AttrType
 
 \begin_layout Standard
 Las instancias de esta clase representan los posibles tipos de datos que
- puede contener un campo (Integer, Float, String, etc.).
+ puede contener un atributo (
+\emph on
+Integer
+\emph default
+, 
+\emph on
+Float
+\emph default
+, 
+\emph on
+String
+\emph default
+, etc.).
 \end_layout
 
 \begin_layout Subsubsection
@@ -199,30 +371,6 @@ Las instancias de esta clase representan los posibles tipos de índices que
  pueden crearse sobre una tabla (B-Tree, Hashed).
 \end_layout
 
-\begin_layout Standard
-(No creo que sea muy significativo describir estas clases? preguntar)
-\end_layout
-
-\begin_layout Subsection
-attrData
-\end_layout
-
-\begin_layout Standard
-//attrData class for minimum and maximum attribute values
-\end_layout
-
-\begin_layout Subsubsection
-TupleOrder
-\end_layout
-
-\begin_layout Standard
-attrInfo // class used for creating relations
-\end_layout
-
-\begin_layout Subsubsection
-attrNode
-\end_layout
-
 \begin_layout Subsection
 Interacción con otros componentes
 \end_layout
@@ -232,6 +380,638 @@ El catalogo utiliza fuertemente el resto de las componentes, ya que es el
  punto de acceso a la base de datos.
  Toda acción tiene que ser revisada por el catalogo para poder extraer la
  información necesaria.
+\end_layout
+
+\begin_layout Subsection
+Ejemplos de uso
+\end_layout
+
+\begin_layout Subsubsection
+Crear y eliminar una tabla
+\end_layout
+
+\begin_layout Standard
+Para crear una tabla se debe proporcionar el nombre y una lista con los
+ atributos que tendrá.
+ Por ejemplo, para crear la tabla sailors con los campos sid (PK), sname
+ y srating se podría hacer lo siguiente:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\begin_layout Standard
+
+List<attrInfo> attributes = new ArrayList<attrInfo>();
+\end_layout
+
+\begin_layout Standard
+
+attributes.add(new attrInfo("sid", new AttrType(AttrType.attrInteger), 0 ,
+ true));
+\end_layout
+
+\begin_layout Standard
+
+attributes.add(new attrInfo("sname", new AttrType(AttrType.attrString), 10
+ , false));
+\end_layout
+
+\begin_layout Standard
+
+attributes.add(new attrInfo("srating", new AttrType(AttrType.attrReal), 0
+ , false));
+\end_layout
+
+\begin_layout Standard
+
+attrInfo[] listInfo = new attrInfo[attributes.size()];
+\end_layout
+
+\begin_layout Standard
+
+attributes.toArray(listInfo);
+\end_layout
+
+\begin_layout Standard
+
+SystemDefs.JavabaseCatalog.createRel("sailors", listInfo);
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Notar que el anteúltimo parámetro que recibe el constructor de 
+\emph on
+attrInfo
+\emph default
+ (la longitud) solo se especifica para los atributos de tipo 
+\emph on
+String
+\emph default
+ (en el caso de los otros tipos es indistinto, ie.
+ no se tiene en cuenta el valor pasado en dicho parámetro).
+ También se ve en este ejemplo que el método 
+\emph on
+createRel
+\emph default
+ se aplica sobre el catálogo (instancia de la clase 
+\emph on
+Catalog
+\emph default
+).
+ Este a su vez, como se comentó anteriormente delegará la creación de la
+ tabla en el catálogo de tablas (instancia de 
+\emph on
+RelCatalog
+\emph default
+).
+ Para eliminar una tabla solo se debe proporcionar el nombre de la misma.
+ Por ejemplo, para borrar la tabla sailors se debería hacer lo siguiente:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\begin_layout Standard
+
+SystemDefs.JavabaseCatalog.removeInfo("sailors");
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Crear y eliminar un índice
+\end_layout
+
+\begin_layout Standard
+Para agregar un índice sobre la tabla sailors se debe especificar el nombre
+ de la tabla, el nombre del atributo sobre el que se desea agregar el índice,
+ el tipo de índice (Hash o B-Tree) y la cantidad de buckets (este último
+ parámetro no se utiliza actualmente).
+ Por ejemplo, para agregar un índice de tipo B-Tree sobre el campo sname
+ de la tabla sailors, se podría hacer lo siguiente:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\begin_layout Standard
+
+SystemDefs.JavabaseCatalog.addIndex("sailors", "sname", new IndexType (IndexType.B_
+Index), 0);
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La funcionalidad para borrar el índice aún no fue implementada, pero básicamente
+ sería de la siguiente forma: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\begin_layout Standard
+
+SystemDefs.JavabaseCatalog.dropIndex("sailors", "sname", new IndexType (IndexType.B
+_Index);
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Obtener información sobre una tabla, atributo(s) o índice(s)
+\end_layout
+
+\begin_layout Standard
+Para obtener información sobre una tabla específica bastará con especificar
+ el nombre de la relacióny un record donde se pasará dicha información.
+ Por ejemplo:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\begin_layout Standard
+
+RelDesc relDesc = null;
+\end_layout
+
+\begin_layout Standard
+
+(2) SystemDefs.JavabaseCatalog.getRelationInfo("sailors", relDesc);
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Otra alternativa sería interactuar directamente con el catálogo de tablas
+ de la siguiente forma:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\begin_layout Standard
+
+(1) RelDesc relDesc = ExtendedSystemDefs.MINIBASE_RELCAT.getInfo("sailors");
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Notar que 
+\emph on
+SystemDefs.JavabaseCatalog
+\emph default
+ es el catalogo (instancia de la clase 
+\emph on
+Catalog
+\emph default
+) de la base de datos, que a su vez contienen los catalogos de tablas, atributos
+ e índices (instancias de 
+\emph on
+RelCatalog
+\emph default
+, 
+\emph on
+AttrCatalog
+\emph default
+ 
+\emph on
+IndexCatalog
+\emph default
+).
+ Dichas instancias también son accesibles directamente de la siguiente forma:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\begin_layout Standard
+
+ExtendedSystemDefs.MINIBASE_RELCAT
+\end_layout
+
+\begin_layout Standard
+
+ExtendedSystemDefs.MINIBASE_ATTRCAT
+\end_layout
+
+\begin_layout Standard
+
+ExtendedSystemDefs.MINIBASE_INDCAT
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Dado que el catalogo (
+\emph on
+SystemDefs.JavabaseCatalog
+\emph default
+) delega las responsabilidades en sus catalogos particulares, las expresiones
+ (1) y (2) son equivalentes (aunque sería más conveniente acceder siempre
+ a traves de 
+\emph on
+SystemDefs.JavabaseCatalog
+\emph default
+).
+ Para obtener información sobre un atributo en particular, por ejemplo el
+ atributo srating de la tablasailors basta con hacer lo siguiente:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\begin_layout Standard
+
+AttrDesc attrDesc = SystemDefs.JavabaseCatalog.getAttributeInfo("sailors",
+ "srating");
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+O bien para obtener la información sobre todos los atributos del una tabla:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\begin_layout Standard
+
+AttrDesc  [] attrDescs = SystemDefs.JavabaseCatalog.getRelAttributes("sailors");
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Finalmente para obtener la información sobre un índice en particular
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+IndexDesc indexDesc = SystemDefs.JavabaseCatalog.getIndexInfo("sailors", "sid",
+ new IndexType (IndexType.B_Index));
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+todos los índices de una tabla
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\begin_layout Standard
+
+IndexDesc  [] indexDescs = SystemDefs.JavabaseCatalog.getRelIndexes("sailors");
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+o sobre todos los índices de un atributo
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\begin_layout Standard
+
+IndexDesc  [] indexDescs = SystemDefs.JavabaseCatalog.getAttrIndexes("sailors",
+ "sid");
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
