@@ -793,68 +793,73 @@ Ejemplos de uso
 Conclusiones generales
 \end_layout
 
-\begin_layout Section
-ApéndicesEn lï¿½neas generales, hemos encontrado un cï¿½digo que cumple
- con los mï¿½dulos, funcionamiento y estructuras clï¿½sicas que describe
- la bibliografï¿½a para una base de datos, en especial el libro de Ramakrishna.
+\begin_layout Standard
+En líneas generales, hemos encontrado un código que cumple con los módulos,
+ funcionamiento y estructuras clásicas que describe la bibliografía para
+ una base de datos, en especial el libro de Ramakrishna.
 \end_layout
 
 \begin_layout Standard
-Por lo tanto, podemos afirmar que minibase posee las caracterï¿½sticas necesaria
-s para utilizarse como una base de datos de estudio.
+Por lo tanto, podemos afirmar que minibase posee las características necesarias
+ para utilizarse como una base de datos de estudio.
  
 \end_layout
 
 \begin_layout Standard
-Sin embargo, hemos observado que Minibase posee un cï¿½digo de muy poca
- calidad.
+Sin embargo, hemos observado que Minibase posee un código de muy poca calidad.
 \end_layout
 
 \begin_layout Standard
-Los puntos mï¿½s bï¿½sicos y visibles para programar y/o extender funcionalidad
- en Minibase son los siguientes: la construcciï¿½n de las clases es incï¿½moda;
- a tal punto que ciertos constructores toman parï¿½metros redundantes.
+Los puntos más básicos y visibles para programar y/o extender funcionalidad
+ en Minibase son los siguientes: la construcción de las clases es incómoda;
+ a tal punto que ciertos constructores toman parámetros redundantes.
  Incluso existen clases que no construyen totalmente a sus objetos en el
- constructor, sino que hay que llamar luego a distintos mï¿½todos para completar
- su construcciï¿½n.
+ constructor, sino que hay que llamar luego a distintos métodos para completar
+ su construcción.
  
 \end_layout
 
 \begin_layout Standard
-Los mï¿½todos para generar querys son extremadamente rudimentarios y no
- aprovechan en lo mï¿½s mï¿½nimo el paradigma de objetos.
+Los métodos para generar querys son extremadamente rudimentarios y no aprovechan
+ en lo más mínimo el paradigma de objetos.
  
 \end_layout
 
 \begin_layout Standard
-En muchos mï¿½dulos se utilizan listas encadenadas ( BM, HeapFile, ï¿½tc
- ).
- Estas listas estï¿½n implementadas sobre nodos con apuntadores al siguiente.
- Java, al igual que la mayorï¿½a de los lenguajes OO, posee estructuras
- de datos dinï¿½micas, que implementan de igual manera esta funcionalidad(
- colecciones, y en su ï¿½ltima versiï¿½n, colecciones genï¿½ricas ) evitando
- la ardua tarea de desarrollar y mantener listas compuestas por nodos con
- apuntadores.
+En muchos módulos se utilizan listas encadenadas ( BM, HeapFile, étc ).
+ Estas listas están implementadas sobre nodos con apuntadores al siguiente.
+ Java, al igual que la mayoría de los lenguajes OO, posee estructuras de
+ datos dinámicas, que implementan de igual manera esta funcionalidad( coleccione
+s, y en su última versión, colecciones genéricas ) evitando la ardua tarea
+ de desarrollar y mantener listas compuestas por nodos con apuntadores.
 \end_layout
 
 \begin_layout Standard
-Todo lo anterior se debe en su mayorï¿½a a un diseï¿½o de clases muy pobre.
+Todo lo anterior se debe en su mayoría a un diseño de clases muy pobre.
 \end_layout
 
 \begin_layout Standard
 A tal nivel que no parece desapropiado conjeturar que minibase parece haberse
- migrado del lenguaje C al lenguaje java sin el mï¿½s mï¿½nimo anï¿½lisis.
+ migrado del lenguaje C al lenguaje java sin el más mínimo análisis.
  Obviando completamente los detalles( y no solo detalles ) del pasaje de
  un lenguaje estructurado a otro orientado a objetos, con el consecuente
- resultado de un cï¿½digo de pï¿½sima calidad.
+ resultado de un código de pésima calidad.
 \end_layout
 
 \begin_layout Standard
-Dejando eso de lado, este trabajo prï¿½ctico nos ha servido para familiarizamos
- en profundidad con las ideas y funcionamiento de los mï¿½dulos principales
- que componen una RDBMS, en las distintas capas de abstracciï¿½n.
- Despuï¿½s de adquirir toda esa informaciï¿½n, no parece nada imposible,
- eventualmente, escribir de cero una RDBMS en parte o en su totalidad.
+Dejando eso de lado, este trabajo práctico nos ha servido para familiarizamos
+ en profundidad con las ideas y funcionamiento de los módulos principales
+ que componen una RDBMS, en las distintas capas de abstracción.
+ Después de adquirir toda esa información, no parece nada imposible, eventualmen
+te, escribir de cero una RDBMS en parte o en su totalidad.
+\end_layout
+
+\begin_layout Section
+Apéndices
+\end_layout
+
+\begin_layout Standard
+
 \end_layout
 
 \begin_layout Section
