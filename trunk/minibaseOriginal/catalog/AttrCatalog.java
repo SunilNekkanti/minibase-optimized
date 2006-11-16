@@ -52,7 +52,7 @@ implements GlobalConst, Catalogglobal
 		int sizeOfInt = 4;
 		int sizeOfFloat = 4;
 		tuple = new Tuple(Tuple.max_size);
-		attrs = new AttrType[10];
+		attrs = new AttrType[14];
 
 		// rel name
 		attrs[0] = new AttrType(AttrType.attrString);
@@ -75,6 +75,14 @@ implements GlobalConst, Catalogglobal
 		attrs[8] = new AttrType(AttrType.attrString);   // ?????  BK ?????
 		// Pk
 		attrs[9] = new AttrType(AttrType.attrInteger);
+		//Fk
+		attrs[10] = new AttrType(AttrType.attrInteger);
+		//Fk Nombre de la relacion
+		attrs[11] = new AttrType(AttrType.attrString);
+		//Fk Nombre del atributo
+		attrs[12] = new AttrType(AttrType.attrString);
+		//Check
+		attrs[13] = new AttrType(AttrType.attrString);
 
 		// Find the largest possible tuple for values attrs[7] & attrs[8]
 		//   str_sizes[2] & str_sizes[3]
@@ -85,11 +93,15 @@ implements GlobalConst, Catalogglobal
 			max = (short) sizeOfFloat;
 
 
-		str_sizes = new short[4];
+		str_sizes = new short[7];
 		str_sizes[0] = (short) MAXNAME;
 		str_sizes[1] = (short) MAXNAME;
 		str_sizes[2] = max;
 		str_sizes[3] = max;
+		str_sizes[4] = (short) MAXNAME;
+		str_sizes[5] = (short) MAXNAME;
+		str_sizes[6] = (short) MAXNAME;
+		
 
 		try {
 			tuple.setHdr( attrs, str_sizes);
@@ -489,6 +501,11 @@ implements GlobalConst, Catalogglobal
 			}	
 
 			tuple.setIntFld(10, record.isPk()?1:0);
+			tuple.setIntFld(11, record.isFk()?1:0);
+			tuple.setStrFld(12, record.getFkRel());
+			tuple.setStrFld(13, record.getFkAttr());
+			tuple.setStrFld(14, record.getCheck());
+			
 			tuple.setIntFld(6, record.attrLen);
 			tuple.setIntFld(7, record.indexCnt);
 		}
@@ -542,6 +559,11 @@ implements GlobalConst, Catalogglobal
 
 			record.attrLen = tuple.getIntFld(6);
 			record.indexCnt = tuple.getIntFld(7);
+			record.setFk(tuple.getIntFld(11)!=0);
+			record.setFkRel(tuple.getStrFld(12));
+			record.setFkAttr(tuple.getStrFld(13));
+			record.setCheck(tuple.getStrFld(14));
+			
 		}
 		catch (Exception e1) {
 			throw new AttrCatalogException(e1, "read_tuple failed");
