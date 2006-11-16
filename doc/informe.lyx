@@ -770,6 +770,133 @@ preview false
 \end_layout
 
 \begin_layout Section
+Bugs encontrados
+\end_layout
+
+\begin_layout Standard
+Los bugs encontrados en el codigo de Minibase se deben, casi enteramente,
+ al pasaje de C/C++ a Java.
+ 
+\end_layout
+
+\begin_layout Standard
+El error más común que se encontró fue el pasaje por referencia.
+ En C/C++ es posible pasar por referencia un parametro utilizando el &.
+ Esto en Java no es posible como se pasa a ejemplificar:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\begin_layout Standard
+
+RelDesc desc = null;
+\end_layout
+
+\begin_layout Standard
+
+getRelDesc("sailors.in", desc);
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En este caso se crea un puntero a un objeto RelDesc, y se lo inicializa
+ en null.
+ El comportamiento esperado es que la funcion getRelDesc ponga en desc la
+ descipcion de la relacion con el nombre 
+\begin_inset Quotes eld
+\end_inset
+
+sailors.in
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Esto no sucede porque el puntero desc se pasa por copia a la función, con
+ lo cual desc nunca es modificado por getRelDesc y queda en null.
+ Para corregir este problema se opto por devolver el objeto desc de la siguiente
+ manera:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\begin_layout Standard
+
+RelDesc desc = getRelDesc("sailors.in");
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Dando un interfaz más clara.
+\end_layout
+
+\begin_layout Standard
+Otro bug común que se encontró fue la falta de los llamados a close a los
+ scan que se abren.
+ Esto produce que las paginas queden pineadas y no se puedan liberar nunca.
+ Este error, probablemente, se deba a la falta de destructores explicitos
+ en Java (existe finalize pero no se garantiza su ejecucion).
+ Con lo cual se introdujeron los close necesarios.
+\end_layout
+
+\begin_layout Section
 Conclusiones generales
 \end_layout
 
