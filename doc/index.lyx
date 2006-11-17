@@ -38,45 +38,288 @@ Descripción general
 \end_layout
 
 \begin_layout Standard
-Esta componente ofrece las utilidades para poder crear y acceder a la informacio
+Esta componente ofrece las utilidades para poder crear y acceder a la informació
 n de un índice.
  La única implementación soporta hasta el momento es sobre arboles B+.
+\end_layout
+
+\begin_layout Standard
+La componente BTree contiene la implementación de un índice basado en un
+ B+ Tree.
+ Estos árboles permiten mantener una estructura de datos ordenada con un
+ costo relativamente bajo.
+ En los BTrees se guardaran 2 elementos: El elemento ``clave'', o sea el
+ campo que define el orden del índice y el RID de la tupla completa.
+ Para más información sobre BTrees (que escapan al scope de este trabajo
+ practico) remitirse a la bibliografía.
 \end_layout
 
 \begin_layout Subsection
 Clases principales y sus protocolos principales
 \end_layout
 
+\begin_layout Subsection
+BTreeFile
+\end_layout
+
 \begin_layout Standard
-La clase principal es 
+Esta clase extiende 
+\emph on
+indexFile
+\emph default
+ para representar un índice de tipo 
+\emph on
+BTree
+\emph default
+.
+ Su funciones mas importante son:
+\end_layout
+
+\begin_layout Description
+Insertar\InsetSpace ~
+y\InsetSpace ~
+borrar\InsetSpace ~
+elementos: Las funciones Insert y Delete se encargan de realizar
+ esta tarea.
+ Aquí se realizan las tareas de rebalanceo del B+ Tree.
+ 
+\end_layout
+
+\begin_layout Description
+Búsqueda\InsetSpace ~
+de\InsetSpace ~
+elementos: A través de la función new_
+\emph on
+scan
+\emph default
+ se obtiene un 
 \emph on
 IndexScan
 \emph default
-.
- Este iterador permite recorrer las tuplas que referencia un índice utilizando
- 
-\emph on
-IndexFileScan
-\emph default
-.
+ con el cual se puede iterar un conjunto de valores contiguos en el orden
+ del índice, dado los límites inferior y superior.
  
 \end_layout
 
 \begin_layout Standard
-
+También contiene el header del BTree (
 \emph on
-IndexFileScan
+BTreeHeaderPage
 \emph default
- permite iterar sobre un árbol B+.
+) con datos como tipo del la clave de ordenamiento, el algoritmo de borrado
+ a utilizar .
+\end_layout
+
+\begin_layout Subsubsection
+IndexFileScan
+\end_layout
+
+\begin_layout Standard
+Es el tipo de iterador que devuelve new_scan de la clase 
+\emph on
+BTreeIndexFile
+\emph default
+.
+ Posee una interfaz simple que consta de get_next y delete_current.
+ Está extendida por 
+\emph on
+BTFileScan
+\emph default
+, que es quien tiene el algoritmo de iteración de árboles B+ Tree.
+\end_layout
+
+\begin_layout Subsubsection
+BT
+\end_layout
+
+\begin_layout Standard
+En esta clase se implementan varias utilidades qué son usadas por los distintos
+ componentes del paquete.
+ El método 
+\emph on
+keyCompare
+\emph default
+ esta implementado aquí.
+\end_layout
+
+\begin_layout Subsubsection
+BTSortedPage
+\end_layout
+
+\begin_layout Standard
+Es el tipo de heap file page que se utiliza en los nodos del árbol.
+ Se encarga de la inserción y borrado de elementos dentro del nodo (funciones
+ que son llamadas por el algoritmo de inserción y borrado de BTreeFile).
+ Esta clase es extendida por 
+\emph on
+BTIndexPage
+\emph default
+ y 
+\emph on
+BTLeafPage
+\emph default
+, que son los nodos internos y las hojas del árbol respectivamente.
+\end_layout
+
+\begin_layout Subsubsection
+KeyDataEntry
+\end_layout
+
+\begin_layout Standard
+Esta clase contiene los datos que se insertarán en el B+ Tree.
+ En definitiva no es más que una estructura que incluye una 
+\emph on
+KeyClass
+\emph default
+ y una 
+\emph on
+DataClass
+\emph default
+.
+ 
+\emph on
+KeyClass
+\emph default
+ representa al elemento clave por el cual se ordena el B+ Tree, que puede
+ ser de tipo Integer (
+\emph on
+IntegerKey
+\emph default
+) o de tipo String (
+\emph on
+StringKey
+\emph default
+).
+ 
+\emph on
+DataClass
+\emph default
+ representa al dato que acompaña a la clave en el B+ Tree.
+ En caso de un nodo interno (
+\emph on
+BTIndexPage
+\emph default
+) el dato será el 
+\emph on
+PageId
+\emph default
+ del nodo hijo y en caso de una hoja del árbol (
+\emph on
+BTLeafPage
+\emph default
+) será el 
+\emph on
+RID
+\emph default
+ de la tupla representada por esa entrada del B+ Tree.
+ 
 \end_layout
 
 \begin_layout Subsection
 Interacción con otros componentes
 \end_layout
 
+\begin_layout Subsubsection
+Agregado de elementos al árbol
+\end_layout
+
 \begin_layout Standard
-Index utiliza fuertemente la componente btree, que es una implementación
- de un árbol B+.
+La función de agregado (
+\emph on
+insert
+\emph default
+) del 
+\emph on
+BTreeFile
+\emph default
+ es llamada en dos circunstancias: 
+\end_layout
+
+\begin_layout Description
+Creado\InsetSpace ~
+de\InsetSpace ~
+un\InsetSpace ~
+índice\InsetSpace ~
+(
+\emph on
+IndexCatalog.AddIndex
+\emph default
+): En este caso se utiliza para agregar al índice todas las tuplas existentes
+ en la relación hasta el momento.
+ 
+\end_layout
+
+\begin_layout Description
+Agregado\InsetSpace ~
+de\InsetSpace ~
+una\InsetSpace ~
+tupla\InsetSpace ~
+a\InsetSpace ~
+la\InsetSpace ~
+relación\InsetSpace ~
+(
+\emph on
+Utility.InserRecUT
+\emph default
+): En este caso se agrega la nueva tupla al índice.
+\end_layout
+
+\begin_layout Subsubsection
+Borrado de elementos del árbol
+\end_layout
+
+\begin_layout Standard
+La Clase 
+\emph on
+BTFileScan
+\emph default
+ (el 
+\emph on
+IndexFileScan
+\emph default
+ correspondiente a los índices de tipo 
+\emph on
+BTree
+\emph default
+) implementa 
+\emph on
+delete_current
+\emph default
+, que utiliza el método de borrado de la clase 
+\emph on
+BTIndexFile
+\emph default
+.
+ En la práctica ningún modulo implementa el uso de esta funcionalidad.
+\end_layout
+
+\begin_layout Subsubsection
+Búsqueda de elementos del árbol
+\end_layout
+
+\begin_layout Standard
+En el módulo 
+\emph on
+IndexUtils
+\emph default
+ se encuentra la función 
+\emph on
+BTreeScan
+\emph default
+ que recibe el 
+\emph on
+IndexFile
+\emph default
+ y los límites del rango a iterar, y devuelve el 
+\emph on
+IndexScan
+\emph default
+ que corresponde.
+ Este es el método utilizado en 
+\emph on
+SpeedJoin
+\emph default
+ para conseguir las tuplas internas que cumplen con el criterio del join.
 \end_layout
 
 \end_body
