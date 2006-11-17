@@ -40,7 +40,7 @@
 \begin_body
 
 \begin_layout Section
-SpeedJoin
+Index Nested Loop Join
 \end_layout
 
 \begin_layout Subsection
@@ -48,8 +48,8 @@ Explicación
 \end_layout
 
 \begin_layout Standard
-SpeedJoin es una estrategia de join que utiliza la existencia de un índice
- en la relación 
+Index Nested Loop Join es una estrategia de join que utiliza la existencia
+ de un índice en la relación 
 \begin_inset Quotes eld
 \end_inset
 
@@ -61,7 +61,8 @@ interna
 \end_layout
 
 \begin_layout Standard
-El pseudocódigo de un recorrido completo sobre el SpeedJoin es el siguiente:
+El pseudocódigo de un recorrido completo sobre el Index Nested Loop Join
+ es el siguiente:
 \end_layout
 
 \begin_layout Standard
@@ -349,7 +350,7 @@ end{verbatim}
 \begin_layout Standard
 Éstas tres formas, son las estrategias de join que se encuentran implementadas
  en NestedLoopsJoin y SortMergeJoin, incluidas en la versión original de
- Minibase, y SpeedJoin, implementada en el presente trabajo.
+ Minibase, y Index Nested Loop Join, implementada en el presente trabajo.
 \end_layout
 
 \begin_layout Subsubsection
@@ -613,19 +614,21 @@ end{verbatim}
 \end_layout
 
 \begin_layout Standard
-Lo que demuestra en este caso que SpeedJoin es la opción más rápida.
+Lo que demuestra en este caso que Index Nested Loop Join es la opción más
+ rápida.
 \end_layout
 
 \begin_layout Standard
-Si en sailors.in hubiese habido sid repetidos, entonces SpeedJoin hubiese
- iterado más de una vez los valores de la relación interna, por lo que sus
- estadísticas se hubieran acercado más a las del SortMergeJoin.
+Si en sailors.in hubiese habido sid repetidos, entonces Index Nested Loop
+ Join hubiese iterado más de una vez los valores de la relación interna,
+ por lo que sus estadísticas se hubieran acercado más a las del SortMergeJoin.
 \end_layout
 
 \begin_layout Standard
 Llegado al extremo de que todos los sid de sailors y reserves fueran iguales,
- SpeedJoin hubiese tardado lo mismo que el NestedLoopsJoin ya que se hubiesen
- tenido que iterar todas las combinaciones de las dos tablas.
+ Index Nested Loop Join hubiese tardado lo mismo que el NestedLoopsJoin
+ ya que se hubiesen tenido que iterar todas las combinaciones de las dos
+ tablas.
 \end_layout
 
 \end_body
