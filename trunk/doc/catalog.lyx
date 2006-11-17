@@ -180,7 +180,11 @@ HeapFile
 \end_layout
 
 \begin_layout Itemize
-El nombre de la tabla la cantidad de atributos que posee
+El nombre de la tabla 
+\end_layout
+
+\begin_layout Itemize
+La cantidad de atributos que posee
 \end_layout
 
 \begin_layout Itemize
@@ -905,14 +909,15 @@ status open
 begin{verbatim}
 \end_layout
 
+\begin_layout Standard
+
+IndexDesc indexDesc = SystemDefs.JavabaseCatalog.getIndexInfo("sailors", "sid",
+ new IndexType (IndexType.B_Index));
+\end_layout
+
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-IndexDesc indexDesc = SystemDefs.JavabaseCatalog.getIndexInfo("sailors", "sid",
- new IndexType (IndexType.B_Index));
 \end_layout
 
 \begin_layout Standard
