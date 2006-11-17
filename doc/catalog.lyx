@@ -912,7 +912,12 @@ begin{verbatim}
 \begin_layout Standard
 
 IndexDesc indexDesc = SystemDefs.JavabaseCatalog.getIndexInfo("sailors", "sid",
- new IndexType (IndexType.B_Index));
+ new IndexType
+\end_layout
+
+\begin_layout Standard
+
+(IndexType.B_Index));
 \end_layout
 
 \end_inset
