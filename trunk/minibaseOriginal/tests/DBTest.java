@@ -470,7 +470,7 @@ class DBDriver extends TestDriver implements GlobalConst {
 		return status;
 	}
 
-	protected boolean test4 ()  {
+	protected boolean test7 ()  {
 
 		boolean status = OK;
 
