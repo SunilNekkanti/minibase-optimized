@@ -1,4 +1,4 @@
-#LyX 1.4.2 created this file. For more info see http://www.lyx.org/
+#LyX 1.4.3 created this file. For more info see http://www.lyx.org/
 \lyxformat 245
 \begin_document
 \begin_header
@@ -641,6 +641,21 @@ El objetivo principal de este trabajo practico es poner en funcionamiento
 Como objetivos secundarios están la creación de un nuevo tipo de Join y
  de un utilitario para la creación de nuevas relaciones.
  También se extendió el catalogo para soportar el atributo Primary Key.
+\end_layout
+
+\begin_layout Standard
+
+\newpage
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Include \input{arch.lyx}
+preview false
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
