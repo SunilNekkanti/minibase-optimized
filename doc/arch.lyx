@@ -1,0 +1,115 @@
+#LyX 1.4.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 245
+\begin_document
+\begin_header
+\textclass article
+\language spanish
+\inputencoding auto
+\fontscheme default
+\graphics default
+\paperfontsize default
+\spacing single
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\leftmargin 1cm
+\topmargin 3cm
+\rightmargin 1cm
+\bottommargin 3cm
+\headheight 2cm
+\headsep 2cm
+\footskip 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\end_header
+
+\begin_body
+
+\begin_layout Subsection
+Arquitectura de MiniBase
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename arch.png
+	lyxscale 50
+	scale 50
+	keepAspectRatio
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La arquitectura de un motor de bases de datos comercial contiene más funcionalid
+ad, con lo cual más componentes, que el código de Minibase.
+ Como se puede ver por el diagrama, un motor de bases de datos comercial
+ consta de un modulo de optimización, que sirve también de punto de acceso
+ a las bases de datos utilizando SQL, y un modulo de bajo nivel que ocupa
+ de abstraer los archivos de bases de datos y ofrecer índices al modulo
+ de optimización.
+\end_layout
+
+\begin_layout Standard
+Minibase ofrece una funcionalidad muy limitada, solamente están presentes
+ FILE AND INDEX MANAGER, BUFFER MANAGER, DISK SPACE MANAGER, OPERATION EXECUTION
+ y los archivos de la base de datos, incluyendo el catálogo (DATA BASE FILES).
+ Como parte del trabajo practico se implementó una mínima parte del parser
+ (carga batch de tablas).
+ El resto de las componentes no están implementadas, como manejo de transaccione
+s, locks, recuperación, parser SQL y optimizador.
+ Estas componentes son esenciales para una bases de datos moderna.
+\end_layout
+
+\begin_layout Subsubsection
+Interacción entre componentes
+\end_layout
+
+\begin_layout Standard
+Las componentes implementadas interactúan entre si principalmente por medio
+ del pattern iterator.
+ Este pattern ofrece una interfaz simple para recorrer los datos de una
+ tabla, de un índice o del resultado de una operación como un join.
+\end_layout
+
+\begin_layout Standard
+La componente de más bajo nivel es el DISK SPACE MANAGER que se ocupa de
+ manejar los archivos en el disco.
+ Toda interacción con el DISK SPACE MANAGER se hace indirectamente utilizando
+ el BUFFER MANAGER.
+ Esta componente interactúa con el DISK SPACE MANAGER a nivel de paginas,
+ creando una cache para agilizar el acceso a estas.
+\end_layout
+
+\begin_layout Standard
+El FILE AND INDEX MANAGER implementa la abstracción HeapFile para poder
+ interactuar con el BUFFER MANAGER a nivel de tuplas.
+ También permite la utilización de iteradores para recorrer una tabla.
+ Otra estructura que implementa es el B+Tree para el manejo de índices.
+ Esta componente se encarga de actualizar el catalogo cuando se introduce
+ algún cambio a la base de datos.
+\end_layout
+
+\begin_layout Standard
+Por ultimo esta la componente OPERATION EXECUTION que implementa las operaciones
+ básicas de manejo de una base de datos y utiliza el pattern iterator para
+ interactuar con los índices y con las tablas.
+ También es la encargada de hablar con el catalogo para la manipulación
+ de las tablas.
+\end_layout
+
+\end_body
+\end_document
